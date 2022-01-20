@@ -7,7 +7,7 @@ import ButtonGroup from '@mui/material/ButtonGroup';
 
 export default function Login() {
   return (
-    <Box 
+            <Box 
             gap={1}
             sx={{ 
                 display: 'flex',
@@ -18,15 +18,18 @@ export default function Login() {
                 height: '100vh',
                 backgroundColor: 'white',
             }}
-        >
+            >
+            
+            <h2>Record:er</h2>
+
             <Box
             component="form"
             sx={{
-                '& > :not(style)': { m: 1, width: '40ch' },
+                '& > :not(style)': { m: 1, width: '35ch' },
             }}
             noValidate
             autoComplete="off"
-    >
+            >
              <TextField id="outlined-basic" label="이메일" variant="outlined" />  
                 <TextField
                 id="outlined-password-input"
@@ -42,15 +45,25 @@ export default function Login() {
             flexDirection: 'column',
             alignItems: 'center',
             '& > *': {
+                m: 1, width: '35ch'
+            },
+            }}
+            >
+            <Button variant="contained">로그인</Button>
+            </Box>
+
+            <Box
+            sx={{
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
+            '& > *': {
                 m: 1,
             },
             }}
             >
-            <ButtonGroup variant="outlined" aria-label="outlined button group">
-                <Button>로그인</Button>
-                <Button>회원 가입</Button>
-                <Button>비밀번호 찾기</Button>
-                </ButtonGroup>
+            <Button variant="text">회원 가입</Button>
+            <Button variant="text">비밀번호 찾기</Button>
             </Box>
   </Box>
   );

@@ -1,47 +1,107 @@
-import React from 'react'
-import { useDispatch } from 'react-redux'
-import { Router } from 'react-router-dom';
+import React from 'react';
+// import { useDispatch } from 'react-redux';
+// import { Router } from 'react-router-dom';
 
-function SignUp(props) {
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
 
-    const dispatch = useDispatch();
+export default function SignUp() {
 
-    const [Email, setEmail] = useState('');
-    const [Password, setPassword] = useState('');
-    const [ConfirmPassword, setConfirmPassword] = useState('');
-    const [NickName, setNickName] = useState('');
-    const [BlogName, setBlogName] = useState('');
+    // const dispatch = useDispatch();
 
-    // handler
-    const onEmailHandler = (e) => {
-        setEmail(e.currentTarget.value);
-    };
+    // const [Email, setEmail] = useState('');
+    // const [Password, setPassword] = useState('');
+    // const [ConfirmPassword, setConfirmPassword] = useState('');
+    // const [NickName, setNickName] = useState('');
+    // const [BlogName, setBlogName] = useState('');
 
-    const onPasswordHandler = (e) => {
-        setPassword(e.currentTarget.value);
-    };
+    // // handler
+    // const onEmailHandler = (e) => {
+    //     setEmail(e.currentTarget.value);
+    // };
 
-    const onConfirmPasswordHandler = (e) => {
-        setConfirmPassword(e.currentTarget.value);
-    };
+    // const onPasswordHandler = (e) => {
+    //     setPassword(e.currentTarget.value);
+    // };
 
-    const onNickNameHandler = (e) => {
-        setNickName(e.currentTarget.value);
-    };
+    // const onConfirmPasswordHandler = (e) => {
+    //     setConfirmPassword(e.currentTarget.value);
+    // };
 
-    const onBlogNameHandler = (e) => {
-        setBlogName(e.currentTarget.value);
-    };
+    // const onNickNameHandler = (e) => {
+    //     setNickName(e.currentTarget.value);
+    // };
+
+    // const onBlogNameHandler = (e) => {
+    //     setBlogName(e.currentTarget.value);
+    // };
 
     return (
-        <div>
-            <input type = 'email' value = {Email} onChange = {onEmailHandler} />
-            <input type = 'password' value = {Password} onChange = {onPasswordHandler} />
-            <input type = 'password' value = {ConfirmPassword} onChange = {onConfirmPasswordHandler} />
-            <input type = 'text' value = {NickName} onChange = {onNickNameHandler} />
-            <input type = 'text' value = {BlogName} onChange = {onBlogNameHandler} />
-        </div>
+        <Box 
+        gap={1}
+        sx={{ 
+            display: 'flex',
+            flexDirection: 'column', 
+            justifyContent: 'center',
+            alignItems: 'center',
+            width: '100vw',
+            height: '100vh',
+            backgroundColor: 'white',
+        }}
+        >
+
+        <h2>회원 가입</h2>
+
+        <Box
+         component="form"
+            sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            '& > :not(style)': { m: 1, width: '35ch' },
+            }}
+            noValidate
+            autoComplete="off"
+            >
+            <TextField id="outlined-basic" label="이메일" variant="outlined" />
+            <Button size="small" variant="outlined">이메일 중복 확인</Button>
+            <TextField id="outlined-basic" label="비밀번호" variant="outlined" />
+            <TextField id="outlined-basic" label="비밀번호 확인" variant="outlined" />
+            <TextField id="outlined-basic" label="닉네임" variant="outlined" />
+            <TextField id="outlined-basic" label="블로그명(영어)" variant="outlined" />
+            <Button size="small" variant="outlined">블로그명 중복 확인</Button>
+            </Box>
+
+            <Box
+            component="form"
+            sx={{
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
+            '& > :not(style)': { m: 1, width: '20ch' },
+            }}
+            noValidate
+            autoComplete="off"
+            >
+            <Button variant="contained">회원가입</Button>
+            <Button variant="contained">취소</Button>
+            </Box>
+        </Box>
+        // <div>
+        //     <form style={{ display: 'flex', flexDirection: 'column' }} onSubmit = {onSubmitHandler}>
+        //     <label>이메일</label>
+        //     <input type = 'email' value = {Email} onChange = {onEmailHandler} />
+        //     <label>비밀번호</label>
+        //     <input type = 'password' value = {Password} onChange = {onPasswordHandler} />
+        //     <label>비밀번호 확인</label>
+        //     <input type = 'password' value = {ConfirmPassword} onChange = {onConfirmPasswordHandler} />
+        //     <label>닉네임</label>
+        //     <input type = 'text' value = {NickName} onChange = {onNickNameHandler} />
+        //     <label>블로그명</label>
+        //     <input type = 'text' value = {BlogName} onChange = {onBlogNameHandler} />
+        //     <Button varient='contained'>회원 가입</Button>
+        //     </form>
+        // </div>
     )
 }
-
-export default SignUp
