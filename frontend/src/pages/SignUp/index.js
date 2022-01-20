@@ -50,9 +50,7 @@ export default function SignUp() {
             backgroundColor: 'white',
         }}
         >
-
         <h2>회원 가입</h2>
-
         <Box
          component="form"
             sx={{
