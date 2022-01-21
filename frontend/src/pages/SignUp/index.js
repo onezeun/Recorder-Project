@@ -63,12 +63,10 @@ export default function SignUp() {
             autoComplete="off"
             >
             <TextField id="outlined-basic" label="이메일" variant="outlined" />
-            <Button size="small" variant="outlined">이메일 중복 확인</Button>
             <TextField id="outlined-basic" label="비밀번호" variant="outlined" />
             <TextField id="outlined-basic" label="비밀번호 확인" variant="outlined" />
             <TextField id="outlined-basic" label="닉네임" variant="outlined" />
             <TextField id="outlined-basic" label="블로그명(영어)" variant="outlined" />
-            <Button size="small" variant="outlined">블로그명 중복 확인</Button>
             </Box>
 
             <Box
