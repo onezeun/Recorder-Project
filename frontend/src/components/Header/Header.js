@@ -117,6 +117,7 @@ export default function Header() {
   // 흰 배경, 내용 중간 정렬
   const WhiteBackground = styled.div`
     background: white;
+    color: black;
     display: flex;
     justify-content: center;
     height: auto;
