@@ -63,8 +63,18 @@ export default function SignUp() {
             autoComplete="off"
             >
             <TextField id="outlined-basic" label="이메일" variant="outlined" />
-            <TextField id="outlined-basic" label="비밀번호" variant="outlined" />
-            <TextField id="outlined-basic" label="비밀번호 확인" variant="outlined" />
+            <TextField
+                id="outlined-password-input"
+                label="비밀번호"      
+                type="password"
+                autoComplete="current-password"
+                />
+            <TextField
+                id="outlined-password-input"
+                label="비밀번호 확인"      
+                type="password"
+                autoComplete="current-password"
+                />
             <TextField id="outlined-basic" label="닉네임" variant="outlined" />
             <TextField id="outlined-basic" label="블로그명(영어)" variant="outlined" />
             </Box>
