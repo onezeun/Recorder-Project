@@ -1,5 +1,4 @@
 # backend quickstart
----
 
 Recorder-Project/backend 경로 이동 및 빌드
 ```
