@@ -1,7 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
-import { media } from './styleUtil';
-import { IconButton, Typography, MenuItem, Menu, Box, Badge, Stack, Button } from '@mui/material';
+import { IconButton, Typography, MenuItem, Menu, Box, Badge } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import AccountCircle from '@mui/icons-material/AccountCircle';
@@ -104,112 +102,59 @@ export default function Header() {
     </Menu>
   );
 
-
-  // 상단 고정
-  const Positioner = styled.div`
-    display: flex;
-    flex-direction: column;
-    position: fixed;
-    top: 0px;
-    width: 100%;
-`;
-
-  // 흰 배경, 내용 중간 정렬
-  const WhiteBackground = styled.div`
-    background: white;
-    color: black;
-    display: flex;
-    justify-content: center;
-    height: auto;
-`;
-
-  // 헤더의 내용
-  const HeaderContents = styled.div`
-    width: 1200px;
-    height: 100px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-
-    padding-right: 1rem;
-    padding-left: 1rem;
-    ${media.wide`
-        width: 992px;
-    `}
-
-    ${media.tablet`
-        width: 100%;
-    `}
-`;
-
-  // 로고
-  const Logo = styled.div`
-    font-size: 1.4rem;
-    letter-spacing: 2px;
-    color: #444444;
-    font-family: 'Rajdhani';
-`;
-
-  // 중간 여백
-  const Spacer = styled.div`
-    flex-grow: 1;
-`;
-
-  /* 헤더 구분선
-  const GradientBorder = styled.div`
-      height: 1px;
-      background: #444444;
-  `;
-  */
-
   return (
-    <Positioner>
-      <WhiteBackground>
-        <HeaderContents>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            RECORD:ER
-          </Typography>
-          <Box sx={{ flexGrow: 1 }} />
-          <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-            <IconButton size="large" aria-label="search" color="inherit">
-              <SearchIcon />
-            </IconButton>
-            <IconButton
-              size="large"
-              aria-label="show 17 new notifications"
-              color="inherit"
-            >
-              <Badge badgeContent={17} color="error">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
-            <IconButton
-              size="large"
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
-              color="inherit"
-            >
-              <AccountCircle />
-            </IconButton>
-          </Box>
-          <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
-            <IconButton
-              size="large"
-              aria-label="show more"
-              aria-controls={mobileMenuId}
-              aria-haspopup="true"
-              onClick={handleMobileMenuOpen}
-              color="inherit"
-            >
-              <MoreIcon />
-            </IconButton>
-            {renderMobileMenu}
-            {renderMenu}
-          </Box> 
-          {/* 로그인 전 
+    <Box flexDirection = 'row' alignItems = 'center' sx={{
+      display: 'flex',
+      justifyContent: 'center',
+      pr: '1rem',
+      pl: '1rem'
+    }}>
+      <Box sx={{ mx:5, mt:4 }}>
+      <Typography variant="h6" component="div">
+        RECORD:ER
+      </Typography>
+      </Box>
+      <Box sx={{ flexGrow: 1 }} />
+      <Box sx={{ display: { xs: 'none', md: 'flex' },  mt:2 }}>
+        <IconButton size="large" aria-label="search" color="inherit">
+          <SearchIcon />
+        </IconButton>
+        <IconButton
+          size="large"
+          aria-label="show 17 new notifications"
+          color="inherit"
+        >
+          <Badge badgeContent={17} color="error">
+            <NotificationsIcon />
+          </Badge>
+        </IconButton>
+        <IconButton
+          size="large"
+          edge="center"
+          aria-label="account of current user"
+          aria-controls={menuId}
+          aria-haspopup="true"
+          onClick={handleProfileMenuOpen}
+          color="inherit"
+        >
+          <AccountCircle />
+        </IconButton>
+      </Box>
+      <Box sx={{ display: { xs: 'flex', md: 'none' }, mt:2 }}>
+        <IconButton
+          size="large"
+          aria-label="show more"
+          aria-controls={mobileMenuId}
+          aria-haspopup="true"
+          onClick={handleMobileMenuOpen}
+          color="inherit"
+        >
+          <MoreIcon />
+        </IconButton>
+        {renderMobileMenu}
+        {renderMenu}
+      </Box>
+      {/* 로그인 전 
           <Box sx={{
             display: 'flex',
             justifyContent: 'flex-end',
@@ -223,8 +168,6 @@ export default function Header() {
             </Stack>
           </Box>
           */}
-        </HeaderContents>
-      </WhiteBackground>
-    </Positioner>
+    </Box>
   );
 }
