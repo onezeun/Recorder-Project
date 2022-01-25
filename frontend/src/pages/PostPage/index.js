@@ -247,9 +247,7 @@ export default function PostPage() {
                   <h5>쿼카를 닮은 예비 풀스택 개발자 주지운입니다.</h5>
                  </Box>
                </Box>
-
-                
-                
+              
                 {/* 댓글 입력 */}
                 <Box
                 component="form"
@@ -300,7 +298,7 @@ export default function PostPage() {
                   autoComplete="off"
                   >
                   <h3>ezerone&nbsp;&nbsp;&nbsp;&nbsp;2시간 전</h3>
-                  <h4>주지운씨 블로그 잘 보고 있습니다!</h4>
+                  <h4>주지운씨 블로그 잘 보고 있습니다!!</h4>
                  </Box>
                 </Box>
 
