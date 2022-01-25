@@ -10,5 +10,5 @@ cd backend
 ```
 java -jar -Dspring.profiles.active=local build/libs/*.jar
 혹은 루트에서
-$ ./gradlew bootRun
+./gradlew bootRun
 ```
