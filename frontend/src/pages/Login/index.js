@@ -25,6 +25,8 @@ export default function Login() {
             <Box
             component="form"
             sx={{
+                display: 'flex',
+                flexDirection: 'column',
                 '& > :not(style)': { m: 1, width: '35ch' },
             }}
             noValidate
