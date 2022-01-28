@@ -339,7 +339,7 @@ sketch
 # Support for Project snippet scope
 
 ### Gradle ###
-.gradle
+# .gradle
 build/
 
 # Ignore Gradle GUI config
@@ -358,6 +358,6 @@ gradle-app.setting
 **/build/
 
 # backend - application.yml
-**/application.yml
+application.yml
 
 # End of https://www.toptal.com/developers/gitignore/api/macos,gradle,java,intellij,visualstudiocode,node,react
