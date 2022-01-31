@@ -3,6 +3,7 @@ import * as React from 'react';
 import { Button, IconButton, Card, CardActions, CardContent, CardMedia, Grid, Box, Typography, Container }from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import ShareIcon from '@mui/icons-material/Share';
 // import CameraIcon from '@mui/icons-material/PhotoCamera';
 // import CssBaseline from '@mui/material/CssBaseline';
 // import Stack from '@mui/material/Stack';
@@ -96,7 +97,9 @@ export default function Album() {
                     <IconButton aria-label="like">
                       <FavoriteIcon />
                     </IconButton>
-                    <Button size="small">Edit</Button>
+                    <IconButton aria-label="share">
+                      <ShareIcon />
+                    </IconButton>
                   </CardActions>
                 </Card>
               </Grid>
