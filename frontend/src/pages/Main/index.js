@@ -39,41 +39,51 @@ export default function Album() {
             pb: 6,
           }}
         >
-          <Container maxWidth="sm">
-            <Typography
-              component="h1"
-              variant="h2"
-              align="left"
-              color="text.primary"
-              gutterBottom
-            >
+
+          
+          <Box
+            sx= {{
+              display: 'flex',
+              flexDirection: 'row',
+              }}
+              noValidate
+              autoComplete="off"
+              >
+            <Box
+             sx= {{
+              '& > :not(style)': { marginLeft: 4 },
+              }}
+              noValidate
+              autoComplete="off"
+              >
               <Button>인기 게시물</Button>
+            </Box>
+            <Box
+             sx= {{
+
+              }}
+              noValidate
+              autoComplete="off"
+              >
               <Button>최신 게시물</Button>
-              {/* <Button variant="outlined">이웃 게시물</Button> */}
-            </Typography>
-            {/* <Typography variant="h5" align="center" color="text.secondary" paragraph>
-              Something short and leading about the collection below—its contents,
-              the creator, etc. Make it short and sweet, but not too short so folks
-              don&apos;t simply skip over it entirely.
-            </Typography> */}
-            {/* <Stack
-              sx={{ pt: 4 }}
-              direction="row"
-              spacing={2}
-              justifyContent="center"
-            >
-              <Button variant="contained">Main call to action</Button>
-              <Button variant="outlined">Secondary action</Button>
-            </Stack> */}
-          </Container>
+            </Box>
+          </Box>
+
         </Box>
-        <Container sx={{ py: 8 }} maxWidth="md">
+        {/* <Container sx={{ py: 8 }} maxWidth="md"> */}
+        <Box
+        sx= {{
+        '& > :not(style)': { marginLeft: 1, marginRight: 1 },
+        }}
+        noValidate
+        autoComplete="off"
+        >
           {/* End hero unit */}
           <Grid container spacing={4}>
             {cards.map((card) => (
               <Grid item key={card} xs={12} sm={6} md={4}>
                 <Card
-                  sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
+                  sx={{ width: '86%', height: '100%', display: 'flex', flexDirection: 'column' }}
                 >
                   <CardMedia
                     component="img"
@@ -82,15 +92,14 @@ export default function Album() {
                       pt: '56.25%',
                     }}
                     image="https://source.unsplash.com/random"
-                    alt="random"
+                    alt="사진"
                   />
                   <CardContent sx={{ flexGrow: 1 }}>
                     <Typography gutterBottom variant="h5" component="h2">
-                      Heading
+                      1-800-273-8255
                     </Typography>
                     <Typography>
-                      This is a media card. You can use this section to describe the
-                      content.
+                      Logic, Juanes 노래입니다. I've been on the low I been taking my time I feel like I'm out of my mind
                     </Typography>
                   </CardContent>
                   <CardActions>
@@ -105,7 +114,8 @@ export default function Album() {
               </Grid>
             ))}
           </Grid>
-        </Container>
+      </Box>
+        {/* </Container> */}
       </main>
       {/* Footer */}
       {/* <Box sx={{ bgcolor: 'background.paper', p: 6 }} component="footer">
