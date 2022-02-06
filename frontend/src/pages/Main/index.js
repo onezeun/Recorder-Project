@@ -1,14 +1,11 @@
 import * as React from 'react';
 // import AppBar from '@mui/material/AppBar';
-import { Button, IconButton, Card, CardActions, CardContent, CardMedia, Grid, Box, Typography, Container }from '@mui/material';
+import { Button, IconButton, Card, CardActions, CardContent, CardMedia, Grid, Box, Typography, CardHeader, Avatar, Pagination, Stack }from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
-// import CameraIcon from '@mui/icons-material/PhotoCamera';
-// import CssBaseline from '@mui/material/CssBaseline';
-// import Stack from '@mui/material/Stack';
-// import Toolbar from '@mui/material/Toolbar';
-// import Link from '@mui/material/Link';
+
+
 
 // function Copyright() {
 //   return (
@@ -27,11 +24,10 @@ const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
 const theme = createTheme();
 
-export default function Album() {
+export default function Main() {
   return (
     <ThemeProvider theme={theme}>
       <main>
-        {/* Hero unit */}
         <Box
           sx={{
             bgcolor: 'background.paper',
@@ -40,7 +36,7 @@ export default function Album() {
           }}
         >
 
-          
+          {/* 인기, 최근, 이웃 게시물 버튼 */}
           <Box
             sx= {{
               display: 'flex',
@@ -68,28 +64,35 @@ export default function Album() {
               <Button>최신 게시물</Button>
             </Box>
           </Box>
-
         </Box>
-        {/* <Container sx={{ py: 8 }} maxWidth="md"> */}
+
         <Box
         sx= {{
-        '& > :not(style)': { marginLeft: 1, marginRight: 1 },
+        '& > :not(style)': { marginLeft: 1 },
         }}
         noValidate
         autoComplete="off"
         >
-          {/* End hero unit */}
+          {/* 게시글 */}
           <Grid container spacing={4}>
             {cards.map((card) => (
               <Grid item key={card} xs={12} sm={6} md={4}>
                 <Card
                   sx={{ width: '86%', height: '100%', display: 'flex', flexDirection: 'column' }}
                 >
+                  <CardHeader
+                    avatar={
+                      <Avatar sx={{  }} aria-label="recipe">
+                        R
+                      </Avatar>
+                    }
+                    title="zu21un"
+                    subheader="2월 6일 14:46, 2022"
+                  />
                   <CardMedia
                     component="img"
                     sx={{
-                      // 16:9
-                      pt: '56.25%',
+                      
                     }}
                     image="https://source.unsplash.com/random"
                     alt="사진"
@@ -115,9 +118,26 @@ export default function Album() {
             ))}
           </Grid>
       </Box>
-        {/* </Container> */}
-      </main>
-      {/* Footer */}
+
+          {/* pagination */}
+          <Box
+             sx= {{
+              display: 'flex',
+              justifyContent: 'center',
+              '& > :not(style)': { m: 3, marginLeft: 5 },
+              
+              }}
+              noValidate
+              autoComplete="off"
+              >
+              <Stack spacing={2}>
+              <Pagination count={6} variant="outlined" color="primary" />
+              </Stack>
+            </Box>
+            
+     </main>
+      
+      {/* 필요시 Footer */}
       {/* <Box sx={{ bgcolor: 'background.paper', p: 6 }} component="footer">
         <Typography variant="h6" align="center" gutterBottom>
           Footer
@@ -128,7 +148,7 @@ export default function Album() {
           color="text.secondary"
           component="p"
         >
-          Something here to give the footer a purpose!
+          zu21un 바보
         </Typography>
         <Copyright />
       </Box> */}
