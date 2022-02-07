@@ -1,6 +1,9 @@
 package com.record.backend.domain.comment;
 
+import static javax.persistence.FetchType.*;
+
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -18,11 +21,11 @@ public class CommentLike {
 	@Id @GeneratedValue
 	private Long id;
 
-	@ManyToOne
+	@ManyToOne(fetch = LAZY)
 	@JoinColumn(name = "user_id")
 	private User user;
 
-	@ManyToOne
+	@ManyToOne(fetch = LAZY)
 	@JoinColumn(name = "comment_id")
 	private Comment comment;
 }
