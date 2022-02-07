@@ -2,6 +2,7 @@ package com.record.backend.domain.post;
 
 import static javax.persistence.FetchType.*;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -17,15 +18,16 @@ import lombok.Setter;
 @Entity
 @Getter @Setter
 public class PostLike {
-	@Id
-	@GeneratedValue
-	private Long id;
 
-	@ManyToOne(fetch = LAZY)
-	@JoinColumn(name = "user_id")
-	private User user;
+	@Id @GeneratedValue
+	@Column(name = "post_like_id")
+	private Long id;
 
 	@ManyToOne(fetch = LAZY)
 	@JoinColumn(name = "post_id")
 	private Post post;
+
+	@ManyToOne(fetch = LAZY)
+	@JoinColumn(name = "user_id")
+	private User user;
 }

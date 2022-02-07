@@ -15,8 +15,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-import com.record.backend.domain.post.Post;
 import com.record.backend.domain.User;
+import com.record.backend.domain.post.Post;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -37,21 +37,11 @@ public class Comment {
 	@JoinColumn(name = "post_id")
 	private Post post;
 
-	@ManyToOne(fetch = LAZY)
-	@JoinColumn(name = "parent_comment")
-	private Comment parent;
+	private String content;
 
-	@OneToMany(mappedBy = "parent")
-	private List<Comment> child = new ArrayList<>();
+	private LocalDateTime created_time;
 
-	private LocalDateTime create_time;
-
-	@OneToMany(mappedBy = "comment_id")
+	//1대 다 관계
+	@OneToMany(mappedBy = "comment")
 	private List<CommentLike> commentLikeList = new ArrayList<>();
-
-	//==연관관계 편이 메서드==//
-	public void addChildComment(Comment child) {
-		this.child.add(child);
-		child.setParent(this);
-	}
 }
