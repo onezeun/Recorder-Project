@@ -12,6 +12,7 @@ import Editor from './pages/EditorPage';
 import MyPage from './pages/MyPage';
 import Post from './pages/PostPage';
 import Main from './pages/Main';
+import UserHome from './pages/UserHome';
 
 const StyledDiv = styled.div`
   margin-top: 50px;
@@ -41,6 +42,9 @@ function App() {
           <Link to="/main">
             <button>Main</button>
           </Link>
+          <Link to="/userhome">
+            <button>Userhome</button>
+          </Link>
         <hr /> 
         <Routes>
           <Route exact path="/" element={<Login />} />
@@ -50,6 +54,7 @@ function App() {
           <Route path="/mypage" element={<MyPage />} />
           <Route path="/post" element={<Post />} />
           <Route path="/main" element={<Main />} />
+          <Route path="/userhome" element={<UserHome />} />
         </Routes>
       </StyledDiv>
     </Router>
