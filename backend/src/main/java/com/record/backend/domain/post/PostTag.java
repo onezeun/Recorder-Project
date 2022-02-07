@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+
 import com.record.backend.domain.Tag;
 
 import lombok.Getter;
@@ -19,6 +20,7 @@ import lombok.Setter;
 public class PostTag {
 
 	@Id @GeneratedValue
+	@Column(name = "post_tag_id")
 	private Long id;
 
 	@ManyToOne(fetch = LAZY)

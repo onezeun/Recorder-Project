@@ -41,6 +41,8 @@ dependencies {
 
 	//test
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	//testcase 전용 db h2
+	//runtimeOnly 'com.h2database:h2'
 
 	//JUnit4 추가
 	testImplementation("org.junit.vintage:junit-vintage-engine") {
