@@ -1,7 +1,5 @@
 package com.record.backend.domain.post;
 
-import static javax.persistence.FetchType.*;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +14,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import com.record.backend.domain.User;
+import com.record.backend.domain.comment.Comment;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -24,33 +23,35 @@ import lombok.Setter;
 @Getter @Setter
 public class Post {
 
-	@Id @GeneratedValue
+	@Id
+	@GeneratedValue
 	@Column(name = "post_id")
 	private Long id;
 
-	@ManyToOne(fetch = LAZY)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id")
 	private User user;
 
-	private String Content_url;
+	private String content_url;
 
 	private String summary;
 
 	private String exposure;
 
-	private byte[] thumnail_url;
+	private byte[] thumnail_image;
 
 	private LocalDateTime created_time;
 
+	//1대 다 관계
+	@OneToMany(mappedBy = "post")
+	private List<Comment> commentList = new ArrayList<>();
 
-	@OneToMany(mappedBy = "post_id")
+	@OneToMany(mappedBy = "post")
 	private List<PostCategory> postCategoryList = new ArrayList<>();
 
-	@OneToMany(mappedBy = "post_id")
-	private List<PostLike> postLikesList = new ArrayList<>();
+	@OneToMany(mappedBy = "post")
+	private List<PostLike> postLikeList = new ArrayList<>();
 
-	@OneToMany(mappedBy = "post_id")
+	@OneToMany(mappedBy = "post")
 	private List<PostTag> postTagList = new ArrayList<>();
-
-
 }

@@ -19,7 +19,7 @@ public class MemberRepositoryTest {
 
 	@Test
 	@Transactional
-	@Rollback(value = false)
+	//@Rollback(value = false)
 	public void testMember() {
 		Member member = new Member();
 		member.setUsername("memberA");

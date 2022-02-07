@@ -2,7 +2,7 @@ package com.record.backend.domain;
 
 import static javax.persistence.FetchType.*;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,7 +19,8 @@ import lombok.Setter;
 @Getter @Setter
 public class Alert {
 
-	@Id @GeneratedValue
+	@Id
+	@GeneratedValue
 	@Column(name = "alert_id")
 	private Long id;
 
@@ -27,8 +28,7 @@ public class Alert {
 	@JoinColumn(name = "user_id")
 	private User user;
 
-	//enum 타입으로 할까 고민중
 	private String content;
 
-	private LocalDate created_time;
+	private LocalDateTime created_time;
 }

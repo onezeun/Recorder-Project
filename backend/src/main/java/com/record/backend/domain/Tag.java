@@ -1,15 +1,17 @@
 package com.record.backend.domain;
 
+import static javax.persistence.FetchType.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
-import com.record.backend.domain.comment.CommentLike;
 import com.record.backend.domain.post.PostTag;
 
 import lombok.Getter;
@@ -19,12 +21,13 @@ import lombok.Setter;
 @Getter @Setter
 public class Tag {
 
-	@Id @GeneratedValue
+	@Id
+	@GeneratedValue
 	@Column(name = "tag_id")
 	private Long id;
 
-	private String tag_name;
+	private String name;
 
-	@OneToMany(mappedBy = "tag_id")
+	@OneToMany(mappedBy = "tag")
 	private List<PostTag> postTagList = new ArrayList<>();
 }

@@ -14,6 +14,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.record.backend.domain.post.PostCategory;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,11 +23,11 @@ import lombok.Setter;
 @Getter @Setter
 public class Category {
 
-	@Id @GeneratedValue
+	@Id
+	@GeneratedValue
 	@Column(name = "category_id")
 	private Long id;
 
-	//user category 다대일
 	@ManyToOne(fetch = LAZY)
 	@JoinColumn(name = "user_id")
 	private User user;
@@ -36,12 +38,16 @@ public class Category {
 	@JoinColumn(name = "parent_id")
 	private Category parent;
 
-	@OneToMany(mappedBy = "parent") //셀프의 연관관계를 건거라고 생각하면 된다.
+	@OneToMany(mappedBy = "parent") //self 연관관계
 	private List<Category> child = new ArrayList<>();
 
-	//==연관관계 편이 메서드==//
+	//==연관관계 편이 메서드==// parent니까 셀프
 	public void addChildCategory(Category child) {
 		this.child.add(child);
 		child.setParent(this);
 	}
+
+	//1대 다 관계
+	@OneToMany(mappedBy = "category")
+	private List<PostCategory> postCategoryList = new ArrayList<>();
 }
