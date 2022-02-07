@@ -1,9 +1,12 @@
 package com.record.backend.domain;
 
+import static javax.persistence.FetchType.*;
+
 import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -20,7 +23,7 @@ public class Alert {
 	@Column(name = "alert_id")
 	private Long id;
 
-	@ManyToOne
+	@ManyToOne(fetch = LAZY)
 	@JoinColumn(name = "user_id")
 	private User user;
 
