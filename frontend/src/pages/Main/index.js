@@ -92,7 +92,9 @@ export default function Main() {
                   <CardMedia
                     component="img"
                     sx={{
-                      
+                      width: 'fill',
+                      height: '400px',
+                      objectFit: 'cover'
                     }}
                     image="https://source.unsplash.com/random"
                     alt="사진"
@@ -133,9 +135,8 @@ export default function Main() {
               <Stack spacing={2}>
               <Pagination count={6} variant="outlined" color="primary" />
               </Stack>
-            </Box>
-            
-     </main>
+          </Box>            
+      </main>
       
       {/* 필요시 Footer */}
       {/* <Box sx={{ bgcolor: 'background.paper', p: 6 }} component="footer">
