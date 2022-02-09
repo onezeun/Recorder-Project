@@ -1,4 +1,4 @@
-package com.record.backend.domain;
+package com.record.backend.domain.tag;
 
 import static javax.persistence.FetchType.*;
 

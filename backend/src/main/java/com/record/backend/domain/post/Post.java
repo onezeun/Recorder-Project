@@ -10,10 +10,11 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-import com.record.backend.domain.User;
+import com.record.backend.domain.user.User;
 import com.record.backend.domain.comment.Comment;
 
 import lombok.Getter;
@@ -34,6 +35,11 @@ public class Post {
 
 	private String content_url;
 
+	private String title;
+
+	@Lob
+	private String content;
+
 	private String summary;
 
 	private String exposure;
@@ -41,6 +47,8 @@ public class Post {
 	private byte[] thumnail_image;
 
 	private LocalDateTime created_time;
+
+	private LocalDateTime update_date;
 
 	//1대 다 관계
 	@OneToMany(mappedBy = "post")
