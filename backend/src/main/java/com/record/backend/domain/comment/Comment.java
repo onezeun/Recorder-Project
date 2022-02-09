@@ -8,15 +8,13 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-import com.record.backend.domain.Category;
-import com.record.backend.domain.User;
+import com.record.backend.domain.user.User;
 import com.record.backend.domain.post.Post;
 
 import lombok.Getter;
@@ -38,6 +36,7 @@ public class Comment {
 	@JoinColumn(name = "post_id")
 	private Post post;
 
+	@Column(nullable = false, length = 200)
 	private String content;
 
 	@ManyToOne(fetch = LAZY)

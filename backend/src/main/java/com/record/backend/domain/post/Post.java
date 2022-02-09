@@ -1,6 +1,5 @@
 package com.record.backend.domain.post;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,10 +10,11 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-import com.record.backend.domain.User;
+import com.record.backend.domain.user.User;
 import com.record.backend.domain.comment.Comment;
 
 import lombok.Getter;
@@ -36,6 +36,9 @@ public class Post {
 	private String content_url;
 
 	private String title;
+
+	@Lob
+	private String content;
 
 	private String summary;
 

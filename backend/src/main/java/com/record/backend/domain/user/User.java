@@ -1,4 +1,4 @@
-package com.record.backend.domain;
+package com.record.backend.domain.user;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.record.backend.domain.category.Category;
 import com.record.backend.domain.comment.Comment;
 import com.record.backend.domain.comment.CommentLike;
 import com.record.backend.domain.post.Post;
