@@ -14,6 +14,7 @@ import Post from './pages/PostPage';
 import Main from './pages/Main';
 import UserHome from './pages/UserHome';
 import Search from './pages/Search';
+import Neighbor from './pages/NeighborPage';
 
 const StyledDiv = styled.div`
   margin-top: 50px;
@@ -49,6 +50,9 @@ function App() {
           <Link to="/search">
             <button>Search</button>
           </Link>
+          <Link to="/neighbor">
+            <button>Neighbor</button>
+          </Link>
         <hr /> 
         <Routes>
           <Route exact path="/" element={<Login />} />
@@ -60,6 +64,7 @@ function App() {
           <Route path="/main" element={<Main />} />
           <Route path="/userhome" element={<UserHome />} />
           <Route path="/search" element={<Search />} />
+          <Route path="/neighbor" element={<Neighbor />} />
         </Routes>
       </StyledDiv>
     </Router>
