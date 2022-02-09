@@ -1,6 +1,6 @@
 import * as React from 'react';
 // import AppBar from '@mui/material/AppBar';
-import { Button, IconButton, Card, CardActions, CardContent, CardMedia, Grid, Box, Typography, CardHeader, Avatar, Pagination, Stack }from '@mui/material';
+import { Button, IconButton, Card, CardActions, CardContent, CardMedia, Grid, Box, Typography, CardHeader, Avatar, Pagination, Stack, CardActionArea }from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
@@ -77,7 +77,7 @@ export default function Main() {
           <Grid container spacing={4}>
             {cards.map((card) => (
               <Grid item key={card} xs={12} sm={6} md={4}>
-                <Card
+                  <Card
                   sx={{ width: '86%', height: '100%', display: 'flex', flexDirection: 'column' }}
                 >
                   <CardHeader
@@ -89,6 +89,7 @@ export default function Main() {
                     title="zu21un"
                     subheader="2월 6일 14:46, 2022"
                   />
+                  <CardActionArea component="a" href="#">
                   <CardMedia
                     component="img"
                     sx={{
@@ -107,6 +108,7 @@ export default function Main() {
                       Logic, Juanes 노래입니다. I've been on the low I been taking my time I feel like I'm out of my mind
                     </Typography>
                   </CardContent>
+                  </CardActionArea>
                   <CardActions>
                     <IconButton aria-label="like">
                       <FavoriteIcon />
