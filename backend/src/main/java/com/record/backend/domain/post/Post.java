@@ -1,5 +1,6 @@
 package com.record.backend.domain.post;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +35,8 @@ public class Post {
 
 	private String content_url;
 
+	private String title;
+
 	private String summary;
 
 	private String exposure;
@@ -41,6 +44,8 @@ public class Post {
 	private byte[] thumnail_image;
 
 	private LocalDateTime created_time;
+
+	private LocalDateTime update_date;
 
 	//1대 다 관계
 	@OneToMany(mappedBy = "post")
