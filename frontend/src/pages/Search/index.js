@@ -1,6 +1,6 @@
 import * as React from 'react';
 // import AppBar from '@mui/material/AppBar';
-import { Button, IconButton, Card, CardActions, CardContent, CardMedia, Grid, Box, Typography, CardHeader, Avatar, Pagination, Stack, CardActionArea }from '@mui/material';
+import { IconButton, Card, CardActions, CardContent, CardMedia, Grid, Box, Typography, CardHeader, Avatar, Pagination, Stack, CardActionArea }from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
@@ -28,19 +28,21 @@ export default function Main() {
   return (
     <ThemeProvider theme={theme}>
       <main>
+        {/* ~~에 대한 검색결과 글자 출력 */}
         <Box
           sx={{
             bgcolor: 'background.paper',
             pt: 8,
             pb: 6,
+            fontWeight: 'bolder',
           }}
         >
 
-          {/* 인기, 최근, 이웃 게시물 버튼 */}
           <Box
             sx= {{
               display: 'flex',
               flexDirection: 'row',
+              justifyContent: 'center',
               }}
               noValidate
               autoComplete="off"
@@ -52,16 +54,7 @@ export default function Main() {
               noValidate
               autoComplete="off"
               >
-              <Button>인기 게시물</Button>
-            </Box>
-            <Box
-             sx= {{
-
-              }}
-              noValidate
-              autoComplete="off"
-              >
-              <Button>최신 게시물</Button>
+              '주지운'에 대한 검색결과
             </Box>
           </Box>
         </Box>
@@ -73,11 +66,11 @@ export default function Main() {
         noValidate
         autoComplete="off"
         >
-          {/* 게시글 */}
+          {/* 검색된 게시글 */}
           <Grid container spacing={4}>
             {cards.map((card) => (
               <Grid item key={card} xs={12} sm={6} md={4}>
-                  <Card
+                <Card
                   sx={{ width: '86%', height: '100%', display: 'flex', flexDirection: 'column' }}
                 >
                   <CardHeader
@@ -102,10 +95,10 @@ export default function Main() {
                   />
                   <CardContent sx={{ flexGrow: 1 }}>
                     <Typography gutterBottom variant="h5" component="h2">
-                      1-800-273-8255
+                      zu21un 그 사람 있잖아요
                     </Typography>
                     <Typography>
-                      Logic, Juanes 노래입니다. I've been on the low I been taking my time I feel like I'm out of my mind
+                      본명 주지운인 것 같던데 그 사람은 왜 그런가요?
                     </Typography>
                   </CardContent>
                   </CardActionArea>
@@ -139,23 +132,6 @@ export default function Main() {
               </Stack>
           </Box>            
       </main>
-      
-      {/* 필요시 Footer */}
-      {/* <Box sx={{ bgcolor: 'background.paper', p: 6 }} component="footer">
-        <Typography variant="h6" align="center" gutterBottom>
-          Footer
-        </Typography>
-        <Typography
-          variant="subtitle1"
-          align="center"
-          color="text.secondary"
-          component="p"
-        >
-          zu21un 바보
-        </Typography>
-        <Copyright />
-      </Box> */}
-      {/* End footer */}
     </ThemeProvider>
   );
 }

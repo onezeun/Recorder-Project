@@ -10,17 +10,21 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-import com.record.backend.domain.User;
+import com.record.backend.domain.user.User;
 import com.record.backend.domain.comment.Comment;
 
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Getter @Setter
+@Getter
+@NoArgsConstructor
 public class Post {
 
 	@Id
@@ -30,9 +34,16 @@ public class Post {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id")
-	private User user;
+	private User user; //작성자
 
-	private String content_url;
+	private String content_url; //url
+
+	private String title; //제목
+
+	@Lob
+	private String content; //내용
+
+	private int hits; //조회수
 
 	private String summary;
 
@@ -40,7 +51,9 @@ public class Post {
 
 	private byte[] thumnail_image;
 
-	private LocalDateTime created_time;
+	private LocalDateTime created_time = LocalDateTime.now();
+
+	private LocalDateTime update_date;
 
 	//1대 다 관계
 	@OneToMany(mappedBy = "post")
@@ -54,4 +67,16 @@ public class Post {
 
 	@OneToMany(mappedBy = "post")
 	private List<PostTag> postTagList = new ArrayList<>();
+
+	@Builder
+	public Post(String title, String content, int hits, User user,
+		String content_url, String summary, String exposure) {
+		this.title = title;
+		this.content = content;
+		this.hits = hits;
+		this.user = user;
+		this.content_url = content_url;
+		this.summary = summary;
+		this.exposure = exposure;
+	}
 }

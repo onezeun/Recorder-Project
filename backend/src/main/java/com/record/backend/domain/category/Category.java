@@ -1,4 +1,4 @@
-package com.record.backend.domain;
+package com.record.backend.domain.category;
 
 import static javax.persistence.FetchType.*;
 
@@ -7,13 +7,13 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.record.backend.domain.user.User;
 import com.record.backend.domain.post.PostCategory;
 
 import lombok.Getter;

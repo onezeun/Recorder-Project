@@ -1,4 +1,4 @@
-package com.record.backend.domain;
+package com.record.backend.domain.user;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -10,11 +10,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.record.backend.domain.category.Category;
 import com.record.backend.domain.comment.Comment;
 import com.record.backend.domain.comment.CommentLike;
 import com.record.backend.domain.post.Post;
 import com.record.backend.domain.post.PostLike;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -30,8 +32,6 @@ public class User {
 
 	private String password;
 
-	private String name;
-
 	private String nickname;
 
 	private String domain;
@@ -43,18 +43,24 @@ public class User {
 	private LocalDateTime created_time;
 
 	//1대 다 관계
+	@Builder.Default
 	@OneToMany(mappedBy = "user")
 	private List<Post> postList = new ArrayList<>();
 
+	@Builder.Default
 	@OneToMany(mappedBy = "user")
 	private List<Category> categoryList = new ArrayList<>();
 
+	@Builder.Default
 	@OneToMany(mappedBy = "user")
 	private List<Comment> commentList = new ArrayList<>();
 
+	@Builder.Default
 	@OneToMany(mappedBy = "user")
 	private List<CommentLike> commentLikeList = new ArrayList<>();
 
+	@Builder.Default
 	@OneToMany(mappedBy = "user")
 	private List<PostLike> postLikeList = new ArrayList<>();
+
 }
