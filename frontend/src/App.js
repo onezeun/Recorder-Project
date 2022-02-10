@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import './App.css';
 
 import Header from './components/Header/Header.js';
+import MemberComponent from './components/Member/MemberConponent.js';
 
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
@@ -53,6 +54,9 @@ function App() {
           <Link to="/neighbor">
             <button>Neighbor</button>
           </Link>
+          <Link to="/member">
+            <button>Member</button>
+          </Link>
         <hr /> 
         <Routes>
           <Route exact path="/" element={<Login />} />
@@ -65,6 +69,7 @@ function App() {
           <Route path="/userhome" element={<UserHome />} />
           <Route path="/search" element={<Search />} />
           <Route path="/neighbor" element={<Neighbor />} />
+          <Route path="/member" element={<MemberComponent />} />
         </Routes>
       </StyledDiv>
     </Router>
