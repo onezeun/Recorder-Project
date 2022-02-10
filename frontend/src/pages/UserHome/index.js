@@ -99,6 +99,6 @@ export default function Userhome() {
             </Box>
         </Stack>
       </Stack>
-    </Grid >
+    </Grid>
   )
 }

@@ -13,7 +13,11 @@
     "@mui/material": "^5.3.0",
     "@mui/styled-engine-sc": "^5.3.0",
     "@mui/styles": "^5.3.0",
+<<<<<<< HEAD
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.3",
+=======
+    "@mui/x-data-grid": "^5.5.0",
+>>>>>>> 3c43c682d1628c2347aeb096b86d68def020501e
     "@popperjs/core": "^2.11.2",
     "@svgr/webpack": "^5.5.0",
     "@testing-library/jest-dom": "^5.16.1",
