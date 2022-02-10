@@ -14,6 +14,7 @@ import Post from './pages/PostPage';
 import Main from './pages/Main';
 import UserHome from './pages/UserHome';
 import Search from './pages/Search';
+import MemberComponent from './components/Member/MemberConponent.js';
 
 const StyledDiv = styled.div`
   margin-top: 50px;
@@ -21,6 +22,9 @@ const StyledDiv = styled.div`
 
 function App() {
   return (
+    // <div className="App">
+    //   <MemberComponent />
+    // </div>
     <Router>
       <Header />
       <StyledDiv>
@@ -49,6 +53,9 @@ function App() {
           <Link to="/search">
             <button>Search</button>
           </Link>
+          <Link to="/member">
+            <button>member</button>
+          </Link>
         <hr /> 
         <Routes>
           <Route exact path="/" element={<Login />} />
@@ -60,6 +67,7 @@ function App() {
           <Route path="/main" element={<Main />} />
           <Route path="/userhome" element={<UserHome />} />
           <Route path="/search" element={<Search />} />
+          <Route path="/member" element={<MemberComponent />} />
         </Routes>
       </StyledDiv>
     </Router>
