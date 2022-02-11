@@ -34,7 +34,7 @@ const rows = [
     { id: 4, name: '한지은', blogname: 'onezeun', neighbor: 'O' },
 ];
 
-export default function NeighborPage() {
+export default function Neighbor() {
   return (
     <Box 
         sx={{ 

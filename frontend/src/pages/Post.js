@@ -11,7 +11,7 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 
 
 
-export default function PostPage() {
+export default function Post() {
 
   // 댓글 입력 창 관련
   const blue = {
