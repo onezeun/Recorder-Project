@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './index.css';
+import '../components/Editor/index.css';
 
 import { styled, alpha } from '@mui/material/styles';
 import { StylesProvider } from '@mui/styles';
@@ -61,7 +61,7 @@ const StyledMenu = styled((props) => (
     },
   }));
 
-export default function EditorPage() {
+export default function Editor() {
     const [anchorEl, setAnchorEl] = useState(null);
     const [category, setCategory] = useState('');
     const open = Boolean(anchorEl);

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Stack, Box, Paper, Grid, Typography, Pagination } from '@mui/material';
-import Sidebar from './Sidebar'
-import MainPost from './MainPost';
+import Sidebar from '../components/Userhome/Sidebar'
+import MainPost from '../components/Userhome/MainPost';
 
 const MainPosts = [
   {

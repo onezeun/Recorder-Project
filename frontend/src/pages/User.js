@@ -10,7 +10,7 @@ const Input = styled('input')({
 
 const label = { inputProps: { 'aria-label': 'Switch demo' } };
 
-export default function MyPage() {
+export default function User() {
   return (
 
     <Box sx={{ flexGrow: 'wrap', overflow: 'hidden', px: 3 }}>

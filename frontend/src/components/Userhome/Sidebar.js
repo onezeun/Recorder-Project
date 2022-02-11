@@ -12,7 +12,7 @@ import Tooltip from '@mui/material/Tooltip';
 import ArrowRight from '@mui/icons-material/ArrowRight';
 //import Settings from '@mui/icons-material/Settings';
 
-import Category from '../../components/Category';
+import Category from '../Category';
 
 /* 검색바 스타일 */
 const Search = styled('div')(({ theme }) => ({

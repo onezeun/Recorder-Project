@@ -5,26 +5,11 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
 
-
-
-// function Copyright() {
-//   return (
-//     <Typography variant="body2" color="text.secondary" align="center">
-//       {'Copyright © '}
-//       <Link color="inherit" href="https://mui.com/">
-//         Your Website
-//       </Link>{' '}
-//       {new Date().getFullYear()}
-//       {'.'}
-//     </Typography>
-//   );
-// }
-
 const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
 const theme = createTheme();
 
-export default function Main() {
+export default function Search() {
   return (
     <ThemeProvider theme={theme}>
       <main>

@@ -8,14 +8,14 @@ import Header from './components/Header/Header.js';
 import MemberComponent from './components/Member/MemberConponent.js';
 
 import Login from './pages/Login';
-import SignUp from './pages/SignUp';
-import Editor from './pages/EditorPage';
-import MyPage from './pages/MyPage';
-import Post from './pages/PostPage';
+import Signup from './pages/Signup';
+import Editor from './pages/Editor';
+import User from './pages/User';
+import Post from './pages/Post';
 import Main from './pages/Main';
-import UserHome from './pages/UserHome';
+import UserHome from './pages/Userhome';
 import Search from './pages/Search';
-import Neighbor from './pages/NeighborPage';
+import Neighbor from './pages/Neighbor';
 
 const StyledDiv = styled.div`
   margin-top: 50px;
@@ -31,13 +31,13 @@ function App() {
             <button>Login</button>
           </Link>
           <Link to="/signup">
-            <button>SignUp</button>
+            <button>Signup</button>
           </Link>
           <Link to="/editor">
             <button>Editor</button>
           </Link>
-          <Link to="/mypage">
-            <button>Mypage</button>
+          <Link to="/user">
+            <button>User</button>
           </Link>
           <Link to="/post">
             <button>Post</button>
@@ -61,9 +61,9 @@ function App() {
         <Routes>
           <Route exact path="/" element={<Login />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<SignUp />} />
+          <Route path="/signup" element={<Signup />} />
           <Route path="/editor" element={<Editor />} />
-          <Route path="/mypage" element={<MyPage />} />
+          <Route path="/user" element={<User />} />
           <Route path="/post" element={<Post />} />
           <Route path="/main" element={<Main />} />
           <Route path="/userhome" element={<UserHome />} />
