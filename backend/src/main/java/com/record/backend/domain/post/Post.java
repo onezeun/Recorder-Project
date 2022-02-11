@@ -79,4 +79,13 @@ public class Post {
 		this.summary = summary;
 		this.exposure = exposure;
 	}
+
+	//==연관 관계 메서드==//
+	public void addComment(Comment comment) {
+		this.commentList.add(comment);
+		//무한루프에 빠지지 않도록 체크
+		if (comment.getPost() != this) {
+			comment.setPost(this);
+		}
+	}
 }

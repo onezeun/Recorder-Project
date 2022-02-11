@@ -57,4 +57,12 @@ public class Comment {
 		this.child.add(child);
 		child.setParent(this);
 	}
+
+	public void setPost(Post post) {
+		this.post = post;
+		//무한루프에 빠지지 않도록 체크
+		if (!post.getCommentList().contains(this)) {
+			post.getCommentList().add(this);
+		}
+	}
 }
