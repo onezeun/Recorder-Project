@@ -60,17 +60,7 @@ export default function PostPage() {
       <InputUnstyled components={{ Input: StyledInputElement }} {...props} ref={ref} />
     );
   });
-
-  // // 예비로 현시각 설정
-  // const nowTime = new Date();
-
-  // const year = nowTime.getFullYear();
-  // const month = ('0' + (nowTime.getMonth() + 1)).slice(-2);
-  // const day = ('0' + nowTime.getDate()).slice(-2);
-  // const hours = ('0' + nowTime.getHours()).slice(-2);
-  // const minutes = ('0' + nowTime.getMinutes()).slice(-2);
-  // const timeString = year + '-' + month + '-' + day + '' + hours + ':' + minutes;
-
+  
   const itemData = [
     {
       img: 'https://images.unsplash.com/photo-1551963831-b3b1ca40c98e',

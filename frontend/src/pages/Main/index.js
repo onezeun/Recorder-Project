@@ -5,21 +5,6 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
 
-
-
-// function Copyright() {
-//   return (
-//     <Typography variant="body2" color="text.secondary" align="center">
-//       {'Copyright © '}
-//       <Link color="inherit" href="https://mui.com/">
-//         Your Website
-//       </Link>{' '}
-//       {new Date().getFullYear()}
-//       {'.'}
-//     </Typography>
-//   );
-// }
-
 const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
 const theme = createTheme();
@@ -139,23 +124,6 @@ export default function Main() {
               </Stack>
           </Box>            
       </main>
-      
-      {/* 필요시 Footer */}
-      {/* <Box sx={{ bgcolor: 'background.paper', p: 6 }} component="footer">
-        <Typography variant="h6" align="center" gutterBottom>
-          Footer
-        </Typography>
-        <Typography
-          variant="subtitle1"
-          align="center"
-          color="text.secondary"
-          component="p"
-        >
-          zu21un 바보
-        </Typography>
-        <Copyright />
-      </Box> */}
-      {/* End footer */}
     </ThemeProvider>
   );
 }
