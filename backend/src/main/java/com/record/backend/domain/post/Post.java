@@ -14,6 +14,7 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.record.backend.domain.category.Category;
 import com.record.backend.domain.user.User;
 import com.record.backend.domain.comment.Comment;
 
@@ -21,6 +22,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import static javax.persistence.FetchType.*;
 
 @Entity
 @Getter
@@ -32,7 +35,7 @@ public class Post {
 	@Column(name = "post_id")
 	private Long id;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = LAZY)
 	@JoinColumn(name = "user_id")
 	private User user; //작성자
 
@@ -55,12 +58,13 @@ public class Post {
 
 	private LocalDateTime update_date;
 
+	@ManyToOne(fetch = LAZY)
+	@JoinColumn(name = "category_id")
+	private Category category;
+
 	//1대 다 관계
 	@OneToMany(mappedBy = "post")
 	private List<Comment> commentList = new ArrayList<>();
-
-	@OneToMany(mappedBy = "post")
-	private List<PostCategory> postCategoryList = new ArrayList<>();
 
 	@OneToMany(mappedBy = "post")
 	private List<PostLike> postLikeList = new ArrayList<>();
@@ -69,15 +73,17 @@ public class Post {
 	private List<PostTag> postTagList = new ArrayList<>();
 
 	@Builder
-	public Post(String title, String content, int hits, User user,
-		String content_url, String summary, String exposure) {
+	public Post(User user, String title, String content,
+				String summary, String exposure, byte[] thumnail_image, Category category) {
+		this.user = user;
 		this.title = title;
 		this.content = content;
-		this.hits = hits;
-		this.user = user;
-		this.content_url = content_url;
 		this.summary = summary;
 		this.exposure = exposure;
+		this.thumnail_image = thumnail_image;
+		this.category = category;
+
+		this.hits = 0;
 	}
 
 	//==연관 관계 메서드==//
@@ -88,4 +94,6 @@ public class Post {
 			comment.setPost(this);
 		}
 	}
+
+
 }
