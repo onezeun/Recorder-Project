@@ -20,9 +20,9 @@ public class PostSaveRequestDto {
 	private String content_url;
 
 	@Builder
-	public PostSaveRequestDto(String title, String content, int hits, String summary,
+	public PostSaveRequestDto(User user, String title, String content, int hits, String summary,
 		String exposure, String content_url) {
-		//this.user = user;
+		this.user = user;
 		this.title = title;
 		this.content = content;
 		this.hits = hits;
@@ -33,7 +33,7 @@ public class PostSaveRequestDto {
 
 	public Post toEntity() {
 		return Post.builder()
-			//.user(user)
+			.user(user)
 			.title(title)
 			.content(content)
 			.hits(hits)

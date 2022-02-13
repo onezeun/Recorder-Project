@@ -8,10 +8,12 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.record.backend.domain.post.Post;
+import com.record.backend.domain.user.User;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -23,7 +25,7 @@ public class PostRepositoryTest {
 	//@Autowired MemberRepository memberRepository;
 
 	@Test
-	//@Rollback(value = false)
+	@Rollback(value = false)
 	public void 게시글등록_불러오기테스트() {
 		//given
 		String title = "테스트 게시글";
@@ -37,7 +39,7 @@ public class PostRepositoryTest {
 		user.setId(1L);*/
 
 		postRepository.save(Post.builder()
-			//.user(user)
+			//.user()
 			.title(title)
 			.content(content)
 			.hits(hits)

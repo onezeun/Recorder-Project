@@ -17,7 +17,7 @@ public class PostResponseDto {
 	private String content_url;
 
 	public PostResponseDto(Post entity) {
-		//this.user = entity.getUser();
+		this.user = entity.getUser();
 		this.title = entity.getTitle();
 		this.content = entity.getContent();
 		this.hits = entity.getHits();
