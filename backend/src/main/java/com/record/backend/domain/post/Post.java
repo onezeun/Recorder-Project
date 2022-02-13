@@ -4,15 +4,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 
 import com.record.backend.domain.category.Category;
 import com.record.backend.domain.user.User;
@@ -39,8 +31,6 @@ public class Post {
 	@JoinColumn(name = "user_id")
 	private User user; //작성자
 
-	private String content_url; //url
-
 	private String title; //제목
 
 	@Lob
@@ -50,7 +40,8 @@ public class Post {
 
 	private String summary;
 
-	private String exposure;
+	@Enumerated(EnumType.STRING)
+	private Exposure exposure; // ALL, NEIGHBOR, NO
 
 	private byte[] thumnail_image;
 
@@ -74,7 +65,8 @@ public class Post {
 
 	@Builder
 	public Post(User user, String title, String content,
-				String summary, String exposure, byte[] thumnail_image, Category category) {
+				String summary, Exposure exposure,
+				byte[] thumnail_image, Category category) {
 		this.user = user;
 		this.title = title;
 		this.content = content;
@@ -95,5 +87,7 @@ public class Post {
 		}
 	}
 
+	//==비즈니스 로직==//
+	
 
 }
