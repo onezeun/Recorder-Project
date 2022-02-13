@@ -22,7 +22,14 @@ public class PostRepositoryTest {
 
 	@Autowired
 	PostRepository postRepository;
-	//@Autowired MemberRepository memberRepository;
+	@Autowired UserRepository userRepository;
+
+/*	@Test
+	//@Rollback(value = false)
+	public void 유저_임시생성() {
+		User user = User.createUser("abc@naver.com", "111");
+		userRepository.save(user);
+	}*/
 
 	@Test
 	@Rollback(value = false)
@@ -35,11 +42,10 @@ public class PostRepositoryTest {
 		String exposure = "1";
 		String content_url = "www.hello";
 
-		/*User user = new User();
-		user.setId(1L);*/
+		User user = new User();
 
 		postRepository.save(Post.builder()
-			//.user()
+			.user(user)
 			.title(title)
 			.content(content)
 			.hits(hits)
@@ -55,7 +61,7 @@ public class PostRepositoryTest {
 		Post post = postList.get(0);
 		assertThat(post.getTitle()).isEqualTo(title);
 		assertThat(post.getContent()).isEqualTo(content);
-		//assertThat(post.getUser()).isEqualTo(user);
+		assertThat(post.getUser()).isEqualTo(user);
 		assertThat(post.getHits()).isEqualTo(hits);
 		assertThat(post.getSummary()).isEqualTo(summary);
 		assertThat(post.getExposure()).isEqualTo(exposure);
