@@ -43,11 +43,11 @@ public class Post {
 	@Enumerated(EnumType.STRING)
 	private Exposure exposure; // ALL, NEIGHBOR, NO
 
-	private byte[] thumnail_image;
+	private byte[] thumbnail_image;
 
 	private LocalDateTime created_time = LocalDateTime.now();
 
-	private LocalDateTime update_date;
+	private LocalDateTime update_time;
 
 	@ManyToOne(fetch = LAZY)
 	@JoinColumn(name = "category_id")
@@ -66,13 +66,13 @@ public class Post {
 	@Builder
 	public Post(User user, String title, String content,
 				String summary, Exposure exposure,
-				byte[] thumnail_image, Category category) {
+				byte[] thumbnail_image, Category category) {
 		this.user = user;
 		this.title = title;
 		this.content = content;
 		this.summary = summary;
 		this.exposure = exposure;
-		this.thumnail_image = thumnail_image;
+		this.thumbnail_image = thumbnail_image;
 		this.category = category;
 
 		this.hits = 0;
@@ -87,7 +87,33 @@ public class Post {
 		}
 	}
 
+
 	//==비즈니스 로직==//
-	
+	public void addHits() {
+		this.hits += 1;
+	}
+
+	public String updateTitle(String title) {
+		this.title = title;
+		this.update_time = LocalDateTime.now();
+		return this.title;
+	}
+
+	public void updateContent(String content) {
+		this.content = content;
+		this.update_time = LocalDateTime.now();
+	}
+
+	public Exposure updateExposure(Exposure exposure) {
+		this.exposure = exposure;
+		this.update_time = LocalDateTime.now();
+		return this.exposure;
+	}
+
+	public void updateThumbnail(byte[] thumbnail_image) {
+		this.thumbnail_image = thumbnail_image;
+		this.update_time = LocalDateTime.now();
+	}
+
 
 }
