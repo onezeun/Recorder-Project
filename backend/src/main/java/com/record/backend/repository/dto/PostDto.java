@@ -2,6 +2,7 @@ package com.record.backend.repository.dto;
 
 import java.time.LocalDateTime;
 
+import com.record.backend.domain.post.Exposure;
 import com.record.backend.domain.post.Post;
 
 import lombok.Data;
@@ -15,9 +16,10 @@ public class PostDto {
 	private String content;
 	private int hits;
 	private String summary;
-	private String exposure;
-	private String content_url;
+	private Exposure exposure;
+	private byte[] thumbnail_image;
 	private LocalDateTime created_time;
+	private LocalDateTime update_time;
 
 	public PostDto(Post post) {
 		postId = post.getId();
@@ -27,7 +29,8 @@ public class PostDto {
 		hits = post.getHits();
 		summary = post.getSummary();
 		exposure = post.getExposure();
-		content_url = post.getContent_url();
+		thumbnail_image = post.getThumbnail_image();
 		created_time = post.getCreated_time();
+		update_time = post.getUpdate_time();
 	}
 }

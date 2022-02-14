@@ -17,18 +17,16 @@ public class PostSaveRequestDto {
 	private int hits;
 	private String summary;
 	private String exposure;
-	private String content_url;
 
 	@Builder
 	public PostSaveRequestDto(User user, String title, String content, int hits, String summary,
-		String exposure, String content_url) {
+		String exposure) {
 		this.user = user;
 		this.title = title;
 		this.content = content;
 		this.hits = hits;
 		this.summary = summary;
 		this.exposure = exposure;
-		this.content_url = content_url;
 	}
 
 	public Post toEntity() {
@@ -36,10 +34,8 @@ public class PostSaveRequestDto {
 			.user(user)
 			.title(title)
 			.content(content)
-			.hits(hits)
 			.summary(summary)
 			.exposure(exposure)
-			.content_url(content_url)
 			.build();
 	}
 }

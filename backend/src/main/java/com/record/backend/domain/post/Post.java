@@ -87,6 +87,21 @@ public class Post {
 		}
 	}
 
+	public void addPostLike(PostLike postLike) {
+		this.postLikeList.add(postLike);
+		if (postLike.getPost() != this) {
+			postLike.setPost(this);
+		}
+	}
+
+	public void addPostTag(PostTag postTag) {
+		this.postTagList.add(postTag);
+		if (postTag.getPost() != this) {
+			postTag.setPost(this);
+		}
+	}
+
+
 
 	//==비즈니스 로직==//
 	public void addHits() {

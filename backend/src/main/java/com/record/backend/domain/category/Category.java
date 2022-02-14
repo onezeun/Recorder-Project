@@ -15,7 +15,6 @@ import javax.persistence.OneToMany;
 
 import com.record.backend.domain.post.Post;
 import com.record.backend.domain.user.User;
-import com.record.backend.domain.post.PostCategory;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -52,7 +51,4 @@ public class Category {
 		child.setParent(this);
 	}
 
-	//1대 다 관계
-	@OneToMany(mappedBy = "category")
-	private List<PostCategory> postCategoryList = new ArrayList<>();
 }
