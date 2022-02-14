@@ -20,9 +20,9 @@ public class PostResponseDto {
 	private Long user_id;
 	private String user_nickname;
 	private byte[] user_profile_photo;
+	private String user_introduce;
 	private byte[] thumbnail_image;
 	private String title;
-	private String summary;
 	private String content;
 	private int hits;
 	private Exposure exposure;
@@ -37,9 +37,9 @@ public class PostResponseDto {
 		this.user_id = entity.getUser().getId();
 		this.user_nickname = entity.getUser().getNickname();
 		this.user_profile_photo = entity.getUser().getProfile_photo();
+		this.user_introduce = entity.getUser().getIntroduce();
 		this.thumbnail_image = entity.getThumbnail_image();
 		this.title = entity.getTitle();
-		this.summary = entity.getSummary();
 		this.content = entity.getContent();
 		this.hits = entity.getHits();
 		this.exposure = entity.getExposure();
