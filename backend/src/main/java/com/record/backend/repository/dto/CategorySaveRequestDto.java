@@ -9,9 +9,10 @@ import com.record.backend.domain.user.User;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @NoArgsConstructor
-@Getter
+@Getter @Setter
 public class CategorySaveRequestDto {
 
 	private User user;
