@@ -17,6 +17,7 @@ import javax.persistence.OneToMany;
 import com.record.backend.domain.user.User;
 import com.record.backend.domain.post.Post;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -39,24 +40,11 @@ public class Comment {
 	@Column(nullable = false, length = 200)
 	private String content;
 
-	@ManyToOne(fetch = LAZY)
-	@JoinColumn(name = "parent_id")
-	private Comment parent;
-
-	@OneToMany(mappedBy = "parent") //self 연관관계
-	private List<Comment> child = new ArrayList<>();
-
-	private LocalDateTime created_time;
+	private LocalDateTime created_time = LocalDateTime.now();
 
 	//1대 다 관계
 	@OneToMany(mappedBy = "comment")
 	private List<CommentLike> commentLikeList = new ArrayList<>();
-
-	//==연관관계 편이 메서드==// parent니까 셀프
-	public void addChildCategory(Comment child) {
-		this.child.add(child);
-		child.setParent(this);
-	}
 
 	public void setPost(Post post) {
 		this.post = post;
@@ -64,5 +52,12 @@ public class Comment {
 		if (!post.getCommentList().contains(this)) {
 			post.getCommentList().add(this);
 		}
+	}
+
+	@Builder
+	public Comment(String content, Post post, User user) {
+		this.content = content;
+		this.post = post;
+		this.user = user;
 	}
 }
