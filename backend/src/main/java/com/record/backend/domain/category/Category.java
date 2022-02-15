@@ -16,14 +16,16 @@ import javax.persistence.OneToMany;
 import com.record.backend.domain.post.Post;
 import com.record.backend.domain.user.User;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Getter
+@Getter @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 public class Category {
 
 	@Id
@@ -45,4 +47,5 @@ public class Category {
 		this.name = name;
 		this.postList = postList;
 	}
+
 }

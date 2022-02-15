@@ -9,9 +9,9 @@ import com.record.backend.domain.post.Post;
 import com.record.backend.domain.user.User;
 
 public interface CategoryRepository extends JpaRepository<Category, Long> {
-
-	Optional<Post> findByUserId(int user_id);
-
 	Boolean findByUserAndName(User user_id, String category_name);
 
+	Optional<Category> findByName(String categoryName);
+
+	int deleteByName(String category);
 }
