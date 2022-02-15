@@ -1,13 +1,12 @@
 package com.record.backend.service;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.record.backend.domain.category.Category;
-import com.record.backend.domain.post.Post;
 import com.record.backend.exception.IllegalUserException;
 import com.record.backend.repository.CategoryRepository;
 import com.record.backend.repository.dto.CategoryResponseDto;
@@ -22,6 +21,9 @@ public class CategoryService {
 
 	private final CategoryRepository categoryRepository;
 
+	/**
+	 * 카테고리 생성하기
+	 */
 	@Transactional
 	public Long saveCategory(CategorySaveRequestDto requestDto) {
 		Category category = requestDto.toEntity();
@@ -34,30 +36,59 @@ public class CategoryService {
 		return categoryRepository.save(category).getId();
 	}
 
+	/**
+	 * 카테고리 수정
+	 */
 	@Transactional
-	public Category editCategory(Category category) {
-		return null;
+	public Long updateCategory(String categoryName, CategorySaveRequestDto requestDto) {
+		Category category = findCategory(categoryName);
+		category.setName(requestDto.getCategory_name());
+		return category.getId();
+
 	}
 
-	public Category getCategoryById(Long id) throws IllegalArgumentException {
-		Category category = categoryRepository.getById(id);
-
-		if (category == null) {
-			throw new IllegalArgumentException("카테고리를 찾을 수 없습니다.");
-		}
-		return category;
-	}
-
-	public List<Category> findCategories() {
+	/**
+	 * 모든 카테고리 찾기
+	 */
+	public List<Category> findAll() {
 		return categoryRepository.findAll();
 	}
 
-	public Optional<Category> findCategory(Long id) {
-		return categoryRepository.findById(id);
+	/**
+	 * 포스트 작성시 카테고리 목록 불러오기
+	 */
+	public List<CategoryResponseDto> showCategoriesToPost() {
+		return categoryRepository.findAll()
+			.stream()
+			.map(CategoryResponseDto::new)
+			.collect(Collectors.toList());
 	}
 
+	/**
+	 * 카테고리 삭제
+	 * @return
+	 */
 	@Transactional
-	public void delete(Category category) {
-		categoryRepository.delete(category);
+	public int deleteCategory(String categoryName) {
+		Category category = findCategory(categoryName);
+
+		return categoryRepository.deleteByName(category.getName());
 	}
+
+	/**
+	 * 카테고리의 아이디 값으로 조회하여 해당 카테고리 이름을 반환
+	 */
+	public Category findCategory(String categoryName) {
+		return categoryRepository.findByName(categoryName)
+			.orElseThrow(() -> new IllegalUserException("카테고리 이름을 찾을 수 없습니다."));
+	}
+
+	/**
+	 * 사용자 검증
+	 */
+/*	private void validateCategoryWithUser(User user, Category category) {
+		if (!category.isAuthor(user)) {
+			throw new RuntimeException("해당 블로그 사용자가 아님.");
+		}
+	}*/
 }
