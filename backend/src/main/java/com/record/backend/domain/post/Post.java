@@ -36,7 +36,7 @@ public class Post {
 	@Lob
 	private String content; //내용
 
-	private int hits; //조회수
+	private int hits = 0; //조회수
 
 	private String summary;
 
@@ -66,7 +66,7 @@ public class Post {
 	@Builder
 	public Post(User user, String title, String content,
 				String summary, Exposure exposure,
-				byte[] thumbnail_image, Category category) {
+				byte[] thumbnail_image, Category category, List<PostTag> postTagList) {
 		this.user = user;
 		this.title = title;
 		this.content = content;
@@ -74,8 +74,7 @@ public class Post {
 		this.exposure = exposure;
 		this.thumbnail_image = thumbnail_image;
 		this.category = category;
-
-		this.hits = 0;
+		this.postTagList = postTagList;
 	}
 
 	//==연관 관계 메서드==//
@@ -86,6 +85,21 @@ public class Post {
 			comment.setPost(this);
 		}
 	}
+
+	public void addPostLike(PostLike postLike) {
+		this.postLikeList.add(postLike);
+		if (postLike.getPost() != this) {
+			postLike.setPost(this);
+		}
+	}
+
+	public void addPostTag(PostTag postTag) {
+		this.postTagList.add(postTag);
+		if (postTag.getPost() != this) {
+			postTag.setPost(this);
+		}
+	}
+
 
 
 	//==비즈니스 로직==//
