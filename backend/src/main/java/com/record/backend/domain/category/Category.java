@@ -13,14 +13,19 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.record.backend.domain.post.Post;
 import com.record.backend.domain.user.User;
-import com.record.backend.domain.post.PostCategory;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Getter @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Category {
 
 	@Id
@@ -34,20 +39,13 @@ public class Category {
 
 	private String name;
 
-	@ManyToOne(fetch = LAZY)
-	@JoinColumn(name = "parent_id")
-	private Category parent;
+	@OneToMany(mappedBy = "category")
+	private List<Post> postList = new ArrayList<>();
 
-	@OneToMany(mappedBy = "parent") //self 연관관계
-	private List<Category> child = new ArrayList<>();
-
-	//==연관관계 편이 메서드==// parent니까 셀프
-	public void addChildCategory(Category child) {
-		this.child.add(child);
-		child.setParent(this);
+	@Builder Category(User user, String name, List<Post> postList) {
+		this.user = user;
+		this.name = name;
+		this.postList = postList;
 	}
 
-	//1대 다 관계
-	@OneToMany(mappedBy = "category")
-	private List<PostCategory> postCategoryList = new ArrayList<>();
 }
