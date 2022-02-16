@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import com.record.backend.domain.category.Category;
 import com.record.backend.domain.user.User;
@@ -18,7 +20,7 @@ import lombok.Setter;
 import static javax.persistence.FetchType.*;
 
 @Entity
-@Getter
+@Getter @Setter
 @NoArgsConstructor
 public class Post {
 
@@ -27,17 +29,24 @@ public class Post {
 	@Column(name = "post_id")
 	private Long id;
 
+	@NotNull
 	@ManyToOne(fetch = LAZY)
 	@JoinColumn(name = "user_id")
 	private User user; //작성자
 
+	@NotNull
+	@Size(min = 1, max = 255)
 	private String title; //제목
 
 	@Lob
+	@NotNull
+	@Size(min = 1)
 	private String content; //내용
 
 	private int hits = 0; //조회수
 
+	@NotNull
+	@Size(min = 1)
 	private String summary;
 
 	@Enumerated(EnumType.STRING)
@@ -107,25 +116,32 @@ public class Post {
 		this.hits += 1;
 	}
 
-	public String updateTitle(String title) {
-		this.title = title;
-		this.update_time = LocalDateTime.now();
-		return this.title;
-	}
-
-	public void updateContent(String content) {
-		this.content = content;
-		this.update_time = LocalDateTime.now();
-	}
-
-	public Exposure updateExposure(Exposure exposure) {
-		this.exposure = exposure;
-		this.update_time = LocalDateTime.now();
-		return this.exposure;
-	}
-
-	public void updateThumbnail(byte[] thumbnail_image) {
-		this.thumbnail_image = thumbnail_image;
+//	public void setPostTag(List<PostTag> postTagList) {
+//		this.postTagList = postTagList;
+//	}
+//
+//	public String setTitle(String title) {
+//		this.title = title;
+//		return this.title;
+//	}
+//
+//	public void setContent(String content) {
+//		this.content = content;
+//	}
+//
+//	public void setSummary(String summary) {
+//		this.summary = summary;
+//	}
+//
+//	public void setExposure(Exposure exposure) {
+//		this.exposure = exposure;
+//	}
+//
+//	public void setThumbnail(byte[] thumbnail_image) {
+//		this.thumbnail_image = thumbnail_image;
+//	}
+//
+	public void setUpdateDate() {
 		this.update_time = LocalDateTime.now();
 	}
 
