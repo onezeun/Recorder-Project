@@ -17,36 +17,56 @@ const mainPostDatas = [
   { id: 9, nickname:"jiwoon", profile: null, thumbnail: null, title: "인사9", summary:"안녕하세요9", hits : 4, created_time: "2022-05-06 11:46:04" },
 ]
 
-const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+// const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
 const theme = createTheme();
 
 export default function Main() {
 
-  const [posts, setPosts] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const[id, setId] = useState(null);
+  const[nickname, setNickname] = useState(null);
+  const[profile, setProfile] = useState(null);
+  const[thumbnail, setThumbnail] = useState(null);
+  const[title, setTitle] = useState(null);
+  const[summary, setSummary] = useState(null);
+  const[hits, setHits] = useState(null);
+  const[created_time, setCreated_time] = useState(null);
+
+  const[like, setLike] = useState(false);
+
 
   useEffect(() => {
-    const fetchPosts = async() => {
+    const fetchPostDatas = async() => {
       try {
-        setError(null);
-        setPosts(null);
-        setLoading(true);
-        const response = await axios.get("http://localhost:8080/api/board/posts");
-        setPosts(response.data);
+        // const response = await axios.get("http://localhost:8080/api/board/posts");
+        const response = mainPostDatas();
+        setId(response.data);
+        setNickname(response.data);
+        setProfile(response.data);
+        setThumbnail(response.data);
+        setTitle(response.data);
+        setSummary(response.data);
+        setHits(response.data);
+        setCreated_time(response.data);
       } catch(e) {
-          setError(e);
+          console.log(e);
       }
-      setLoading(false);
     };
-
-    fetchPosts();
+    fetchPostDatas();
   }, []);
 
-  if (loading) return <div>loading...</div>;
-  if (error) return <div>error</div>
-  if (!posts) return null;
+  // 좋아요 기능
+  useEffect(async() => {
+    const fetchLikeData = async() => {
+      // const response = await axios.get
+      // if (response.data.type === 'liked') setLike(true)
+    }
+    fetchLikeData()
+  }, []);
+    const recorderLike = async(e) => {
+      // const response = await axios.get
+      setLike(!like)
+    }
 
   return (
     <ThemeProvider theme={theme}>
@@ -98,27 +118,19 @@ export default function Main() {
         >
           {/* 게시글 */}
           <Grid container spacing={4}>
-            {/* <ul>
-              {posts.map(post => (
-                <li key={post.post_id}>
-                  {post.title}
-                </li>
-              ))}
-            </ul> */}
-
-            {cards.map((card) => (
-              <Grid item key={card} xs={12} sm={6} md={4}>
+            {mainPostDatas.map((mainPostData) => (
+              <Grid item key={mainPostData} xs={12} sm={6} md={4}>
                   <Card
                   sx={{ width: '86%', height: '100%', display: 'flex', flexDirection: 'column' }}
                 >
                   <CardHeader
                     avatar={
-                      <Avatar sx={{  }} aria-label="recipe">
-                        R
+                      <Avatar sx={{  }} image={mainPostData.profile} aria-label="recipe">
+                        
                       </Avatar>
                     }
-                    title="zu21un"
-                    subheader="2월 6일 14:46, 2022"
+                    title={mainPostData.nickname}
+                    subheader={mainPostData.created_time}
                   />
                   <CardActionArea component="a" href="#">
                   <CardMedia
@@ -128,21 +140,20 @@ export default function Main() {
                       height: '400px',
                       objectFit: 'cover'
                     }}
-                    image="https://source.unsplash.com/random"
-                    alt="사진"
+                    image={mainPostData.thumbnail}
                   />
                   <CardContent sx={{ flexGrow: 1 }}>
                     <Typography gutterBottom variant="h5" component="h2">
-                      1-800-273-8255
+                      {mainPostData.title}
                     </Typography>
                     <Typography>
-                      Logic, Juanes 노래입니다. I've been on the low I been taking my time I feel like I'm out of my mind
+                      {mainPostData.summary}
                     </Typography>
                   </CardContent>
                   </CardActionArea>
                   <CardActions>
                     <IconButton aria-label="like">
-                      <FavoriteIcon />
+                      <FavoriteIcon onClick={recorderLike}/>
                     </IconButton>
                     <IconButton aria-label="share">
                       <ShareIcon />
