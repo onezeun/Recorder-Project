@@ -24,7 +24,7 @@ public class CategoryService {
 	/**
 	 * 카테고리 생성하기
 	 */
-	@Transactional
+	/*@Transactional
 	public Long saveCategory(CategorySaveRequestDto requestDto) {
 		Category category = requestDto.toEntity();
 		if (categoryRepository.findByUserAndName(requestDto.getUser(), requestDto.getCategory_name())) {
@@ -34,15 +34,20 @@ public class CategoryService {
 			throw new IllegalUserException("카테고리는 열개가 최대임.");
 		}
 		return categoryRepository.save(category).getId();
+	}*/
+	@Transactional
+	public Long saveCategory(CategorySaveRequestDto requestDto) {
+		Category category = requestDto.toEntity();
+		return categoryRepository.save(category).getId();
 	}
 
 	/**
 	 * 카테고리 수정
 	 */
 	@Transactional
-	public Long updateCategory(String categoryName, CategorySaveRequestDto requestDto) {
-		Category category = findCategory(categoryName);
-		category.setName(requestDto.getCategory_name());
+	public Long updateCategory(Long categoryId, CategoryResponseDto responseDto) {
+		Category category = findCategory(categoryId);
+		category.setName(responseDto.getCategory_name());
 		return category.getId();
 
 	}
@@ -75,11 +80,22 @@ public class CategoryService {
 		return categoryRepository.deleteByName(category.getName());
 	}
 
+	@Transactional
+	public void deleteCategoryOne(Long categoryId) {
+		Category category = findCategory(categoryId);
+		categoryRepository.deleteById(category.getId());
+	}
+
 	/**
 	 * 카테고리의 아이디 값으로 조회하여 해당 카테고리 이름을 반환
 	 */
 	public Category findCategory(String categoryName) {
 		return categoryRepository.findByName(categoryName)
+			.orElseThrow(() -> new IllegalUserException("카테고리 이름을 찾을 수 없습니다."));
+	}
+
+	public Category findCategory(Long categoryId) {
+		return categoryRepository.findById(categoryId)
 			.orElseThrow(() -> new IllegalUserException("카테고리 이름을 찾을 수 없습니다."));
 	}
 

@@ -21,7 +21,7 @@ public class CategoryResponseDto {
 
 	public CategoryResponseDto(Category entity) {
 		this.category_id = entity.getId();
-		this.user_id = entity.getUser().getId();
+//		this.user_id = entity.getUser().getId();
 		this.category_name = entity.getName();
 		this.postList = entity.getPostList();
 	}
