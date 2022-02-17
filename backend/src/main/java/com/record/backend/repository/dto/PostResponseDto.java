@@ -24,6 +24,7 @@ public class PostResponseDto {
 	private byte[] thumbnail_image;
 	private String title;
 	private String content;
+	private String summary;
 	private int hits;
 	private Exposure exposure;
 	private LocalDateTime created_time;
@@ -41,6 +42,7 @@ public class PostResponseDto {
 		this.thumbnail_image = entity.getThumbnail_image();
 		this.title = entity.getTitle();
 		this.content = entity.getContent();
+		this.summary = entity.getSummary();
 		this.hits = entity.getHits();
 		this.exposure = entity.getExposure();
 		this.created_time = entity.getCreated_time();
