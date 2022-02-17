@@ -28,10 +28,8 @@ public class PostSaveRequestDto {
 
 
 	@Builder
-	public PostSaveRequestDto(User user, Category category,
-							  String title, String content,
-							  String summary, Exposure exposure,
-							  byte[] thumbnail_image,
+	public PostSaveRequestDto(User user, Category category, String title, String content,
+							  String summary, Exposure exposure, byte[] thumbnail_image,
 							  List<PostTag> postTagList) {
 		this.user = user;
 		this.category = category;

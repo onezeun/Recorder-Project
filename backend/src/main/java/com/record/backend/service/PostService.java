@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.record.backend.repository.dto.PostResponseDto;
+import com.record.backend.repository.dto.PostUpdateDto;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,18 +27,12 @@ public class PostService {
 	}
 
 	@Transactional
-	public Post editPost(PostResponseDto postDto) {
-		Post post = postRepository.findById(postDto.getPost_id()).get();
+	public Long updatePost(PostUpdateDto updateDto) {
+		Post post = postRepository.findById(updateDto.getPost_id()).get();
 
-		post.setTitle(postDto.getTitle());
-		post.setContent(postDto.getContent());
-		post.setSummary(postDto.getSummary());
-		post.setExposure(postDto.getExposure());
-		post.setThumbnail_image(postDto.getThumbnail_image());
-		post.setPostTagList(postDto.getPostTagList());
-		post.setUpdateDate();
+		post.updatePost(updateDto);
 
-		return post;
+		return post.getId();
 	}
 
 //

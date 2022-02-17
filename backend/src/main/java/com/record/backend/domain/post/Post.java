@@ -12,6 +12,7 @@ import com.record.backend.domain.category.Category;
 import com.record.backend.domain.user.User;
 import com.record.backend.domain.comment.Comment;
 
+import com.record.backend.repository.dto.PostUpdateDto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,7 +21,7 @@ import lombok.Setter;
 import static javax.persistence.FetchType.*;
 
 @Entity
-@Getter @Setter
+@Getter
 @NoArgsConstructor
 public class Post {
 
@@ -116,34 +117,16 @@ public class Post {
 		this.hits += 1;
 	}
 
-//	public void setPostTag(List<PostTag> postTagList) {
-//		this.postTagList = postTagList;
-//	}
-//
-//	public String setTitle(String title) {
-//		this.title = title;
-//		return this.title;
-//	}
-//
-//	public void setContent(String content) {
-//		this.content = content;
-//	}
-//
-//	public void setSummary(String summary) {
-//		this.summary = summary;
-//	}
-//
-//	public void setExposure(Exposure exposure) {
-//		this.exposure = exposure;
-//	}
-//
-//	public void setThumbnail(byte[] thumbnail_image) {
-//		this.thumbnail_image = thumbnail_image;
-//	}
-//
-	public void setUpdateDate() {
+	public void updatePost(PostUpdateDto updateDto) {
+		this.title = updateDto.getTitle();
+		this.content = updateDto.getContent();
+		this.summary = updateDto.getSummary();
+		this.exposure = updateDto.getExposure();
+		this.thumbnail_image = updateDto.getThumbnail_image();
+		this.postTagList = updateDto.getPostTagList();
 		this.update_time = LocalDateTime.now();
 	}
+
 
 
 }
