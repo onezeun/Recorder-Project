@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
+
 import axios from 'axios';
 import { Button, IconButton, Card, CardActions, CardContent, CardMedia, Grid, Box, Typography, CardHeader, Avatar, Pagination, Stack, CardActionArea }from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
+
+import LikeButton from '../components/Like/LikeButton';
 
 const mainPostDatas = [
   { id: 1, nickname:"jiwoon", profile: null, thumbnail: null, title: "인사1", summary:"안녕하세요1", hits : 3, created_time: "2022-03-07 14:46:04" },
@@ -153,7 +156,7 @@ export default function Main() {
                   </CardActionArea>
                   <CardActions>
                     <IconButton aria-label="like">
-                      <FavoriteIcon onClick={recorderLike}/>
+                      <LikeButton onClick={recorderLike}/>
                     </IconButton>
                     <IconButton aria-label="share">
                       <ShareIcon />
