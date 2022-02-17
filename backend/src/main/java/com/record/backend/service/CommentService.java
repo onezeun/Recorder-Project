@@ -43,10 +43,10 @@ public class CommentService {
 	}
 
 	//수정
-	public Long updateComment(Long id, CommentSaveRequestDto requestDto) {
+	public Long updateComment(Long id, CommentResponseDto responseDto) {
 		Comment comment = findComment(id);
 
-		comment.setContent(requestDto.getContent());
+		comment.setContent(responseDto.getContent());
 		return comment.getId();
 	}
 

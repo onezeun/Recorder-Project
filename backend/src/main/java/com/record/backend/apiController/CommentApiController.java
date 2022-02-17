@@ -42,9 +42,9 @@ public class CommentApiController {
 	}
 
 	@PutMapping("/comments/{comment_id}")
-	public String updateComment (@PathVariable Long id, CommentSaveRequestDto requestDto) {
-		Long postId = requestDto.getPost().getId();
-		commentService.updateComment(id, requestDto);
+	public String updateComment (@PathVariable Long id, CommentResponseDto responseDto) {
+		Long postId = responseDto.getPost_id();
+		commentService.updateComment(id, responseDto);
 		return "redirect:/board/posts" + postId;
 	}
 
