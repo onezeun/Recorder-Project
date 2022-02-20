@@ -1,4 +1,4 @@
-package com.record.backend.repository.dto;
+package com.record.backend.dto.category;
 
 import java.util.List;
 
@@ -15,22 +15,23 @@ import lombok.Setter;
 @Getter @Setter
 public class CategorySaveRequestDto {
 
+	private Long categoryId;
 	private User user;
 	private String category_name;
 	private List<Post> postList;
 
 	@Builder
-	public CategorySaveRequestDto(User user, String category_name, List<Post> postList) {
+	public CategorySaveRequestDto(User user, String category_name) {
 		this.user = user;
 		this.category_name = category_name;
-		this.postList = postList;
+		//this.postList = postList;
 	}
 
 	public Category toEntity() {
 		return Category.builder()
 			.user(user)
 			.name(category_name)
-			.postList(postList)
+			//.postList(postList)
 			.build();
 	}
 }

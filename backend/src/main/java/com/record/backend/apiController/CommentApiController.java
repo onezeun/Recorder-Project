@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.record.backend.repository.dto.CommentResponseDto;
-import com.record.backend.repository.dto.CommentSaveRequestDto;
+import com.record.backend.dto.comment.CommentResponseDto;
+import com.record.backend.dto.comment.CommentSaveRequestDto;
 import com.record.backend.service.CommentService;
 
 import lombok.RequiredArgsConstructor;
@@ -42,9 +42,9 @@ public class CommentApiController {
 	}
 
 	@PutMapping("/comments/{comment_id}")
-	public String updateComment (@PathVariable Long id, CommentSaveRequestDto requestDto) {
-		Long postId = requestDto.getPost().getId();
-		commentService.updateComment(id, requestDto);
+	public String updateComment (@PathVariable Long id, CommentResponseDto responseDto) {
+		Long postId = responseDto.getPost_id();
+		commentService.updateComment(id, responseDto);
 		return "redirect:/board/posts" + postId;
 	}
 

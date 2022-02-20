@@ -12,11 +12,10 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.record.backend.Member;
 import com.record.backend.domain.category.Category;
 import com.record.backend.repository.CategoryRepository;
-import com.record.backend.repository.dto.CategoryResponseDto;
-import com.record.backend.repository.dto.CategorySaveRequestDto;
+import com.record.backend.dto.category.CategoryResponseDto;
+import com.record.backend.dto.category.CategorySaveRequestDto;
 import com.record.backend.service.CategoryService;
 
 import lombok.RequiredArgsConstructor;
@@ -49,9 +48,9 @@ public class CategoryApiController {
 	@PutMapping("/board/categories/{category_id}")
 	@ResponseBody
 	public Long updateCategory(
-		@PathVariable(name = "category_name") @NotBlank String categoryName
-		, CategorySaveRequestDto requestDto) {
-		return categoryService.updateCategory(categoryName, requestDto);
+		@PathVariable(name = "category_name") @NotBlank Long categoryId
+		, CategoryResponseDto responseDto) {
+		return categoryService.updateCategory(categoryId, responseDto);
 	}
 
 	//삭제

@@ -12,8 +12,8 @@ import com.record.backend.exception.IllegalUserException;
 import com.record.backend.repository.CommentRepository;
 import com.record.backend.repository.PostRepository;
 import com.record.backend.repository.UserRepository;
-import com.record.backend.repository.dto.CommentResponseDto;
-import com.record.backend.repository.dto.CommentSaveRequestDto;
+import com.record.backend.dto.comment.CommentResponseDto;
+import com.record.backend.dto.comment.CommentSaveRequestDto;
 
 import lombok.RequiredArgsConstructor;
 
@@ -43,10 +43,10 @@ public class CommentService {
 	}
 
 	//수정
-	public Long updateComment(Long id, CommentSaveRequestDto requestDto) {
+	public Long updateComment(Long id, CommentResponseDto responseDto) {
 		Comment comment = findComment(id);
 
-		comment.setContent(requestDto.getContent());
+		comment.setContent(responseDto.getContent());
 		return comment.getId();
 	}
 

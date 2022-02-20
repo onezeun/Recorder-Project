@@ -5,15 +5,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import com.record.backend.domain.category.Category;
 import com.record.backend.domain.user.User;
 import com.record.backend.domain.comment.Comment;
 
+import com.record.backend.dto.post.PostUpdateDto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import static javax.persistence.FetchType.*;
 
@@ -27,17 +29,24 @@ public class Post {
 	@Column(name = "post_id")
 	private Long id;
 
+	@NotNull
 	@ManyToOne(fetch = LAZY)
 	@JoinColumn(name = "user_id")
 	private User user; //작성자
 
+	@NotNull
+	@Size(min = 1, max = 255)
 	private String title; //제목
 
 	@Lob
+	@NotNull
+	@Size(min = 1)
 	private String content; //내용
 
-	private int hits; //조회수
+	private int hits = 0; //조회수
 
+	@NotNull
+	@Size(min = 1)
 	private String summary;
 
 	@Enumerated(EnumType.STRING)
@@ -66,7 +75,7 @@ public class Post {
 	@Builder
 	public Post(User user, String title, String content,
 				String summary, Exposure exposure,
-				byte[] thumbnail_image, Category category) {
+				byte[] thumbnail_image, Category category, List<PostTag> postTagList) {
 		this.user = user;
 		this.title = title;
 		this.content = content;
@@ -74,8 +83,7 @@ public class Post {
 		this.exposure = exposure;
 		this.thumbnail_image = thumbnail_image;
 		this.category = category;
-
-		this.hits = 0;
+		this.postTagList = postTagList;
 	}
 
 	//==연관 관계 메서드==//
@@ -87,33 +95,37 @@ public class Post {
 		}
 	}
 
+	public void addPostLike(PostLike postLike) {
+		this.postLikeList.add(postLike);
+		if (postLike.getPost() != this) {
+			postLike.setPost(this);
+		}
+	}
+
+	public void addPostTag(PostTag postTag) {
+		this.postTagList.add(postTag);
+		if (postTag.getPost() != this) {
+			postTag.setPost(this);
+		}
+	}
+
+
 
 	//==비즈니스 로직==//
 	public void addHits() {
 		this.hits += 1;
 	}
 
-	public String updateTitle(String title) {
-		this.title = title;
+	public void updatePost(PostUpdateDto updateDto) {
+		this.title = updateDto.getTitle();
+		this.content = updateDto.getContent();
+		this.summary = updateDto.getSummary();
+		this.exposure = updateDto.getExposure();
+		this.thumbnail_image = updateDto.getThumbnail_image();
+		this.postTagList = updateDto.getPostTagList();
 		this.update_time = LocalDateTime.now();
-		return this.title;
 	}
 
-	public void updateContent(String content) {
-		this.content = content;
-		this.update_time = LocalDateTime.now();
-	}
-
-	public Exposure updateExposure(Exposure exposure) {
-		this.exposure = exposure;
-		this.update_time = LocalDateTime.now();
-		return this.exposure;
-	}
-
-	public void updateThumbnail(byte[] thumbnail_image) {
-		this.thumbnail_image = thumbnail_image;
-		this.update_time = LocalDateTime.now();
-	}
 
 
 }

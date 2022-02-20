@@ -8,7 +8,10 @@ import org.springframework.data.repository.query.Param;
 import com.record.backend.domain.user.User;
 
 public interface UserRepository extends JpaRepository<User, Long> {
-	Optional<User> findByEmail(@Param("email") String email);
 
-	Optional<User> findByDomain(@Param("domain") String domain);
+	Optional<User> findByEmail(String email);
+
+	Optional<User> findByDomain(String domain);
+
+	boolean existsByDomain(String domain);
 }
