@@ -12,11 +12,10 @@ import com.record.backend.domain.category.Category;
 import com.record.backend.domain.user.User;
 import com.record.backend.domain.comment.Comment;
 
-import com.record.backend.repository.dto.PostUpdateDto;
+import com.record.backend.dto.post.PostUpdateDto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import static javax.persistence.FetchType.*;
 

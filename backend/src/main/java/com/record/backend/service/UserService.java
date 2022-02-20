@@ -10,8 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.record.backend.domain.user.User;
 import com.record.backend.exception.IllegalUserException;
 import com.record.backend.repository.UserRepository;
-import com.record.backend.repository.dto.UserResponseDto;
-import com.record.backend.repository.dto.UserSaveRequestDto;
+import com.record.backend.dto.user.UserResponseDto;
+import com.record.backend.dto.user.UserSaveRequestDto;
 
 import lombok.RequiredArgsConstructor;
 

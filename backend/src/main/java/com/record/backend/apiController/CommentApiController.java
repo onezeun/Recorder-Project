@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.record.backend.repository.dto.CommentResponseDto;
-import com.record.backend.repository.dto.CommentSaveRequestDto;
+import com.record.backend.dto.comment.CommentResponseDto;
+import com.record.backend.dto.comment.CommentSaveRequestDto;
 import com.record.backend.service.CommentService;
 
 import lombok.RequiredArgsConstructor;

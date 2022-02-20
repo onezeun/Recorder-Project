@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.record.backend.repository.dto.UserResponseDto;
-import com.record.backend.repository.dto.UserSaveRequestDto;
+import com.record.backend.dto.user.UserResponseDto;
+import com.record.backend.dto.user.UserSaveRequestDto;
 import com.record.backend.service.UserService;
 
 import lombok.RequiredArgsConstructor;

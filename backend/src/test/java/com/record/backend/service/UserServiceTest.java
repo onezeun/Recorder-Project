@@ -1,7 +1,5 @@
 package com.record.backend.service;
 
-import static org.junit.Assert.*;
-
 import javax.persistence.EntityManager;
 
 import org.junit.Test;
@@ -13,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.record.backend.domain.user.User;
 import com.record.backend.repository.UserRepository;
-import com.record.backend.repository.dto.UserSaveRequestDto;
+import com.record.backend.dto.user.UserSaveRequestDto;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

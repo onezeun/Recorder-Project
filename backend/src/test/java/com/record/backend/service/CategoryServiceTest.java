@@ -5,12 +5,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import javax.persistence.EntityManager;
 
-import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,8 +16,8 @@ import com.record.backend.domain.category.Category;
 import com.record.backend.domain.user.User;
 import com.record.backend.exception.IllegalUserException;
 import com.record.backend.repository.CategoryRepository;
-import com.record.backend.repository.dto.CategoryResponseDto;
-import com.record.backend.repository.dto.CategorySaveRequestDto;
+import com.record.backend.dto.category.CategoryResponseDto;
+import com.record.backend.dto.category.CategorySaveRequestDto;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

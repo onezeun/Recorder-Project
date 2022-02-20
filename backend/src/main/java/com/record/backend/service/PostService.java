@@ -1,16 +1,14 @@
 package com.record.backend.service;
 
 import java.util.List;
-import java.util.Optional;
 
-import com.record.backend.repository.dto.PostResponseDto;
-import com.record.backend.repository.dto.PostUpdateDto;
+import com.record.backend.dto.post.PostUpdateDto;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.record.backend.domain.post.Post;
 import com.record.backend.repository.PostRepository;
-import com.record.backend.repository.dto.PostSaveRequestDto;
+import com.record.backend.dto.post.PostSaveRequestDto;
 
 import lombok.RequiredArgsConstructor;
 
@@ -35,10 +33,12 @@ public class PostService {
 		return post.getId();
 	}
 
-//
-//	public List<Post> findAllPost() {
-//		return postRepository.findAll();
-//	}
+
+	public List<Post> findAllPost() {
+		return postRepository.findAll();
+	}
+
+
 //
 //	public Optional<Post> findPostById(Long id) {
 //		return postRepository.findById(id);
