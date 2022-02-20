@@ -49,8 +49,17 @@ export default function Main() {
   const[created_time, setCreated_time] = useState(null);
 
   const[like, setLike] = useState(false);
+  const[number, setNumber] = useState(0);
 
+  // 좋아요 수
+  // const onIncrease = () => {
+  //   setNumber(likes => likes + 1);
+  // }
 
+  // const onDecrease = () => {
+  //   setNumber(likes => likes - 1);
+  // }
+  
   useEffect(() => {
     const fetchPostDatas = async() => {
       try {
@@ -73,16 +82,55 @@ export default function Main() {
 
   // 좋아요 기능
   useEffect(async() => {
-    const fetchLikeData = async() => {
+    const fetchLikeData = async(e) => {
       // const response = await axios.get
-      // if (response.data.type === 'liked') setLike(true)
+      // if (response.data.type === 'liked') setLike(true) && onIncrease
     }
     fetchLikeData()
   }, []);
+
     const recorderLike = async(e) => {
-      // const response = await axios.get
+      // const response = await axios.post // 사용자가 좋아요 누를 경우 DB 갱신
       setLike(!like)
     }
+
+  // 조건부 렌더링
+  // function neighborPost() {
+  //   return (
+  //     <Box
+  //         sx= {{
+
+  //         }}
+  //         noValidate
+  //         autoComplete="off"
+  //         >
+  //       <Button>이웃 게시물</Button>
+  //     </Box>
+  //   )
+  // }
+  
+  // function neighborPostButton(props) {
+  //   if(props.isLoggedIn) {
+  //     return <neighborPost />;
+  //   }
+  //   return null;
+  // }
+
+  function neighborPost(props) {
+    return <Button>1번 게시물</Button>;
+  }
+  
+  function neighborPosts(props) {
+    return <Button>2번 게시물</Button>
+  }
+
+  function Greeting(props) {
+    const isLoggedOut = props.isLoggedOut;
+    if (isLoggedOut) {
+      return <neighborPost />;
+    }
+    return <neighborPosts />;
+  }
 
   return (
     <ThemeProvider theme={theme}>
@@ -122,6 +170,7 @@ export default function Main() {
               >
               <Button>최신 게시물</Button>
             </Box>
+            <Greeting isLoggedOut={false} />
           </Box>
         </Box>
 
@@ -169,7 +218,7 @@ export default function Main() {
                   </CardActionArea>
                   <CardActions>
                     <IconButton aria-label="like">
-                      <LikeButton onClick={recorderLike}/>
+                      <LikeButton like={like} onClick={recorderLike}/>
                     </IconButton>
                     <IconButton aria-label="share">
                       <ShareIcon />
