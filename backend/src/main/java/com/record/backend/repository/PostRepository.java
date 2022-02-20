@@ -11,6 +11,8 @@ import com.record.backend.domain.user.User;
 
 public interface PostRepository extends JpaRepository<Post, Long> {
 
+	Page<Post> findByUser(User user, Pageable pageable);
+
 	Page<Post> findByCategoryId(int categoryId, Pageable pageable);
 
 	Page<Post> findByPostTagListTagName(String tagName, Pageable pageable);
@@ -21,6 +23,8 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 
 	Page<Post> findByTitleContainingOrContentContaining(
 		String title, String content, Pageable pageable);
+
+
 
 //	Optional<Post> findById(Long id);
 }

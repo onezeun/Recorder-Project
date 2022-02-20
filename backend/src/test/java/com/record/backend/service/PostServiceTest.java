@@ -4,8 +4,8 @@ import com.record.backend.domain.post.Exposure;
 import com.record.backend.domain.post.Post;
 import com.record.backend.domain.user.User;
 import com.record.backend.repository.PostRepository;
-import com.record.backend.repository.dto.PostSaveRequestDto;
-import com.record.backend.repository.dto.PostUpdateDto;
+import com.record.backend.dto.post.PostSaveRequestDto;
+import com.record.backend.dto.post.PostUpdateDto;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)

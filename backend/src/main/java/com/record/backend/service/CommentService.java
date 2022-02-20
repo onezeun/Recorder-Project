@@ -12,8 +12,8 @@ import com.record.backend.exception.IllegalUserException;
 import com.record.backend.repository.CommentRepository;
 import com.record.backend.repository.PostRepository;
 import com.record.backend.repository.UserRepository;
-import com.record.backend.repository.dto.CommentResponseDto;
-import com.record.backend.repository.dto.CommentSaveRequestDto;
+import com.record.backend.dto.comment.CommentResponseDto;
+import com.record.backend.dto.comment.CommentSaveRequestDto;
 
 import lombok.RequiredArgsConstructor;
 

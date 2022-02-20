@@ -1,4 +1,4 @@
-package com.record.backend.repository.dto;
+package com.record.backend.dto.category;
 
 import java.util.List;
 
