@@ -2,7 +2,12 @@ package com.record.backend.service;
 
 import java.util.List;
 
+import com.record.backend.domain.category.Category;
+import com.record.backend.domain.post.Exposure;
+import com.record.backend.domain.user.User;
 import com.record.backend.dto.post.PostUpdateDto;
+import com.record.backend.repository.CategoryRepository;
+import com.record.backend.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,11 +22,18 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class PostService {
 
+	private final UserRepository userRepository;
 	private final PostRepository postRepository;
+	private final CategoryRepository categoryRepository;
 
 	@Transactional
-	public Long writePost(PostSaveRequestDto requestDto) {
-		return postRepository.save(requestDto.toEntity()).getId();
+	public Long savePost(PostSaveRequestDto requestDto) {
+		User user = userRepository.findById(requestDto.getUser_id()).get();
+//		Category category = categoryRepository.findByUserAndName(user, requestDto.getCategory()).get();
+		Exposure exposure = Exposure.valueOf(requestDto.getExposure());
+
+		return postRepository.save(requestDto.toEntity(user, exposure)).getId();
+//		return postRepository.save(requestDto.toEntity(user, category, exposure)).getId();
 	}
 
 	@Transactional

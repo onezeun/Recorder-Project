@@ -5,7 +5,10 @@ import static java.util.stream.Collectors.*;
 import java.util.List;
 
 import com.record.backend.dto.post.PostResponseDto;
+import com.record.backend.dto.post.PostSaveRequestDto;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.record.backend.domain.post.Post;
@@ -23,12 +26,10 @@ public class PostApiController {
 	private final UserService userService;
 	private final PostRepository postRepository;
 
-/*
 	@PostMapping("/board/posts")
 	public Long save(@RequestBody PostSaveRequestDto requestDto) {
-		return postService.writePost(requestDto);
+		return postService.savePost(requestDto);
 	}
-*/
 
 	@GetMapping("api/board/posts")
 	public List<PostResponseDto> findAllPosts() {
