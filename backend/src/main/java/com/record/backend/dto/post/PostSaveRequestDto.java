@@ -27,14 +27,15 @@ public class PostSaveRequestDto {
 //	private List<TagDto> postTagList;
 //	private byte[] thumbnail_image;
 
-	public Post toEntity(User user, Exposure exposure) {
+//	public Post toEntity(User user, Category category) {
+	public Post toEntity(User user) {
 		return Post.builder()
 				.user(user)
 				.title(this.title)
 				.content(this.content)
 				.summary(this.summary)
 //				.category(category)
-				.exposure(exposure)
+				.exposure(Exposure.valueOf(this.exposure))
 				.build();
 	}
 

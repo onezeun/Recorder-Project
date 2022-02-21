@@ -112,9 +112,9 @@ public class Post {
 		this.title = updateDto.getTitle();
 		this.content = updateDto.getContent();
 		this.summary = updateDto.getSummary();
-		this.exposure = updateDto.getExposure();
-		this.thumbnail_image = updateDto.getThumbnail_image();
-		this.postTagList = updateDto.getPostTagList();
+		this.exposure = Exposure.valueOf(updateDto.getExposure());
+//		this.thumbnail_image = updateDto.getThumbnail_image();
+//		this.postTagList = updateDto.getPostTagList();
 		this.update_time = LocalDateTime.now();
 	}
 

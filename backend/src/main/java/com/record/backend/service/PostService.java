@@ -30,9 +30,8 @@ public class PostService {
 	public Long savePost(PostSaveRequestDto requestDto) {
 		User user = userRepository.findById(requestDto.getUser_id()).get();
 //		Category category = categoryRepository.findByUserAndName(user, requestDto.getCategory()).get();
-		Exposure exposure = Exposure.valueOf(requestDto.getExposure());
 
-		return postRepository.save(requestDto.toEntity(user, exposure)).getId();
+		return postRepository.save(requestDto.toEntity(user)).getId();
 //		return postRepository.save(requestDto.toEntity(user, category, exposure)).getId();
 	}
 
@@ -45,10 +44,10 @@ public class PostService {
 		return post.getId();
 	}
 
-
-	public List<Post> findAllPost() {
-		return postRepository.findAll();
-	}
+//
+//	public List<Post> findAllPost() {
+//		return postRepository.findAll();
+//	}
 
 
 //
