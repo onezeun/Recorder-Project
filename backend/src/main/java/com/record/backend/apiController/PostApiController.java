@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import com.record.backend.domain.post.Post;
 import com.record.backend.repository.PostRepository;
 import com.record.backend.service.PostService;
-import com.record.backend.service.UserService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -21,7 +20,6 @@ import lombok.RequiredArgsConstructor;
 public class PostApiController {
 
 	private final PostService postService;
-	private final UserService userService;
 	private final PostRepository postRepository;
 
 	@PostMapping("/board/posts")
@@ -35,6 +33,7 @@ public class PostApiController {
 		List<PostResponseDto> result = allPost.stream()
 				.map(o -> new PostResponseDto(o))
 				.collect(toList());
+
 		return result;
 	}
 
@@ -45,8 +44,8 @@ public class PostApiController {
 	}
 
 	@PutMapping("/board/posts/{post_id}")
-	public Long update(@RequestBody PostUpdateDto updateDto) {
-		return postService.updatePost(updateDto);
+	public Long update(@PathVariable("post_id") Long postId, @RequestBody PostUpdateDto updateDto) {
+		return postService.updatePost(postId, updateDto);
 	}
 
 	@DeleteMapping("/board/posts/{post_id}")

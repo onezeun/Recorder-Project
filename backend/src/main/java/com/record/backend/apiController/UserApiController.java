@@ -2,12 +2,7 @@ package com.record.backend.apiController;
 
 import java.util.List;
 
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.record.backend.dto.user.UserResponseDto;
 import com.record.backend.dto.user.UserSaveRequestDto;
@@ -22,7 +17,7 @@ public class UserApiController {
 	private final UserService userService;
 
 	@PostMapping("/users/account/signup")
-	public Long saveUser(UserSaveRequestDto requestDto) {
+	public Long saveUser(@RequestBody UserSaveRequestDto requestDto) {
 		return userService.saveUser(requestDto);
 	}
 
