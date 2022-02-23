@@ -19,6 +19,7 @@ import java.util.List;
 public class PostSaveRequestDto {
 
 	private Long user_id;
+	private User user;
 	private String title;
 	private String content;
 	private String summary;
@@ -28,15 +29,19 @@ public class PostSaveRequestDto {
 //	private byte[] thumbnail_image;
 
 //	public Post toEntity(User user, Category category) {
-	public Post toEntity(User user) {
+	public Post toEntity() {
 		return Post.builder()
-				.user(user)
+				.user(this.user)
 				.title(this.title)
 				.content(this.content)
 				.summary(this.summary)
 //				.category(category)
 				.exposure(Exposure.valueOf(this.exposure))
 				.build();
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 }

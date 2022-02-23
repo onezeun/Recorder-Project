@@ -29,19 +29,22 @@ public class PostService {
 	@Transactional
 	public Long savePost(PostSaveRequestDto requestDto) {
 		User user = userRepository.findById(requestDto.getUser_id()).get();
-//		Category category = categoryRepository.findByUserAndName(user, requestDto.getCategory()).get();
+		requestDto.setUser(user);
 
-		return postRepository.save(requestDto.toEntity(user)).getId();
-//		return postRepository.save(requestDto.toEntity(user, category, exposure)).getId();
+		return postRepository.save(requestDto.toEntity()).getId();
 	}
 
 	@Transactional
 	public Long updatePost(PostUpdateDto updateDto) {
 		Post post = postRepository.findById(updateDto.getPost_id()).get();
-
 		post.updatePost(updateDto);
 
 		return post.getId();
+	}
+
+	@Transactional
+	public void deletePost(Long postId) {
+		postRepository.deleteById(postId);
 	}
 
 //

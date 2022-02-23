@@ -31,7 +31,7 @@ public class PostApiController {
 		return postService.savePost(requestDto);
 	}
 
-	@GetMapping("api/board/posts")
+	@GetMapping("/api/board/posts")
 	public List<PostResponseDto> findAllPosts() {
 		List<Post> allPost = postRepository.findAll();
 		List<PostResponseDto> result = allPost.stream()
