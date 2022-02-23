@@ -37,6 +37,7 @@ public class UserService {
 			.collect(Collectors.toList());
 	}
 
+	@Transactional
 	public Long updateUser (Long id, UserResponseDto responseDto) {
 		User user = findUser(id);
 		user.setNickname(responseDto.getNickname());
@@ -50,11 +51,12 @@ public class UserService {
 		return user.getId();
 	}
 
-	public Long updateUserPassword(Long id, UserResponseDto responseDto) {
-		User user = findUser(id);
-		user.setPassword(responseDto.getPassword());
-		return user.getId();
-	}
+//	public Long updateUserPassword(Long id, UserResponseDto responseDto) {
+//		User user = findUser(id);
+//		user.setPassword(responseDto.getPassword());
+//		return user.getId();
+//	}
+
 /*
 	public Long updateUserDomain(Long id, UserResponseDto responseDto) {
 		User user = findUser(id);
@@ -67,6 +69,7 @@ public class UserService {
 		return user.getId();
 	}*/
 
+	@Transactional
 	public void deleteUser (Long id) {
 		userRepository.delete(findUser(id));
 	}

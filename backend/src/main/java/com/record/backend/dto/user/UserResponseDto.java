@@ -9,7 +9,6 @@ public class UserResponseDto {
 
 	private Long userId;
 	private String email;
-	private String password;
 	private String nickname;
 	private String domain;
 	private String introduce;
@@ -17,7 +16,6 @@ public class UserResponseDto {
 	public UserResponseDto(User entity) {
 		this.userId = entity.getId();
 		this.email = entity.getEmail();
-		this.password = entity.getPassword();
 		this.nickname = entity.getNickname();;
 		this.domain = entity.getDomain();
 		this.introduce = entity.getIntroduce();

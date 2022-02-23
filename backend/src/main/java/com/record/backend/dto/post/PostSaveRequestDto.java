@@ -34,6 +34,7 @@ public class PostSaveRequestDto {
 	private String content;
 
 	private String summary;
+
 	private String exposure;
 //	private String category;
 //	private List<TagDto> postTagList;

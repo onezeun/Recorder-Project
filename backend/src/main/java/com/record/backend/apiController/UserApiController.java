@@ -21,8 +21,8 @@ public class UserApiController {
 		return userService.saveUser(requestDto);
 	}
 
-	@GetMapping("/users/{user_id}")
-	public UserResponseDto getUser (@PathVariable Long id) {
+	@GetMapping("/users/{user_email}")
+	public UserResponseDto getUser (@PathVariable("user_email") Long id) {
 		UserResponseDto responseDto = userService.getUser(id);
 		return responseDto;
 	}
@@ -32,13 +32,13 @@ public class UserApiController {
 		return userService.getUserList();
 	}
 
-	@PutMapping("/users/{user_id}")
-	public Long updateUser(@PathVariable Long id, UserResponseDto responseDto) {
-		return userService.updateUser(id, responseDto);
-	}
+//	@PutMapping("/users/{user_email}")
+//	public Long updateUser(@PathVariable("user_email") Long id, UserResponseDto responseDto) {
+//		return userService.updateUser(id, responseDto);
+//	}
 
-	@DeleteMapping("/users/{user_id}")
-	public void deleteUser(@PathVariable Long id) {
+	@DeleteMapping("/users/{user_email}")
+	public void deleteUser(@PathVariable("user_email") Long id) {
 		userService.deleteUser(id);
 	}
 }
