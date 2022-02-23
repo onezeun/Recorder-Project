@@ -6,50 +6,42 @@ import com.record.backend.domain.post.Post;
 import com.record.backend.domain.post.PostTag;
 import com.record.backend.domain.user.User;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import com.record.backend.dto.tag.TagDto;
+import com.record.backend.repository.CategoryRepository;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @NoArgsConstructor
-@Getter
+@AllArgsConstructor
+@Getter @Setter
 public class PostSaveRequestDto {
 
+	private Long user_id;
 	private User user;
-	private Category category;
 	private String title;
 	private String content;
 	private String summary;
-	private Exposure exposure;
-	private byte[] thumbnail_image;
-	private List<PostTag> postTagList;
+//	private String category;
+	private String exposure;
+//	private List<TagDto> postTagList;
+//	private byte[] thumbnail_image;
 
-
-	@Builder
-	public PostSaveRequestDto(User user, Category category, String title, String content,
-							  String summary, Exposure exposure, byte[] thumbnail_image,
-							  List<PostTag> postTagList) {
-		this.user = user;
-		this.category = category;
-		this.title = title;
-		this.content = content;
-		this.summary = summary;
-		this.exposure = exposure;
-		this.thumbnail_image = thumbnail_image;
-		this.postTagList = postTagList;
-	}
-
+//	public Post toEntity(User user, Category category) {
 	public Post toEntity() {
 		return Post.builder()
-				.user(user)
-				.title(title)
-				.content(content)
-				.summary(summary)
-				.exposure(exposure)
-				.thumbnail_image(thumbnail_image)
-				.postTagList(postTagList)
+				.user(this.user)
+				.title(this.title)
+				.content(this.content)
+				.summary(this.summary)
+//				.category(category)
+				.exposure(Exposure.valueOf(this.exposure))
 				.build();
 	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
 }

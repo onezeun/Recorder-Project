@@ -29,24 +29,17 @@ public class Post {
 	@Column(name = "post_id")
 	private Long id;
 
-	@NotNull
 	@ManyToOne(fetch = LAZY)
 	@JoinColumn(name = "user_id")
 	private User user; //작성자
 
-	@NotNull
-	@Size(min = 1, max = 255)
 	private String title; //제목
 
 	@Lob
-	@NotNull
-	@Size(min = 1)
 	private String content; //내용
 
 	private int hits = 0; //조회수
 
-	@NotNull
-	@Size(min = 1)
 	private String summary;
 
 	@Enumerated(EnumType.STRING)
@@ -73,41 +66,40 @@ public class Post {
 	private List<PostTag> postTagList = new ArrayList<>();
 
 	@Builder
-	public Post(User user, String title, String content,
-				String summary, Exposure exposure,
-				byte[] thumbnail_image, Category category, List<PostTag> postTagList) {
+	public Post(User user, String title,
+			  String content, String summary,
+			  Category category, Exposure exposure) {
+
 		this.user = user;
 		this.title = title;
 		this.content = content;
 		this.summary = summary;
-		this.exposure = exposure;
-		this.thumbnail_image = thumbnail_image;
 		this.category = category;
-		this.postTagList = postTagList;
+		this.exposure = exposure;
 	}
 
 	//==연관 관계 메서드==//
-	public void addComment(Comment comment) {
-		this.commentList.add(comment);
-		//무한루프에 빠지지 않도록 체크
-		if (comment.getPost() != this) {
-			comment.setPost(this);
-		}
-	}
-
-	public void addPostLike(PostLike postLike) {
-		this.postLikeList.add(postLike);
-		if (postLike.getPost() != this) {
-			postLike.setPost(this);
-		}
-	}
-
-	public void addPostTag(PostTag postTag) {
-		this.postTagList.add(postTag);
-		if (postTag.getPost() != this) {
-			postTag.setPost(this);
-		}
-	}
+//	public void addComment(Comment comment) {
+//		this.commentList.add(comment);
+//		//무한루프에 빠지지 않도록 체크
+//		if (comment.getPost() != this) {
+//			comment.setPost(this);
+//		}
+//	}
+//
+//	public void addPostLike(PostLike postLike) {
+//		this.postLikeList.add(postLike);
+//		if (postLike.getPost() != this) {
+//			postLike.setPost(this);
+//		}
+//	}
+//
+//	public void addPostTag(PostTag postTag) {
+//		this.postTagList.add(postTag);
+//		if (postTag.getPost() != this) {
+//			postTag.setPost(this);
+//		}
+//	}
 
 
 
@@ -120,12 +112,10 @@ public class Post {
 		this.title = updateDto.getTitle();
 		this.content = updateDto.getContent();
 		this.summary = updateDto.getSummary();
-		this.exposure = updateDto.getExposure();
-		this.thumbnail_image = updateDto.getThumbnail_image();
-		this.postTagList = updateDto.getPostTagList();
+		this.exposure = Exposure.valueOf(updateDto.getExposure());
+//		this.thumbnail_image = updateDto.getThumbnail_image();
+//		this.postTagList = updateDto.getPostTagList();
 		this.update_time = LocalDateTime.now();
 	}
-
-
 
 }

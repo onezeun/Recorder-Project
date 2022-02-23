@@ -2,7 +2,12 @@ package com.record.backend.service;
 
 import java.util.List;
 
+import com.record.backend.domain.category.Category;
+import com.record.backend.domain.post.Exposure;
+import com.record.backend.domain.user.User;
 import com.record.backend.dto.post.PostUpdateDto;
+import com.record.backend.repository.CategoryRepository;
+import com.record.backend.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,26 +22,35 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class PostService {
 
+	private final UserRepository userRepository;
 	private final PostRepository postRepository;
+	private final CategoryRepository categoryRepository;
 
 	@Transactional
-	public Long writePost(PostSaveRequestDto requestDto) {
+	public Long savePost(PostSaveRequestDto requestDto) {
+		User user = userRepository.findById(requestDto.getUser_id()).get();
+		requestDto.setUser(user);
+
 		return postRepository.save(requestDto.toEntity()).getId();
 	}
 
 	@Transactional
 	public Long updatePost(PostUpdateDto updateDto) {
 		Post post = postRepository.findById(updateDto.getPost_id()).get();
-
 		post.updatePost(updateDto);
 
 		return post.getId();
 	}
 
-
-	public List<Post> findAllPost() {
-		return postRepository.findAll();
+	@Transactional
+	public void deletePost(Long postId) {
+		postRepository.deleteById(postId);
 	}
+
+//
+//	public List<Post> findAllPost() {
+//		return postRepository.findAll();
+//	}
 
 
 //
