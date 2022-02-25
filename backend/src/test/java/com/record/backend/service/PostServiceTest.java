@@ -76,7 +76,7 @@ public class PostServiceTest {
                 "One Two Three", "One", "NEIGHBOR");
 
         //when
-        Long updatePostId = postService.updatePost(updateDto);
+        Long updatePostId = postService.updatePost(user.getId(), updateDto);
 
         //then
         Post post = postRepository.findById(updatePostId).get();
