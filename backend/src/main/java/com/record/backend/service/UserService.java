@@ -1,17 +1,12 @@
 package com.record.backend.service;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.record.backend.domain.user.User;
 import com.record.backend.dto.user.UserModifyDto;
 import com.record.backend.exception.IllegalUserException;
-import com.record.backend.repository.UserRepository;
-import com.record.backend.dto.user.UserResponseDto;
+import com.record.backend.repository.user.UserRepository;
 import com.record.backend.dto.user.UserSaveRequestDto;
 
 import lombok.RequiredArgsConstructor;

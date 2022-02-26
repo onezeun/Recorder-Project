@@ -10,7 +10,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.record.backend.domain.user.User;
-import com.record.backend.repository.UserRepository;
+import com.record.backend.repository.user.UserRepository;
 import com.record.backend.dto.user.UserSaveRequestDto;
 
 @RunWith(SpringRunner.class)

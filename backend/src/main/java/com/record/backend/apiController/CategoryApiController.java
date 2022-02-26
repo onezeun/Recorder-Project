@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.record.backend.domain.category.Category;
-import com.record.backend.repository.CategoryRepository;
+import com.record.backend.repository.category.CategoryRepository;
 import com.record.backend.dto.category.CategoryResponseDto;
 import com.record.backend.dto.category.CategorySaveRequestDto;
 import com.record.backend.service.CategoryService;

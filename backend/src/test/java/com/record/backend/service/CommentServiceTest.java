@@ -1,7 +1,5 @@
 package com.record.backend.service;
 
-import static org.junit.Assert.*;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,9 +7,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.record.backend.repository.CommentRepository;
-import com.record.backend.repository.PostRepository;
-import com.record.backend.repository.UserRepository;
+import com.record.backend.repository.comment.CommentRepository;
+import com.record.backend.repository.post.PostRepository;
+import com.record.backend.repository.user.UserRepository;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

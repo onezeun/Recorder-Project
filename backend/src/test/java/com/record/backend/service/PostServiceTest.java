@@ -1,12 +1,11 @@
 package com.record.backend.service;
 
-import com.record.backend.domain.post.Exposure;
 import com.record.backend.domain.post.Post;
 import com.record.backend.domain.user.User;
-import com.record.backend.repository.PostRepository;
+import com.record.backend.repository.post.PostRepository;
 import com.record.backend.dto.post.PostSaveRequestDto;
 import com.record.backend.dto.post.PostUpdateDto;
-import com.record.backend.repository.UserRepository;
+import com.record.backend.repository.user.UserRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

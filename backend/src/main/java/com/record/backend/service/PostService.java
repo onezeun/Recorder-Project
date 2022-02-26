@@ -1,18 +1,14 @@
 package com.record.backend.service;
 
-import java.util.List;
-
-import com.record.backend.domain.category.Category;
-import com.record.backend.domain.post.Exposure;
 import com.record.backend.domain.user.User;
 import com.record.backend.dto.post.PostUpdateDto;
-import com.record.backend.repository.CategoryRepository;
-import com.record.backend.repository.UserRepository;
+import com.record.backend.repository.category.CategoryRepository;
+import com.record.backend.repository.user.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.record.backend.domain.post.Post;
-import com.record.backend.repository.PostRepository;
+import com.record.backend.repository.post.PostRepository;
 import com.record.backend.dto.post.PostSaveRequestDto;
 
 import lombok.RequiredArgsConstructor;

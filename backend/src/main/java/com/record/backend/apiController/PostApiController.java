@@ -10,7 +10,7 @@ import com.record.backend.dto.post.PostUpdateDto;
 import org.springframework.web.bind.annotation.*;
 
 import com.record.backend.domain.post.Post;
-import com.record.backend.repository.PostRepository;
+import com.record.backend.repository.post.PostRepository;
 import com.record.backend.service.PostService;
 import com.record.backend.service.UserService;
 
@@ -48,9 +48,10 @@ public class PostApiController {
 	}
 
 	@PutMapping("/board/posts/{post_id}")
-	public Long update(@PathVariable("postId") Long postId, @RequestBody PostUpdateDto updateDto) {
+	public Long update(@PathVariable("post_id") Long postId, @RequestBody PostUpdateDto updateDto) {
 		return postService.updatePost(postId, updateDto);
 	}
+
 
 	@DeleteMapping("/board/posts/{post_id}")
 	public void delete(@PathVariable("post_id") Long postId) {

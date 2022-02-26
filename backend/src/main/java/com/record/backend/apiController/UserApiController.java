@@ -15,7 +15,7 @@ import com.record.backend.domain.user.User;
 import com.record.backend.dto.user.UserModifyDto;
 import com.record.backend.dto.user.UserResponseDto;
 import com.record.backend.dto.user.UserSaveRequestDto;
-import com.record.backend.repository.UserRepository;
+import com.record.backend.repository.user.UserRepository;
 import com.record.backend.service.UserService;
 
 import lombok.AllArgsConstructor;
@@ -52,12 +52,12 @@ public class UserApiController {
 
 
 	@PutMapping("/users/{user_id}")
-	public Long updateUser(@PathVariable("userId") Long userId, UserModifyDto modifyDto) {
+	public Long updateUser(@PathVariable("user_id") Long userId, UserModifyDto modifyDto) {
 		return userService.updateUser(userId, modifyDto);
 	}
 
 	@DeleteMapping("/users/{user_id}")
-	public void deleteUser(@PathVariable("userId") Long userId) {
+	public void deleteUser(@PathVariable("user_id") Long userId) {
 		userService.deleteUser(userId);
 	}
 
