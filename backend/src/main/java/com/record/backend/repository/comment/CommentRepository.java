@@ -1,4 +1,4 @@
-package com.record.backend.repository;
+package com.record.backend.repository.comment;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

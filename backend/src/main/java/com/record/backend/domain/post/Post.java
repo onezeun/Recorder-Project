@@ -2,17 +2,23 @@ package com.record.backend.domain.post;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.record.backend.domain.BaseEntity;
 import com.record.backend.domain.category.Category;
+import com.record.backend.domain.tag.Tags;
 import com.record.backend.domain.user.User;
 import com.record.backend.domain.comment.Comment;
 
 import com.record.backend.dto.post.PostUpdateDto;
+import com.record.backend.exception.IllegalUserException;
+
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,7 +28,9 @@ import static javax.persistence.FetchType.*;
 @Entity
 @Getter
 @NoArgsConstructor
-public class Post {
+public class Post extends BaseEntity {
+	private static final int MAX_NAME_LENGTH = 30;
+	private static final int MAX_TAG_SIZE = 5;
 
 	@Id
 	@GeneratedValue
@@ -47,23 +55,20 @@ public class Post {
 
 	private byte[] thumbnail_image;
 
-	private LocalDateTime created_time = LocalDateTime.now();
-
-	private LocalDateTime update_time;
-
 	@ManyToOne(fetch = LAZY)
 	@JoinColumn(name = "category_id")
 	private Category category;
 
 	//1대 다 관계
 	@OneToMany(mappedBy = "post")
-	private List<Comment> commentList = new ArrayList<>();
+	private List<Comment> comments = new ArrayList<>();
 
 	@OneToMany(mappedBy = "post")
-	private List<PostLike> postLikeList = new ArrayList<>();
+	private List<PostLike> postLikes = new ArrayList<>();
 
 	@OneToMany(mappedBy = "post")
-	private List<PostTag> postTagList = new ArrayList<>();
+	private List<PostTag> postTags = new ArrayList<>();
+
 
 	@Builder
 	public Post(User user, String title,
@@ -101,21 +106,57 @@ public class Post {
 //		}
 //	}
 
-
-
-	//==비즈니스 로직==//
-	public void addHits() {
-		this.hits += 1;
-	}
-
 	public void updatePost(PostUpdateDto updateDto) {
 		this.title = updateDto.getTitle();
 		this.content = updateDto.getContent();
 		this.summary = updateDto.getSummary();
 		this.exposure = Exposure.valueOf(updateDto.getExposure());
-//		this.thumbnail_image = updateDto.getThumbnail_image();
-//		this.postTagList = updateDto.getPostTagList();
-		this.update_time = LocalDateTime.now();
+		//		this.thumbnail_image = updateDto.getThumbnail_image();
+		//		this.postTagList = updateDto.getPostTagList();
 	}
+
+	//==비즈니스 로직==//
+
+	//조회수
+	public void addHits() {
+		this.hits += 1;
+	}
+
+	/**
+	 * 태그 생성
+	 * @param tags
+	 */
+	public void setTags(Tags tags) {
+		validateTagSize(tags);
+		this.postTags.addAll(
+			castPostTags(tags)
+		);
+	}
+	private void validateTagSize(Tags tags) {
+		Tags currentTags = tags();
+		final int alreadyHasTagsSize = currentTags.countSameTagName(tags);
+		final int notHasTagsCount = tags.size() - alreadyHasTagsSize;
+
+		if (currentTags.size() + notHasTagsCount > MAX_TAG_SIZE) {
+			throw new IllegalUserException();
+		}
+	}
+
+	private List<PostTag> castPostTags(Tags tags) {
+		return tags.stream()
+			.map(tag -> PostTag.of(this, tag))
+			.collect(Collectors.toList());
+	}
+
+	private Tags tags() {
+		return Tags.of(postTags.stream()
+			.map(PostTag::getTag)
+			.collect(Collectors.toList()));
+	}
+
+	public void clearPostTags() {
+		this.postTags.clear();
+	}
+
 
 }
