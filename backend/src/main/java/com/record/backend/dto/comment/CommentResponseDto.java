@@ -9,15 +9,15 @@ import lombok.Setter;
 @Getter @Setter
 @NoArgsConstructor
 public class CommentResponseDto {
-	private Long comment_id;
-	private Long post_id;
-	private Long user_id;
+	private Long commentId;
+	private Long postId;
+	private Long userId;
 	private String content;
 
 	public CommentResponseDto(Comment entity) {
-		this.comment_id = entity.getId();
-		this.post_id = entity.getPost().getId();
-		this.user_id = entity.getUser().getId();
+		this.commentId = entity.getId();
+		this.postId = entity.getPost().getId();
+		this.userId = entity.getUser().getId();
 		this.content = entity.getContent();
 	}
 
