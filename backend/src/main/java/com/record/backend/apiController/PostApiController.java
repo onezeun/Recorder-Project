@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import com.record.backend.domain.post.Post;
 import com.record.backend.repository.post.PostRepository;
+import com.record.backend.service.CategoryService;
 import com.record.backend.service.PostService;
 import com.record.backend.service.UserService;
 
@@ -25,9 +26,12 @@ public class PostApiController {
 	private final PostService postService;
 	private final UserService userService;
 	private final PostRepository postRepository;
+	private final CategoryService categoryService;
 
+	//작성시 카테고리 내려주는 부분 추가해야함
 	@PostMapping("/board/posts")
 	public Long save(@RequestBody PostSaveRequestDto requestDto) {
+		categoryService.showCategoriesToPost();
 		return postService.savePost(requestDto);
 	}
 

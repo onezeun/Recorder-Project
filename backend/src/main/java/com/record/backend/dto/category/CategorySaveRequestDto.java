@@ -2,6 +2,10 @@ package com.record.backend.dto.category;
 
 import java.util.List;
 
+import javax.validation.constraints.NotBlank;
+
+import org.hibernate.validator.constraints.Length;
+
 import com.record.backend.domain.category.Category;
 import com.record.backend.domain.post.Post;
 import com.record.backend.domain.user.User;
@@ -17,21 +21,22 @@ public class CategorySaveRequestDto {
 
 	private Long categoryId;
 	private User user;
-	private String category_name;
+
+	@NotBlank
+	@Length(max = 10)
+	private String categoryName;
 	private List<Post> postList;
 
 	@Builder
-	public CategorySaveRequestDto(User user, String category_name) {
+	public CategorySaveRequestDto(User user, String categoryName) {
 		this.user = user;
-		this.category_name = category_name;
-		//this.postList = postList;
+		this.categoryName = categoryName;
 	}
 
 	public Category toEntity() {
 		return Category.builder()
 			.user(user)
-			.name(category_name)
-			//.postList(postList)
+			.name(categoryName)
 			.build();
 	}
 }
