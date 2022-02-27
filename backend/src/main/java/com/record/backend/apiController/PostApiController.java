@@ -3,13 +3,17 @@ package com.record.backend.apiController;
 import static java.util.stream.Collectors.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
+import com.record.backend.domain.category.Category;
+import com.record.backend.dto.category.CategoryResponseDto;
 import com.record.backend.dto.post.PostResponseDto;
 import com.record.backend.dto.post.PostSaveRequestDto;
 import com.record.backend.dto.post.PostUpdateDto;
 import org.springframework.web.bind.annotation.*;
 
 import com.record.backend.domain.post.Post;
+import com.record.backend.repository.category.CategoryRepository;
 import com.record.backend.repository.post.PostRepository;
 import com.record.backend.service.CategoryService;
 import com.record.backend.service.PostService;
@@ -24,15 +28,23 @@ import lombok.RequiredArgsConstructor;
 public class PostApiController {
 
 	private final PostService postService;
-	private final UserService userService;
 	private final PostRepository postRepository;
-	private final CategoryService categoryService;
+	private final CategoryRepository categoryRepository;
 
 	//작성시 카테고리 내려주는 부분 추가해야함
 	@PostMapping("/board/posts")
 	public Long save(@RequestBody PostSaveRequestDto requestDto) {
-		categoryService.showCategoriesToPost();
 		return postService.savePost(requestDto);
+	}
+
+	@GetMapping("/board/posts/write")
+	public Result ShowCategoriesToPostWrite() {
+		List<Category> allCategory = categoryRepository.findAll();
+		List<CategoryResponseDto> collect = allCategory.stream()
+			.map(CategoryResponseDto::new)
+			.collect(Collectors.toList());
+
+		return new Result(collect);
 	}
 
 	@GetMapping("/board/posts")
