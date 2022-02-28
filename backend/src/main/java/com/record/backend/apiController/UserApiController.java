@@ -2,6 +2,8 @@ package com.record.backend.apiController;
 
 import java.util.List;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import org.springframework.web.bind.annotation.*;
 
 import com.record.backend.dto.user.UserResponseDto;
@@ -22,14 +24,15 @@ public class UserApiController {
 	}
 
 	@GetMapping("/users/{user_email}")
-	public UserResponseDto getUser (@PathVariable("user_email") Long id) {
-		UserResponseDto responseDto = userService.getUser(id);
+	public UserResponseDto getUser (@PathVariable("user_email") String email) {
+		UserResponseDto responseDto = userService.getUser(email);
 		return responseDto;
 	}
 
 	@GetMapping("/users")
-	public List<UserResponseDto> getUserList() {
-		return userService.getUserList();
+	public Result getUserList() {
+		List<UserResponseDto> userList = userService.getUserList();
+		return new Result(userList);
 	}
 
 //	@PutMapping("/users/{user_email}")
@@ -40,5 +43,11 @@ public class UserApiController {
 	@DeleteMapping("/users/{user_email}")
 	public void deleteUser(@PathVariable("user_email") Long id) {
 		userService.deleteUser(id);
+	}
+
+	@Data
+	@AllArgsConstructor
+	static class Result<T> {
+		private T data;
 	}
 }

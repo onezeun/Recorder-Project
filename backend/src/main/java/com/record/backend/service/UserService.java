@@ -27,8 +27,8 @@ public class UserService {
 		return userRepository.save(requestDto.toEntity()).getId();
 	}
 
-	public UserResponseDto getUser(Long id) {
-		return new UserResponseDto(findUser(id));
+	public UserResponseDto getUser(String email) {
+		return new UserResponseDto(findByEmail(email).get());
 	}
 
 	public List<UserResponseDto> getUserList() {
