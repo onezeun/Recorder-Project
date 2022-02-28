@@ -21,7 +21,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Getter @Setter
+@Getter
 public class PostLike {
 
 	@Id @GeneratedValue
@@ -32,31 +32,28 @@ public class PostLike {
 	@JoinColumn(name = "post_id", nullable = false)
 	private Post post;
 
-	@Column(nullable = false)
-	private Long userId;
-
-/*	@ManyToOne(fetch = LAZY)
+	@ManyToOne(fetch = LAZY)
 	@JoinColumn(name = "user_id")
-	private User user;*/
-
+	private User user;
 	@Builder
-	public PostLike(Long id, Post post, Long userId) {
-		validateNotNull(post, userId);
+	public PostLike(Long id, Post post, User user) {
+		validateNotNull(post, user);
 		this.id = id;
 		this.post = post;
-		this.userId = userId;
+		this.user = user;
 	}
 
-	private void validateNotNull(Post post, Long userId) {
+	public PostLike(Post post, User user) {
+		this(null, post, user);
+	}
+
+	private void validateNotNull(Post post, User user) {
 		if (Objects.isNull(post)) {
 			throw new IllegalUserException("포스트 필요");
 		}
-		if (Objects.isNull(userId)) {
+		if (Objects.isNull(user)) {
 			throw new IllegalUserException("유저 아이디 필요");
 		}
 	}
 
-	public boolean ownedBy(Long userId) {
-		return this.userId.equals(userId);
-	}
 }
