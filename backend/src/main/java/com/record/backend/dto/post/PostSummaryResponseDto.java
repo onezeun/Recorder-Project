@@ -21,8 +21,8 @@ public class PostSummaryResponseDto {
     private String summary;
     private int hits;
     private Exposure exposure;
-    private List<PostLike> postLikes;
-    private List<PostTag> postTags;
+/*    private List<PostLike> postLikes;
+    private List<PostTag> postTags;*/
 
     public PostSummaryResponseDto(Post entity) {
         this.post_id = entity.getId();
@@ -33,7 +33,7 @@ public class PostSummaryResponseDto {
         this.summary = entity.getSummary();
         this.hits = entity.getHits();
         this.exposure = entity.getExposure();
-        this.postLikes = entity.getPostLikes();
-        this.postTags = entity.getPostTags();
+/*        this.postLikes = entity.getPostLikes();
+        this.postTags = entity.getPostTags();*/
     }
 }
