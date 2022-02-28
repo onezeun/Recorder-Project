@@ -1,4 +1,4 @@
-package com.record.backend.repository;
+package com.record.backend.repository.category;
 
 import java.util.Optional;
 
@@ -9,7 +9,7 @@ import com.record.backend.domain.post.Post;
 import com.record.backend.domain.user.User;
 
 public interface CategoryRepository extends JpaRepository<Category, Long> {
-	Boolean findByUserAndName(User user_id, String category_name);
+	Optional<Category> findByUserAndName(User user_id, String category_name);
 
 	Optional<Category> findByName(String categoryName);
 

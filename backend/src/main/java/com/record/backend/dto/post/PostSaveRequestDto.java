@@ -1,55 +1,53 @@
 package com.record.backend.dto.post;
 
-import com.record.backend.domain.category.Category;
 import com.record.backend.domain.post.Exposure;
 import com.record.backend.domain.post.Post;
-import com.record.backend.domain.post.PostTag;
 import com.record.backend.domain.user.User;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 @NoArgsConstructor
-@Getter
+@AllArgsConstructor
+@Getter @Setter
 public class PostSaveRequestDto {
 
 	private User user;
-	private Category category;
+
+	@NotEmpty
+	private Long user_id;
+
+	@NotEmpty
+	@Size(min = 1, max = 20)
 	private String title;
+
+	@NotEmpty
+	@Size(min = 1)
 	private String content;
+
 	private String summary;
-	private Exposure exposure;
-	private byte[] thumbnail_image;
-	private List<PostTag> postTagList;
 
+	private String exposure;
+//	private String category;
+//	private List<TagDto> postTagList;
+//	private byte[] thumbnail_image;
 
-	@Builder
-	public PostSaveRequestDto(User user, Category category, String title, String content,
-							  String summary, Exposure exposure, byte[] thumbnail_image,
-							  List<PostTag> postTagList) {
-		this.user = user;
-		this.category = category;
-		this.title = title;
-		this.content = content;
-		this.summary = summary;
-		this.exposure = exposure;
-		this.thumbnail_image = thumbnail_image;
-		this.postTagList = postTagList;
-	}
-
+//	public Post toEntity(User user, Category category) {
 	public Post toEntity() {
 		return Post.builder()
-				.user(user)
-				.title(title)
-				.content(content)
-				.summary(summary)
-				.exposure(exposure)
-				.thumbnail_image(thumbnail_image)
-				.postTagList(postTagList)
+				.user(this.user)
+				.title(this.title)
+				.content(this.content)
+				.summary(this.summary)
+//				.category(category)
+				.exposure(Exposure.valueOf(this.exposure))
 				.build();
 	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
 }

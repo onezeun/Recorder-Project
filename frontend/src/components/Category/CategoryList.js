@@ -16,10 +16,10 @@ function Category({ category, onRemove, onToggle }) {
   );
 }
 
-function CategoryList({ categorys, onRemove, onToggle }) {
+function CategoryList({ categories, onRemove, onToggle }) {
   return (
     <Box>
-      {categorys.map(category => (
+      {categories.map(category => (
         <Category category={category} key={category.id} onRemove={onRemove} onToggle={onToggle} />
       ))}
     </Box>

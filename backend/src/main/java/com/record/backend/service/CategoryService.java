@@ -7,8 +7,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.record.backend.domain.category.Category;
+import com.record.backend.dto.category.CategoryUpdateDto;
 import com.record.backend.exception.IllegalUserException;
-import com.record.backend.repository.CategoryRepository;
+import com.record.backend.repository.category.CategoryRepository;
 import com.record.backend.dto.category.CategoryResponseDto;
 import com.record.backend.dto.category.CategorySaveRequestDto;
 
@@ -24,20 +25,10 @@ public class CategoryService {
 	/**
 	 * 카테고리 생성하기
 	 */
-	/*@Transactional
-	public Long saveCategory(CategorySaveRequestDto requestDto) {
-		Category category = requestDto.toEntity();
-		if (categoryRepository.findByUserAndName(requestDto.getUser(), requestDto.getCategory_name())) {
-			throw new IllegalUserException("한 블로그에 같은 카테고리는 없다.");
-		}
-		if (category.getUser().getCategoryList().size() >= 10) {
-			throw new IllegalUserException("카테고리는 열개가 최대임.");
-		}
-		return categoryRepository.save(category).getId();
-	}*/
 	@Transactional
 	public Long saveCategory(CategorySaveRequestDto requestDto) {
 		Category category = requestDto.toEntity();
+		validateExistCategoryName(requestDto.getCategoryName());
 		return categoryRepository.save(category).getId();
 	}
 
@@ -45,18 +36,11 @@ public class CategoryService {
 	 * 카테고리 수정
 	 */
 	@Transactional
-	public Long updateCategory(Long categoryId, CategoryResponseDto responseDto) {
+	public Long updateCategory(Long categoryId, CategoryUpdateDto updateDto) {
 		Category category = findCategory(categoryId);
-		category.setName(responseDto.getCategory_name());
+		validateExistCategoryName(updateDto.getCategoryName());
+		category.setName(updateDto.getCategoryName());
 		return category.getId();
-
-	}
-
-	/**
-	 * 모든 카테고리 찾기
-	 */
-	public List<Category> findAll() {
-		return categoryRepository.findAll();
 	}
 
 	/**
@@ -71,40 +55,26 @@ public class CategoryService {
 
 	/**
 	 * 카테고리 삭제
-	 * @return
 	 */
 	@Transactional
-	public int deleteCategory(String categoryName) {
-		Category category = findCategory(categoryName);
-
-		return categoryRepository.deleteByName(category.getName());
-	}
-
-	@Transactional
-	public void deleteCategoryOne(Long categoryId) {
-		Category category = findCategory(categoryId);
-		categoryRepository.deleteById(category.getId());
+	public void deleteCategory(Long id) {
+		categoryRepository.delete(findCategory(id));
 	}
 
 	/**
-	 * 카테고리의 아이디 값으로 조회하여 해당 카테고리 이름을 반환
+	 * 카테고리 조회
 	 */
-	public Category findCategory(String categoryName) {
-		return categoryRepository.findByName(categoryName)
-			.orElseThrow(() -> new IllegalUserException("카테고리 이름을 찾을 수 없습니다."));
-	}
-
 	public Category findCategory(Long categoryId) {
 		return categoryRepository.findById(categoryId)
-			.orElseThrow(() -> new IllegalUserException("카테고리 이름을 찾을 수 없습니다."));
+			.orElseThrow(() -> new IllegalUserException("카테고리를 찾을 수 없습니다."));
 	}
 
 	/**
 	 * 사용자 검증
 	 */
-/*	private void validateCategoryWithUser(User user, Category category) {
-		if (!category.isAuthor(user)) {
-			throw new RuntimeException("해당 블로그 사용자가 아님.");
+	private void validateExistCategoryName(String categoryName) {
+		if (categoryRepository.findByName(categoryName).isPresent()) {
+			throw new IllegalUserException("이미 존재하는 카테고리입니다.");
 		}
-	}*/
+	}
 }

@@ -13,9 +13,8 @@ import javax.persistence.OneToMany;
 
 import com.record.backend.domain.category.Category;
 import com.record.backend.domain.comment.Comment;
-import com.record.backend.domain.comment.CommentLike;
+import com.record.backend.domain.neighbor.Neighbor;
 import com.record.backend.domain.post.Post;
-import com.record.backend.domain.post.PostLike;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -57,10 +56,10 @@ public class User {
 	private List<Comment> commentList = new ArrayList<>();
 
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-	private List<CommentLike> commentLikeList = new ArrayList<>();
+	private List<Neighbor> neighbors = new ArrayList<>();
 
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-	private List<PostLike> postLikeList = new ArrayList<>();
+/*	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+	private List<PostLike> postLikeList = new ArrayList<>();*/
 
 	@Builder
 	public User (String email, String password, String nickname, String domain, String introduce) {

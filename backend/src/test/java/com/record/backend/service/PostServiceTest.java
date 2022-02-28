@@ -1,11 +1,11 @@
 package com.record.backend.service;
 
-import com.record.backend.domain.post.Exposure;
 import com.record.backend.domain.post.Post;
 import com.record.backend.domain.user.User;
-import com.record.backend.repository.PostRepository;
+import com.record.backend.repository.post.PostRepository;
 import com.record.backend.dto.post.PostSaveRequestDto;
 import com.record.backend.dto.post.PostUpdateDto;
+import com.record.backend.repository.user.UserRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +29,8 @@ public class PostServiceTest {
     PostService postService;
     @Autowired
     PostRepository postRepository;
+    @Autowired
+    UserRepository userRepository;
 
     @Test
     @Rollback(false)
@@ -37,18 +39,14 @@ public class PostServiceTest {
         User user = new User();
         em.persist(user);
 
-        PostSaveRequestDto requestDto = PostSaveRequestDto.builder()
-                .user(user)
-                .title("안녕하세요")
-                .content("123")
-                .summary("1234")
-                .exposure(Exposure.ALL)
-                .thumbnail_image(null)
-                .postTagList(null)
-                .build();
+        PostSaveRequestDto requestDto = new PostSaveRequestDto();
+        requestDto.setUser_id(user.getId());
+        requestDto.setTitle("안녕하세요");
+        requestDto.setContent("123");
+        requestDto.setExposure("ALL");
 
         //when
-        Long postId = postService.writePost(requestDto);
+        Long postId = postService.savePost(requestDto);
         
         //then
         Post post = postRepository.findById(postId).get();
@@ -64,33 +62,26 @@ public class PostServiceTest {
         User user = new User();
         em.persist(user);
 
-        PostSaveRequestDto requestDto = PostSaveRequestDto.builder()
-                .user(user)
-                .title("안녕하세요")
-                .content("1234")
-                .summary("12")
-                .exposure(Exposure.ALL)
-                .thumbnail_image(null)
-                .postTagList(null)
-                .build();
+        PostSaveRequestDto requestDto = new PostSaveRequestDto();
+        requestDto.setUser_id(user.getId());
+        requestDto.setTitle("안녕하세요");
+        requestDto.setContent("123");
+        requestDto.setExposure("ALL");
 
-        Long postId = postService.writePost(requestDto);
+        Long postId = postService.savePost(requestDto);
 
-        PostUpdateDto updateDto = PostUpdateDto.builder()
-                .post_id(postId)
-                .title("안녕하신가")
-                .content("4321")
-                .summary("43")
-                .thumbnail_image(null)
-                .exposure(Exposure.NEIGHBOR)
-                .postTagList(null)
-                .build();
+        PostUpdateDto updateDto = new PostUpdateDto(
+                "HELLO",
+                "One Two Three", "One", "NEIGHBOR");
 
         //when
-        Long updatePostId = postService.updatePost(updateDto);
+<<<<<<< HEAD
+        Long updatePostId = postService.updatePost(postId, updateDto);
+=======
+        Long updatePostId = postService.updatePost(user.getId(), updateDto);
+>>>>>>> develop
 
         //then
-
         Post post = postRepository.findById(updatePostId).get();
         assertNotEquals("update_time이 null이 아니어야 한다.", null, post.getUpdate_time());
         assertNotEquals("create_time 과 update_time이 달라야 한다.", post.getCreated_time(), post.getUpdate_time());
