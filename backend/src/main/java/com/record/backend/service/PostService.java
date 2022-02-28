@@ -32,10 +32,11 @@ public class PostService {
 
 	@Transactional
 	public Long updatePost(Long postId, PostUpdateDto updateDto) {
-		Post post = postRepository.findById(updateDto.getPostId()).get();
-		post.updatePost(updateDto);
 
-		return post.getId();
+		Post findPost = postRepository.findById(postId).get();
+		findPost.updatePost(updateDto);
+
+		return findPost.getId();
 	}
 
 	@Transactional

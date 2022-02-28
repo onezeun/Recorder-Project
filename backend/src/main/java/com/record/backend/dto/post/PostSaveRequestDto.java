@@ -6,18 +6,31 @@ import com.record.backend.domain.user.User;
 
 import lombok.*;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter @Setter
 public class PostSaveRequestDto {
 
-	private Long user_id;
 	private User user;
+
+	@NotEmpty
+	private Long user_id;
+
+	@NotEmpty
+	@Size(min = 1, max = 20)
 	private String title;
+
+	@NotEmpty
+	@Size(min = 1)
 	private String content;
+
 	private String summary;
-//	private String category;
+
 	private String exposure;
+//	private String category;
 //	private List<TagDto> postTagList;
 //	private byte[] thumbnail_image;
 
