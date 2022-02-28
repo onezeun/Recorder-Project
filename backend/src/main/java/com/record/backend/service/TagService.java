@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.record.backend.domain.tag.FilterCriteria;
 import com.record.backend.domain.tag.Tag;
 import com.record.backend.domain.tag.TagName;
-import com.record.backend.domain.tag.Tags;
 import com.record.backend.dto.tag.TagRequest;
 import com.record.backend.dto.tag.TagResponse;
 import com.record.backend.repository.tag.TagQueryRepository;
@@ -20,7 +19,7 @@ import com.record.backend.repository.tag.TagRepository;
 @Transactional(readOnly = true)
 public class TagService {
 
-	private final TagRepository tagRepository;
+	/*private final TagRepository tagRepository;
 	private final TagQueryRepository tagQueryRepository;
 
 	public TagService(TagRepository tagRepository, TagQueryRepository tagQueryRepository) {
@@ -35,7 +34,7 @@ public class TagService {
 			.distinct()
 			.map(tagName -> tagRepository.findByTagName(tagName).orElse(Tag.of(tagName)))
 			.collect(Collectors.toList());
-		return Tags.of(tags);
+		return Tag.of(tags);
 	}
 
 	@Cacheable(value = "filterTags", key = "#filterCriteria.post")
@@ -47,5 +46,5 @@ public class TagService {
 
 		List<Tag> findTags = tagQueryRepository.findAllByContainsPostName(keyword);
 		return TagResponse.listOf(Tags.of(findTags));
-	}
+	}*/
 }
