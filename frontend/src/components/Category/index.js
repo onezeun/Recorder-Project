@@ -18,7 +18,7 @@ export default function Category() {
     });
   };
 
-  const [categorys, setCategorys] = useState([
+  const [categories, setcategories] = useState([
     {
       id: 1,
       categoryname: '카테고리1',
@@ -42,7 +42,7 @@ export default function Category() {
       id: nextCategory.current,
       categoryname
     };
-    setCategorys(categorys.concat(category));
+    setcategories(categories.concat(category));
 
     setInputs({
       categoryname: '',
@@ -52,12 +52,12 @@ export default function Category() {
 
 
   const onRemove = id => {
-    setCategorys(categorys.filter(category => category.id !== id));
+    setcategories(categories.filter(category => category.id !== id));
   };
 
   const onToggle = id => {
-    setCategorys(
-      categorys.map(category =>
+    setcategories(
+      categories.map(category =>
         category.id === id ? { ...category, active: !category.active } : category
       )
     );
@@ -83,7 +83,7 @@ export default function Category() {
             onCreate={onCreate}
           />
         </Box>
-        <CategoryList categorys={categorys} onRemove={onRemove} onToggle={onToggle} />
+        <CategoryList categories={categories} onRemove={onRemove} onToggle={onToggle} />
       </Modal>
     </React.Fragment>
   );
