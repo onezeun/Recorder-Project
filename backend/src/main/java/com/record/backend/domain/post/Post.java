@@ -12,12 +12,10 @@ import javax.validation.constraints.Size;
 
 import com.record.backend.domain.BaseEntity;
 import com.record.backend.domain.category.Category;
-import com.record.backend.domain.tag.Tags;
 import com.record.backend.domain.user.User;
 import com.record.backend.domain.comment.Comment;
 
 import com.record.backend.dto.post.PostUpdateDto;
-import com.record.backend.exception.IllegalUserException;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -62,9 +60,12 @@ public class Post extends BaseEntity {
 	//1대 다 관계
 	@OneToMany(mappedBy = "post")
 	private List<Comment> comments = new ArrayList<>();
-
+/*
 	@OneToMany(mappedBy = "post")
 	private List<PostLike> postLikes = new ArrayList<>();
+*/
+	@Embedded
+	private PostLikes postLikes;
 
 	@OneToMany(mappedBy = "post")
 	private List<PostTag> postTags = new ArrayList<>();
@@ -73,7 +74,7 @@ public class Post extends BaseEntity {
 	@Builder
 	public Post(User user, String title,
 			  String content, String summary,
-			  Category category, Exposure exposure) {
+			  Category category, Exposure exposure, PostLikes postLikes) {
 
 		this.user = user;
 		this.title = title;
@@ -81,30 +82,8 @@ public class Post extends BaseEntity {
 		this.summary = summary;
 		this.category = category;
 		this.exposure = exposure;
+		this.postLikes = postLikes;
 	}
-
-	//==연관 관계 메서드==//
-//	public void addComment(Comment comment) {
-//		this.commentList.add(comment);
-//		//무한루프에 빠지지 않도록 체크
-//		if (comment.getPost() != this) {
-//			comment.setPost(this);
-//		}
-//	}
-//
-//	public void addPostLike(PostLike postLike) {
-//		this.postLikeList.add(postLike);
-//		if (postLike.getPost() != this) {
-//			postLike.setPost(this);
-//		}
-//	}
-//
-//	public void addPostTag(PostTag postTag) {
-//		this.postTagList.add(postTag);
-//		if (postTag.getPost() != this) {
-//			postTag.setPost(this);
-//		}
-//	}
 
 	public void updatePost(PostUpdateDto updateDto) {
 		this.title = updateDto.getTitle();
@@ -122,41 +101,25 @@ public class Post extends BaseEntity {
 		this.hits += 1;
 	}
 
-	/**
-	 * 태그 생성
-	 * @param tags
-	 */
-	public void setTags(Tags tags) {
-		validateTagSize(tags);
-		this.postTags.addAll(
-			castPostTags(tags)
-		);
-	}
-	private void validateTagSize(Tags tags) {
-		Tags currentTags = tags();
-		final int alreadyHasTagsSize = currentTags.countSameTagName(tags);
-		final int notHasTagsCount = tags.size() - alreadyHasTagsSize;
-
-		if (currentTags.size() + notHasTagsCount > MAX_TAG_SIZE) {
-			throw new IllegalUserException();
-		}
+	public void postLike(User user) {
+		PostLike postLike = new PostLike(this, user);
+		postLikes.add(postLike);
 	}
 
-	private List<PostTag> castPostTags(Tags tags) {
-		return tags.stream()
-			.map(tag -> PostTag.of(this, tag))
-			.collect(Collectors.toList());
+	public void unPostLike(User user) {
+		PostLike postLike = new PostLike(this, user);
+		postLikes.remove(postLike);
 	}
 
-	private Tags tags() {
-		return Tags.of(postTags.stream()
-			.map(PostTag::getTag)
-			.collect(Collectors.toList()));
+	public int getLikeCounts() {
+		return postLikes.getCounts();
 	}
 
-	public void clearPostTags() {
-		this.postTags.clear();
+	public PostLikes getPostLikes() {
+		return postLikes;
 	}
 
-
+	public List<User> getPostLikeUsers() {
+		return postLikes.getLikeUsers();
+	}
 }

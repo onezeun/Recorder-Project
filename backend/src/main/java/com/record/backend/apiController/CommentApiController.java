@@ -44,17 +44,6 @@ public class CommentApiController {
 		return commentService.saveComment(postId, userId, requestDto);
 	}
 
-/*	@GetMapping("/board/comments")
-	public Result findAllComments() {
-
-		List<Comment> allComment = commentRepository.findAll();
-		List<CommentResponseDto> collect = allComment.stream()
-			.map(CommentResponseDto::new)
-			.collect(Collectors.toList());
-
-		return new Result(collect);
-	}*/
-
 	@GetMapping("/board/comments")
 	public List<CommentDto> findAllComments(
 		@RequestParam(value = "offset", defaultValue = "0") int offset,

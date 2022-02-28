@@ -6,10 +6,16 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.record.backend.domain.category.Category;
+import com.record.backend.domain.user.User;
 import com.record.backend.dto.category.CategoryResponseDto;
+import com.record.backend.dto.post.LikePresentationResponse;
+import com.record.backend.dto.post.LikeResponseDto;
+import com.record.backend.dto.post.PostDtoAssembler;
 import com.record.backend.dto.post.PostResponseDto;
 import com.record.backend.dto.post.PostSaveRequestDto;
 import com.record.backend.dto.post.PostUpdateDto;
+
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.record.backend.domain.post.Post;
@@ -71,6 +77,23 @@ public class PostApiController {
 	@DeleteMapping("/board/posts/{post_id}")
 	public void delete(@PathVariable("post_id") Long postId) {
 		postService.deletePost(postId);
+	}
+
+	@PutMapping("/board/posts/{post_id}/likes")
+	public ResponseEntity<LikePresentationResponse> likePost(@PathVariable User user, @PathVariable Long postId) {
+		LikeResponseDto likeResponseDto = postService.postLike(user, postId);
+		LikePresentationResponse likePresentationResponse = PostDtoAssembler.likePresentationResponse(likeResponseDto);
+
+		return ResponseEntity.ok(likePresentationResponse);
+	}
+
+	@DeleteMapping("/board/posts/{post_id}/likes")
+	public ResponseEntity<LikePresentationResponse> unlikePost(@PathVariable User user, @PathVariable Long postId) {
+		LikeResponseDto unlikeResponseDto = postService.unPostLike(user, postId);
+		LikePresentationResponse likePresentationResponse = PostDtoAssembler.likePresentationResponse(
+			unlikeResponseDto);
+
+		return ResponseEntity.ok(likePresentationResponse);
 	}
 
 	@Data

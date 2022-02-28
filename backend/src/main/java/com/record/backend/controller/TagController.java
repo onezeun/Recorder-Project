@@ -16,7 +16,7 @@ import com.record.backend.service.TagService;
 @RequestMapping("/tags")
 public class TagController {
 
-	private final TagService tagService;
+	/*private final TagService tagService;
 
 	public TagController(TagService tagService) {
 		this.tagService = tagService;
@@ -27,5 +27,5 @@ public class TagController {
 		FilterCriteria filterCriteria = new FilterCriteria(post);
 		List<TagResponse> responses = tagService.findAllTagsByPostName(filterCriteria);
 		return ResponseEntity.ok(responses);
-	}
+	}*/
 }
