@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.record.backend.domain.user.User;
-import com.record.backend.dto.user.UserModifyDto;
+import com.record.backend.dto.user.UserUpdateDto;
 import com.record.backend.dto.user.UserResponseDto;
 import com.record.backend.dto.user.UserSaveRequestDto;
 import com.record.backend.repository.user.UserRepository;
@@ -55,8 +55,8 @@ public class UserApiController {
 
 
 	@PutMapping("/users/{user_id}")
-	public Long updateUser(@PathVariable("user_id") Long userId, UserModifyDto modifyDto) {
-		return userService.updateUser(userId, modifyDto);
+	public Long updateUser(@PathVariable("user_id") Long userId, UserUpdateDto updateDto) {
+		return userService.updateUser(userId, updateDto);
 	}
 
 	@DeleteMapping("/users/{user_id}")

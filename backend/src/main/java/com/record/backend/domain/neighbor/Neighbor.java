@@ -1,8 +1,8 @@
-package com.record.backend.domain.comment;
+package com.record.backend.domain.neighbor;
 
 import static javax.persistence.FetchType.*;
 
-import javax.persistence.Column;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -12,21 +12,19 @@ import javax.persistence.ManyToOne;
 import com.record.backend.domain.user.User;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
-@Getter @Setter
-public class CommentLike {
+public class Neighbor {
 
 	@Id @GeneratedValue
-	@Column(name = "comment_like_id")
 	private Long id;
 
-	@ManyToOne(fetch = LAZY)
-	@JoinColumn(name = "comment_id")
-	private Comment comment;
-
-	@ManyToOne(fetch = LAZY)
+	@ManyToOne(fetch = LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "user_id")
 	private User user;
 }

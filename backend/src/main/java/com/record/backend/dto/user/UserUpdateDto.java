@@ -1,10 +1,14 @@
 package com.record.backend.dto.user;
 
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
-public class UserModifyDto {
+@NoArgsConstructor
+@AllArgsConstructor
+public class UserUpdateDto {
 
 	private Long userId;
 	private String password;
@@ -13,7 +17,7 @@ public class UserModifyDto {
 	private String introduce;
 	private byte[] profile_photo;
 
-	public UserModifyDto(Long userId, String nickname, String introduce, byte[] profile_photo) {
+	public UserUpdateDto(Long userId, String nickname, String introduce, byte[] profile_photo) {
 		this.userId = userId;
 		this.nickname = nickname;
 		this.introduce = introduce;

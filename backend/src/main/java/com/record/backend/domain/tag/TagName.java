@@ -19,9 +19,9 @@ import lombok.NoArgsConstructor;
 @Embeddable
 public class TagName {
 
-	private static final int MAX_LENTH = 20;
+	private static final int MAX_LENGTH = 20;
 
-	@Column(name = "NAME", nullable = false, unique = true, length = MAX_LENTH)
+	@Column(name = "NAME", nullable = false, unique = true, length = MAX_LENGTH)
 	private String value;
 
 	private TagName(String value) {
@@ -35,12 +35,6 @@ public class TagName {
 		return new TagName(value);
 	}
 
-	private void validateLength(String value) {
-		if (Objects.isNull(value)) {
-			throw new IllegalUserException("태그 이름이 비어있습니다.");
-		}
-	}
-
 	private void validateNotBlank(String value) {
 		if (value.isBlank()) {
 			throw new IllegalUserException("태그에 빈칸이 있습니다.");
@@ -48,9 +42,14 @@ public class TagName {
 	}
 
 	private void validateNotNull(String value) {
-		if (value.length() > MAX_LENTH) {
-			throw new IllegalUserException("길이가 20을 넘습니다.");
+		if (value.length() > MAX_LENGTH) {
+			throw new IllegalUserException("태그 이름이 비어있습니다.");
 		}
 	}
 
+	private void validateLength(String value) {
+		if (Objects.isNull(value)) {
+			throw new IllegalUserException("길이가 20을 넘습니다.");
+		}
+	}
 }

@@ -15,7 +15,7 @@ import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter @Setter
+@Data
 public class PostUpdateDto {
 
     private String title;
