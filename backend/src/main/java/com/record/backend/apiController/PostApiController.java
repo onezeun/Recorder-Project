@@ -17,7 +17,6 @@ import com.record.backend.repository.category.CategoryRepository;
 import com.record.backend.repository.post.PostRepository;
 import com.record.backend.service.CategoryService;
 import com.record.backend.service.PostService;
-import com.record.backend.service.UserService;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

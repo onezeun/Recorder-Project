@@ -71,11 +71,15 @@ public class PostServiceTest {
         Long postId = postService.savePost(requestDto);
 
         PostUpdateDto updateDto = new PostUpdateDto(
-                user.getId(), postId, "HELLO",
+                "HELLO",
                 "One Two Three", "One", "NEIGHBOR");
 
         //when
+<<<<<<< HEAD
+        Long updatePostId = postService.updatePost(postId, updateDto);
+=======
         Long updatePostId = postService.updatePost(user.getId(), updateDto);
+>>>>>>> develop
 
         //then
         Post post = postRepository.findById(updatePostId).get();

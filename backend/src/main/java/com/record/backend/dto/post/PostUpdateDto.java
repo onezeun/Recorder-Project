@@ -18,8 +18,6 @@ import java.util.List;
 @Data
 public class PostUpdateDto {
 
-    private Long userId;
-    private Long postId;
     private String title;
     private String content;
     private String summary;
