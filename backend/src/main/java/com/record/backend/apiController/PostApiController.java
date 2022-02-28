@@ -10,9 +10,11 @@ import com.record.backend.dto.post.PostUpdateDto;
 import org.springframework.web.bind.annotation.*;
 
 import com.record.backend.domain.post.Post;
-import com.record.backend.repository.PostRepository;
+import com.record.backend.repository.post.PostRepository;
 import com.record.backend.service.PostService;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -28,13 +30,13 @@ public class PostApiController {
 	}
 
 	@GetMapping("/board/posts")
-	public List<PostResponseDto> findAllPosts() {
+	public Result findAllPosts() {
 		List<Post> allPost = postRepository.findAll();
-		List<PostResponseDto> result = allPost.stream()
-				.map(o -> new PostResponseDto(o))
+		List<PostResponseDto> collect = allPost.stream()
+				.map(PostResponseDto::new)
 				.collect(toList());
 
-		return result;
+		return new Result(collect);
 	}
 
 	@GetMapping("/board/posts/{post_id}")
@@ -48,8 +50,15 @@ public class PostApiController {
 		return postService.updatePost(postId, updateDto);
 	}
 
+
 	@DeleteMapping("/board/posts/{post_id}")
 	public void delete(@PathVariable("post_id") Long postId) {
 		postService.deletePost(postId);
+	}
+
+	@Data
+	@AllArgsConstructor
+	static class Result<T> {
+		private T data;
 	}
 }

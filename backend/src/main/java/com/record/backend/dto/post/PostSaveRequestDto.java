@@ -1,19 +1,13 @@
 package com.record.backend.dto.post;
 
-import com.record.backend.domain.category.Category;
 import com.record.backend.domain.post.Exposure;
 import com.record.backend.domain.post.Post;
-import com.record.backend.domain.post.PostTag;
 import com.record.backend.domain.user.User;
 
-import com.record.backend.dto.tag.TagDto;
-import com.record.backend.repository.CategoryRepository;
 import lombok.*;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
-import java.util.ArrayList;
-import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor

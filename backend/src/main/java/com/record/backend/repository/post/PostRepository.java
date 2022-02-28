@@ -1,4 +1,4 @@
-package com.record.backend.repository;
+package com.record.backend.repository.post;
 
 import java.util.Optional;
 

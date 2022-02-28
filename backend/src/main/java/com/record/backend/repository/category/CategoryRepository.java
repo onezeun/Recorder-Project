@@ -1,4 +1,4 @@
-package com.record.backend.repository;
+package com.record.backend.repository.category;
 
 import java.util.Optional;
 

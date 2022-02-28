@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.record.backend.domain.category.Category;
 import com.record.backend.exception.IllegalUserException;
-import com.record.backend.repository.CategoryRepository;
+import com.record.backend.repository.category.CategoryRepository;
 import com.record.backend.dto.category.CategoryResponseDto;
 import com.record.backend.dto.category.CategorySaveRequestDto;
 

@@ -9,9 +9,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.record.backend.domain.comment.Comment;
 import com.record.backend.exception.IllegalUserException;
-import com.record.backend.repository.CommentRepository;
-import com.record.backend.repository.PostRepository;
-import com.record.backend.repository.UserRepository;
+import com.record.backend.repository.comment.CommentRepository;
+import com.record.backend.repository.post.PostRepository;
+import com.record.backend.repository.user.UserRepository;
 import com.record.backend.dto.comment.CommentResponseDto;
 import com.record.backend.dto.comment.CommentSaveRequestDto;
 

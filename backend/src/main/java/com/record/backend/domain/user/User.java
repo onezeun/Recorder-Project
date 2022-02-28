@@ -59,8 +59,8 @@ public class User {
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private List<CommentLike> commentLikeList = new ArrayList<>();
 
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-	private List<PostLike> postLikeList = new ArrayList<>();
+/*	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+	private List<PostLike> postLikeList = new ArrayList<>();*/
 
 	@Builder
 	public User (String email, String password, String nickname, String domain, String introduce) {
