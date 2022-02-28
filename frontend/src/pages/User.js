@@ -17,6 +17,7 @@ export default function User() {
         elevation={0}
         sx={{ maxWidth: 800, mx: "auto", pt: 4, pl: 5, pr: 4 }}
       >
+      <Paper elevation={0} sx={{ maxWidth: 800, mx: "auto", pt: 4, pl: 5, pr:4 }}>
         <Box sx={{ display: "flex", justifyContent: "center", pb: 5 }}>
           <h2>MY PAGE</h2>
         </Box>
@@ -35,6 +36,7 @@ export default function User() {
               alt="Remy Sharp"
               src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
             />
+            
           </Grid>
           <Box sx={{ my: 4, mx: 4 }}>
             <Stack direction="row" spacing={1}>
@@ -63,8 +65,14 @@ export default function User() {
             </Stack>
           </Box>
         </Grid>
+        </Paper>
         <Stack direction="row" spacing={1} sx={{ ml: 1, mr: 2, my: 1 }}>
-        <Input accept="image/*" id="contained-button-file" multiple type="file" />
+          <Input
+            accept="image/*"
+            id="contained-button-file"
+            multiple
+            type="file"
+          />
           <Button variant="contained" component="span" size="small">
             이미지 업로드
           </Button>
