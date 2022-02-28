@@ -34,7 +34,7 @@ public class Follow {
 	private User source;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "user_id")
+	@JoinColumn(name = "target_id")
 	private User target;
 
 	protected Follow() {

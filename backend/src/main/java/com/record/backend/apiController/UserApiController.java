@@ -1,10 +1,14 @@
 package com.record.backend.apiController;
 
+import java.awt.print.Pageable;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+
+import org.springframework.data.web.PageableDefault;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +19,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.record.backend.domain.user.User;
+import com.record.backend.dto.user.FollowPresentationResponse;
+import com.record.backend.dto.user.FollowRequestDto;
+import com.record.backend.dto.user.FollowResponseDto;
+import com.record.backend.dto.user.UserDtoAssembler;
+import com.record.backend.dto.user.UserSearchResponseDto;
 import com.record.backend.dto.user.UserUpdateDto;
 import com.record.backend.dto.user.UserResponseDto;
 import com.record.backend.dto.user.UserSaveRequestDto;
@@ -63,6 +72,26 @@ public class UserApiController {
 	public void deleteUser(@PathVariable("user_id") Long userId) {
 		userService.deleteUser(userId);
 	}
+
+	//follow
+	@PostMapping("/users/{user_id}/followings")
+	public ResponseEntity<FollowPresentationResponse> followUser(@PathVariable String domain) {
+		FollowRequestDto followRequestDto = UserDtoAssembler.followRequestDto(domain);
+		FollowResponseDto followResponseDto = userService.followUser(followRequestDto);
+		FollowPresentationResponse followPresentationResponse = UserDtoAssembler.followPresentationResponse(
+			followResponseDto);
+		return ResponseEntity.ok(followPresentationResponse);
+	}
+
+	@DeleteMapping("/users/{user_id}/followings")
+	public ResponseEntity<FollowPresentationResponse> unfollowUser(@PathVariable String domain) {
+		FollowRequestDto unfollowRequestDto = UserDtoAssembler.followRequestDto(domain);
+		FollowResponseDto followResponseDto = userService.unfollowUser(unfollowRequestDto);
+
+		return ResponseEntity.ok(UserDtoAssembler.followPresentationResponse(followResponseDto));
+	}
+
+
 
 	@Data
 	@AllArgsConstructor

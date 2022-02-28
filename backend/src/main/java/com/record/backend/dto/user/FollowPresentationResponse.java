@@ -5,17 +5,17 @@ import lombok.Getter;
 
 @Builder
 @Getter
-public class FollowResponse {
+public class FollowPresentationResponse {
 
 	private int followerCount;
 	private boolean following;
 
-	private FollowResponse() {
+	private FollowPresentationResponse() {
 
 	}
 
-	public FollowResponse(int followerCount, boolean isFollowing) {
+	public FollowPresentationResponse(int followerCount, boolean following) {
 		this.followerCount = followerCount;
-		this.following = isFollowing;
+		this.following = following;
 	}
 }
