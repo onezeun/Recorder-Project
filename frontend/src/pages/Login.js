@@ -1,49 +1,49 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux'
-import { loginUser } from '../components/Login/actions/user_action';
-import { useNavigate } from 'react-router-dom'
+import { loginUser } from '../components/Login/actions/action';
 
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import { FormControlLabel, Checkbox } from '@mui/material';
 
-export default function Login() {
+export default function Login(props) {
 
     const dispatch = useDispatch();
-    const navigate = useNavigate();
     const [Email, setEmail] = useState('');
     const [Password, setPassword] = useState('');
 
-    const onSubmitHandler = (event) => {
-        event.preventDefault();
+    const onSubmitHandler = (e) => {
+        e.preventDefault();
+        console.log('Email', Email);
+        console.log('Password', Password)
     }
 
-    const onEmailHandler = (event) => {
-        setEmail(event.target.value);
+    const onEmailHandler = (e) => {
+        setEmail(e.target.value);
     }
 
-    const onPasswordHandler = (event) => {
-        setPassword(event.target.value);
+    const onPasswordHandler = (e) => {
+        setPassword(e.target.value);
     }
+    
+    // let body = {
+    //     email: Email,
+    //     password: Password
+    // }
 
-    let body = {
-        email: Email,
-        password: Password
-    }
-
-    // action의 반환값을 dispatch
-    dispatch(loginUser(body))
-    .then(response => {
-        if(response.payload.loginSuccess) {
-           navigate('/main')                // 페이지 이동
-        } else{
-            alert('Error')
-        }
-    })
+    // // action의 반환값을 dispatch
+    // dispatch(loginUser(body))
+    // .then(response => {
+    //     if(response.payload.loginSuccess) {
+    //         props.history.push('/')                // 페이지 이동
+    //     } else{
+    //         alert('Error')
+    //     }
+    // })
 
   return (
-            <Box 
+            <Box
             gap={1}
             sx={{ 
                 display: 'flex',
@@ -73,6 +73,8 @@ export default function Login() {
              id="outlined-basic"
              label="이메일"
              variant="outlined"
+             autoComplete='email'
+             autoFocus
              onChange = {onEmailHandler}
              />  
             <TextField
@@ -94,7 +96,24 @@ export default function Login() {
             },
             }}
             >
-            <Button variant="contained">로그인</Button>
+            <FormControlLabel
+                control={<Checkbox value="remember"
+                color="primary" />}
+                label="Remember"
+            />
+            </Box>
+
+            <Box
+            sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            '& > *': {
+                m: 1, width: '35ch'
+            },
+            }}
+            >
+            <Button variant="contained" type="submit">로그인</Button>
             </Box>
 
             <Box
