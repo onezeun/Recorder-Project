@@ -17,6 +17,21 @@ export default function Login(props) {
         e.preventDefault();
         console.log('Email', Email);
         console.log('Password', Password)
+
+        let body = {
+            email: Email,
+            password: Password
+        }
+    
+        // action의 반환값을 dispatch
+        dispatch(loginUser(body))
+        .then(response => {
+            if(response.payload.loginSuccess) {
+                props.history.push('/')                // 페이지 이동
+            } else{
+                alert('Error')
+            }
+        })
     }
 
     const onEmailHandler = (e) => {
@@ -27,23 +42,10 @@ export default function Login(props) {
         setPassword(e.target.value);
     }
     
-    // let body = {
-    //     email: Email,
-    //     password: Password
-    // }
-
-    // // action의 반환값을 dispatch
-    // dispatch(loginUser(body))
-    // .then(response => {
-    //     if(response.payload.loginSuccess) {
-    //         props.history.push('/')                // 페이지 이동
-    //     } else{
-    //         alert('Error')
-    //     }
-    // })
+    
 
   return (
-            <Box
+    <Box
             gap={1}
             sx={{ 
                 display: 'flex',
@@ -58,7 +60,7 @@ export default function Login(props) {
             
             <h2>Record:er</h2>
 
-            <Box
+        <Box
             component="form"
             sx={{
                 display: 'flex',
@@ -84,8 +86,8 @@ export default function Login(props) {
             autoComplete="current-password"
             onChange = {onPasswordHandler}
             />
-            </Box>
 
+            {/* 로그인 정보 기억 */}
             <Box
             sx={{
             display: 'flex',
@@ -97,12 +99,13 @@ export default function Login(props) {
             }}
             >
             <FormControlLabel
-                control={<Checkbox value="remember"
+                control={<Checkbox value="로그인 정보 기억하기"
                 color="primary" />}
-                label="Remember"
+                label="Remember"                          
             />
             </Box>
 
+            {/* 로그인 버튼 */}
             <Box
             sx={{
             display: 'flex',
@@ -115,6 +118,7 @@ export default function Login(props) {
             >
             <Button variant="contained" type="submit">로그인</Button>
             </Box>
+        </Box>
 
             <Box
             sx={{
