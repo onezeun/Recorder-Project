@@ -39,7 +39,7 @@ public class CommentApiController {
 	private final CommentRepository commentRepository;
 	private final CommentQueryRepository commentQueryRepository;
 
-	@PostMapping("/board/comments/posts/{post_id}/users/{user_id}")
+	@PostMapping("/board/posts/{post_id}/users/{user_id}/comments")
 	public Long saveComment(@PathVariable Long postId, @PathVariable Long userId, CommentSaveRequestDto requestDto) {
 		return commentService.saveComment(postId, userId, requestDto);
 	}

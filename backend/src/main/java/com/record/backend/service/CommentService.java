@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.record.backend.domain.comment.Comment;
+import com.record.backend.domain.comment.CommentContent;
 import com.record.backend.domain.post.Post;
 import com.record.backend.domain.user.User;
 import com.record.backend.dto.comment.CommentUpdateDto;
@@ -40,7 +41,7 @@ public class CommentService {
 	public Long updateComment(Long id, CommentUpdateDto updateDto) {
 		Comment comment = findComment(id);
 		validateNotNull(updateDto.getContent());
-		comment.setContent(updateDto.getContent());
+		comment.setContent(CommentContent.of(updateDto.getContent()));
 		return comment.getId();
 	}
 
