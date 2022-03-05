@@ -35,6 +35,7 @@ public class PostLike {
 	@ManyToOne(fetch = LAZY)
 	@JoinColumn(name = "user_id")
 	private User user;
+
 	@Builder
 	public PostLike(Long id, Post post, User user) {
 		validateNotNull(post, user);

@@ -16,9 +16,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
 	Optional<User> findByDomain(String domain);
 
-	@Query("select t from Follow f inner join f.target t on f.source = :user")
+/*	@Query("select t from Follow f inner join f.target t on f.source = :user")
 	List<User> searchFollowingsOf(@Param("user") User user, Pageable pageable);
 
 	@Query("select s from Follow f inner join f.source s on f.target = :user")
-	List<User> searchFollowersOf(@Param("user") User user, Pageable pageable);
+	List<User> searchFollowersOf(@Param("user") User user, Pageable pageable);*/
 }

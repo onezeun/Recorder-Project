@@ -10,7 +10,7 @@ import javax.persistence.OneToMany;
 @Embeddable
 public class Posts {
 
-	@OneToMany(mappedBy = "user_id", fetch = FetchType.LAZY, orphanRemoval = true)
+	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, orphanRemoval = true)
 	private List<Post> posts;
 
 	public Posts() {

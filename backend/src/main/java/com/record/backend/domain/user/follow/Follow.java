@@ -39,6 +39,7 @@ public class Follow {
 
 	protected Follow() {
 	}
+
 	public Follow(User source, User target) {
 		validateDifferentSourceTarget(source, target);
 		this.source = source;

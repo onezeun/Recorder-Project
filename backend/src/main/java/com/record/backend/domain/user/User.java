@@ -13,10 +13,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+
 import com.record.backend.domain.category.Category;
 import com.record.backend.domain.comment.Comment;
-import com.record.backend.domain.neighbor.Neighbor;
-import com.record.backend.domain.post.Post;
 import com.record.backend.domain.post.Posts;
 import com.record.backend.domain.user.follow.Follow;
 import com.record.backend.domain.user.follow.Followers;
@@ -29,7 +28,6 @@ import lombok.Setter;
 
 @Entity
 @Getter @Setter
-@NoArgsConstructor
 public class User {
 
 	@Id @GeneratedValue
@@ -57,21 +55,19 @@ public class User {
 	@Embedded
 	private Followings followings;
 
-	@Embedded
-	private Posts posts;
 
 	//1대 다 관계
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-	private List<Post> postList = new ArrayList<>();
+	/*@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+	private List<Post> postList = new ArrayList<>();*/
+
+	@Embedded
+	private Posts posts;
 
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private List<Category> categoryList = new ArrayList<>();
 
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private List<Comment> commentList = new ArrayList<>();
-
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-	private List<Neighbor> neighbors = new ArrayList<>();
 
 /*	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private List<PostLike> postLikeList = new ArrayList<>();*/
@@ -88,10 +84,24 @@ public class User {
 		this.followings = followings;
 	}
 
-	//==post 로직==//
-	public int getPostCount() {
-		return posts.count();
+	public User() {
+		this(
+			new Followers(new ArrayList<>()),
+			new Followings(new ArrayList<>()),
+			new Posts(new ArrayList<>())
+		);
 	}
+
+	public User(Followers followers, Followings followings, Posts posts) {
+		this.followings = followings;
+		this.followers = followers;
+		this.posts = posts;
+	}
+
+	//==post 로직==//
+/*	public int getPostCount() {
+		return posts.count();
+	}*/
 
 
 	//==follow 로직==//

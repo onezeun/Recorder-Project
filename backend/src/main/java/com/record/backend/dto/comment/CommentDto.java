@@ -12,6 +12,6 @@ public class CommentDto {
 
 	public CommentDto(Comment comment) {
 		commentId = comment.getId();
-		content = comment.getContent();
+		content = comment.getContent().getValue();
 	}
 }

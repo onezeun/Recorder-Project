@@ -12,6 +12,7 @@ import javax.validation.constraints.Size;
 
 import com.record.backend.domain.BaseEntity;
 import com.record.backend.domain.category.Category;
+import com.record.backend.domain.comment.Comments;
 import com.record.backend.domain.user.User;
 import com.record.backend.domain.comment.Comment;
 
@@ -58,20 +59,23 @@ public class Post extends BaseEntity {
 	private Category category;
 
 	//1대 다 관계
-	@OneToMany(mappedBy = "post")
-	private List<Comment> comments = new ArrayList<>();
+	/*@OneToMany(mappedBy = "post")
+	private List<Comment> comments = new ArrayList<>();*/
 /*
 	@OneToMany(mappedBy = "post")
 	private List<PostLike> postLikes = new ArrayList<>();
 */
 	@Embedded
+	private Comments comments;
+
+	@Embedded
 	private PostLikes postLikes;
 
-	@OneToMany(mappedBy = "post")
-	private List<PostTag> postTags = new ArrayList<>();
+/*	@OneToMany(mappedBy = "post")
+	private List<PostTag> postTags = new ArrayList<>();*/
 
 
-	@Builder
+/*	@Builder
 	public Post(User user, String title,
 			  String content, String summary,
 			  Category category, Exposure exposure, PostLikes postLikes) {
@@ -82,6 +86,23 @@ public class Post extends BaseEntity {
 		this.summary = summary;
 		this.category = category;
 		this.exposure = exposure;
+		this.postLikes = postLikes;
+	}*/
+
+	@Builder
+	public Post(Long id, User user, String title, String content, int hits, String summary,
+		Exposure exposure, byte[] thumbnail_image, Category category, Comments comments,
+		PostLikes postLikes) {
+		this.id = id;
+		this.user = user;
+		this.title = title;
+		this.content = content;
+		this.hits = hits;
+		this.summary = summary;
+		this.exposure = exposure;
+		this.thumbnail_image = thumbnail_image;
+		this.category = category;
+		this.comments = comments;
 		this.postLikes = postLikes;
 	}
 
