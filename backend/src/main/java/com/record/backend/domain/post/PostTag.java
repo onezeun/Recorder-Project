@@ -18,7 +18,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Getter @Setter
+@Getter
 public class PostTag {
 
 	@Id @GeneratedValue
@@ -32,30 +32,4 @@ public class PostTag {
 	@ManyToOne(fetch = LAZY)
 	@JoinColumn(name = "tag_id")
 	private Tag tag;
-
-	@Column
-	private boolean deleted;
-
-	private PostTag(Post post, Tag tag) {
-		validateNotNull(post, tag);
-		this.post = post;
-		this.tag = tag;
-	}
-
-	private void validateNotNull(Post post, Tag tag) {
-		if (Objects.isNull(post)) {
-			throw new IllegalUserException("PostTag 생성시 Post는 null이 될 수 없습니다.");
-		}
-		if (Objects.isNull(tag)) {
-			throw new IllegalUserException("PostTag 생성시 Tag는 null이 될 수 없습니다.");
-		}
-	}
-
-	public static PostTag of(Post post, Tag tag) {
-		return new PostTag(post, tag);
-	}
-
-	public void delete() {
-		this.deleted = true;
-	}
 }

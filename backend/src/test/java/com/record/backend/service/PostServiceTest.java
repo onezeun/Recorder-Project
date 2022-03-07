@@ -75,15 +75,9 @@ public class PostServiceTest {
                 "One Two Three", "One", "NEIGHBOR");
 
         //when
-<<<<<<< HEAD
-        Long updatePostId = postService.updatePost(postId, updateDto);
-=======
         Long updatePostId = postService.updatePost(user.getId(), updateDto);
->>>>>>> develop
 
         //then
         Post post = postRepository.findById(updatePostId).get();
-        assertNotEquals("update_time이 null이 아니어야 한다.", null, post.getUpdate_time());
-        assertNotEquals("create_time 과 update_time이 달라야 한다.", post.getCreated_time(), post.getUpdate_time());
     }
 }

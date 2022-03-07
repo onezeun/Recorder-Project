@@ -18,7 +18,7 @@ public class CommentResponseDto {
 		this.commentId = entity.getId();
 		this.postId = entity.getPost().getId();
 		this.userId = entity.getUser().getId();
-		this.content = entity.getContent();
+		this.content = entity.getContent().getValue();
 	}
 
 }

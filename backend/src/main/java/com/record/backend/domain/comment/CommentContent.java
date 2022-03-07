@@ -11,7 +11,6 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@EqualsAndHashCode
 @NoArgsConstructor
 @Getter
 @Embeddable
@@ -22,9 +21,10 @@ public class CommentContent {
 	@Column(name = "NAME", nullable = false, length = MAX_LENGTH)
 	private String value;
 
-	private CommentContent(String value) {
+	public CommentContent(String value) {
 		validateNotNull(value);
 		validateLength(value);
+		this.value = value;
 	}
 
 	public static CommentContent of(String value) {

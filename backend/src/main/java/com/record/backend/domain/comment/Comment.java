@@ -2,24 +2,17 @@ package com.record.backend.domain.comment;
 
 import static javax.persistence.FetchType.*;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
 import com.record.backend.domain.BaseEntity;
-import com.record.backend.domain.tag.TagName;
 import com.record.backend.domain.user.User;
 import com.record.backend.domain.post.Post;
-import com.record.backend.exception.IllegalUserException;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -33,6 +26,9 @@ public class Comment extends BaseEntity {
 	@Column(name = "comment_id")
 	private Long id;
 
+	@Embedded
+	private CommentContent content;
+
 	@ManyToOne(fetch = LAZY)
 	@JoinColumn(name = "user_id")
 	private User user;
@@ -40,16 +36,33 @@ public class Comment extends BaseEntity {
 	@ManyToOne(fetch = LAZY)
 	@JoinColumn(name = "post_id")
 	private Post post;
-
+/*
 	@Column
-	private String content;
+	private String content;*/
 
+	protected Comment() {
+	}
+
+	public Comment(String content, User user, Post post) {
+		this(null, content, user, post);
+	}
 
 	@Builder
-	public Comment(String content, Post post, User user) {
-		this.content = content;
-		this.post = post;
+	public Comment(Long id, String content, User user, Post post) {
+		this.id = id;
+		this.content = new CommentContent(content);
 		this.user = user;
+		this.post = post;
 	}
+
+	public byte[] getProfilePhothoUrl() {
+		return user.getProfile_photo();
+	}
+
+	public String getAuthorName() {
+		return user.getNickname();
+	}
+
+
 
 }

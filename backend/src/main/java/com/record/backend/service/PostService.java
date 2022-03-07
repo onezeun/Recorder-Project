@@ -1,7 +1,9 @@
 package com.record.backend.service;
 
 import com.record.backend.domain.user.User;
+import com.record.backend.dto.post.LikeResponseDto;
 import com.record.backend.dto.post.PostUpdateDto;
+import com.record.backend.exception.IllegalUserException;
 import com.record.backend.repository.category.CategoryRepository;
 import com.record.backend.repository.user.UserRepository;
 import org.springframework.stereotype.Service;
@@ -44,24 +46,33 @@ public class PostService {
 		postRepository.deleteById(postId);
 	}
 
+	//==like 로직==//
+	@Transactional
+	public LikeResponseDto postLike(User user, Long postId) {
+		User source = findUserByDomian(user.getDomain());
+		Post target = findPostById(postId);
 
+		target.postLike(source);
+		return new LikeResponseDto(target.getLikeCounts(), true);
+	}
 
-//
-//	public List<Post> findAllPost() {
-//		return postRepository.findAll();
-//	}
+	@Transactional
+	public LikeResponseDto unPostLike(User user, Long postId) {
+		User source = findUserByDomian(user.getDomain());
+		Post target = findPostById(postId);
 
+		target.unPostLike(source);
+		return new LikeResponseDto(target.getLikeCounts(), false);
+	}
 
-//
-//	public Optional<Post> findPostById(Long id) {
-//		return postRepository.findById(id);
-//	}
-//
-//
-//	@Transactional
-//	public void delete(Post post) {
-//		postRepository.delete(post);
-//	}
+	private Post findPostById(Long postId) {
+		return postRepository.findById(postId)
+			.orElseThrow(IllegalUserException::new);
+	}
 
+	private User findUserByDomian(String domain) {
+		return userRepository.findByDomain(domain)
+			.orElseThrow(IllegalUserException::new);
+	}
 
 }

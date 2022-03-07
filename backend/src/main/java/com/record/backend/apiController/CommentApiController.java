@@ -39,21 +39,10 @@ public class CommentApiController {
 	private final CommentRepository commentRepository;
 	private final CommentQueryRepository commentQueryRepository;
 
-	@PostMapping("/board/comments/posts/{post_id}/users/{user_id}")
+	@PostMapping("/board/posts/{post_id}/users/{user_id}/comments")
 	public Long saveComment(@PathVariable Long postId, @PathVariable Long userId, CommentSaveRequestDto requestDto) {
 		return commentService.saveComment(postId, userId, requestDto);
 	}
-
-/*	@GetMapping("/board/comments")
-	public Result findAllComments() {
-
-		List<Comment> allComment = commentRepository.findAll();
-		List<CommentResponseDto> collect = allComment.stream()
-			.map(CommentResponseDto::new)
-			.collect(Collectors.toList());
-
-		return new Result(collect);
-	}*/
 
 	@GetMapping("/board/comments")
 	public List<CommentDto> findAllComments(
