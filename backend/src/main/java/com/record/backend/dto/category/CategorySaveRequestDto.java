@@ -28,8 +28,8 @@ public class CategorySaveRequestDto {
 	private List<Post> postList;
 
 	@Builder
-	public CategorySaveRequestDto(User user, String categoryName) {
-		this.user = user;
+	public CategorySaveRequestDto(String categoryName) {
+		//this.user = user;
 		this.categoryName = categoryName;
 	}
 

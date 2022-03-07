@@ -44,10 +44,9 @@ public class Category {
 	private List<Post> postList = new ArrayList<>();
 
 	@Builder
-	public Category(User user, String name) {
+	public Category(User user, String name, List<Post> postList) {
 		this.user = user;
 		this.name = name;
-		//this.postList = postList;
+		this.postList = postList;
 	}
-
 }
