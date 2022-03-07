@@ -59,7 +59,7 @@ function App() {
           </Link>
         <hr /> 
         <Routes>
-          <Route exact path="/" element={<Login />} />
+          <Route exact path="/" element={<Signup />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/editor" element={<Editor />} />

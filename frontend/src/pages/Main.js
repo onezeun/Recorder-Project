@@ -1,11 +1,12 @@
-import * as React from 'react';
-// import AppBar from '@mui/material/AppBar';
+import React, { useState, useEffect } from 'react';
+
+import axios from 'axios';
 import { Button, IconButton, Card, CardActions, CardContent, CardMedia, Grid, Box, Typography, CardHeader, Avatar, Pagination, Stack, CardActionArea }from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
 
-const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+import LikeButton from '../components/Like/LikeButton';
 
 const mainPostDatas = [
   { id: 1, nickname:"jiwoon", profile: null, thumbnail: null, title: "인사1", summary:"안녕하세요1", hits : 3, created_time: "2022-03-07 14:46:04" },
@@ -17,12 +18,107 @@ const mainPostDatas = [
   { id: 7, nickname:"hyeji", profile: null, thumbnail: null, title: "인사7", summary:"안녕하세요7", hits : 7, created_time: "2022-02-16 14:46:04" },
   { id: 8, nickname:"jieun", profile: null, thumbnail: null, title: "인사8", summary:"안녕하세요8", hits : 15, created_time: "2022-02-26 6:46:04" },
   { id: 9, nickname:"jiwoon", profile: null, thumbnail: null, title: "인사9", summary:"안녕하세요9", hits : 4, created_time: "2022-05-06 11:46:04" },
-  { id: 10, nickname:"younghan", profile: null, thumbnail: null, title: "인사10", summary:"안녕하세요10", hits : 21, created_time: "2022-02-06 21:46:04" },
 ]
+
+// const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
 const theme = createTheme();
 
 export default function Main() {
+
+  const[id, setId] = useState(null);
+  const[nickname, setNickname] = useState(null);
+  const[profile, setProfile] = useState(null);
+  const[thumbnail, setThumbnail] = useState(null);
+  const[title, setTitle] = useState(null);
+  const[summary, setSummary] = useState(null);
+  const[hits, setHits] = useState(null);
+  const[created_time, setCreated_time] = useState(null);
+
+  const[like, setLike] = useState(false);
+  const[number, setNumber] = useState(0);
+
+  // 좋아요 수
+  // const onIncrease = () => {
+  //   setNumber(likes => likes + 1);
+  // }
+
+  // const onDecrease = () => {
+  //   setNumber(likes => likes - 1);
+  // }
+  
+  useEffect(() => {
+    const fetchPostDatas = async() => {
+      try {
+        // const response = await axios.get("http://localhost:8080/api/board/posts");
+        const response = mainPostDatas();
+        setId(response.data);
+        setNickname(response.data);
+        setProfile(response.data);
+        setThumbnail(response.data);
+        setTitle(response.data);
+        setSummary(response.data);
+        setHits(response.data);
+        setCreated_time(response.data);
+      } catch(e) {
+          console.log(e);
+      }
+    };
+    fetchPostDatas();
+  }, []);
+
+  // 좋아요 기능
+  useEffect(async() => {
+    const fetchLikeData = async(e) => {
+      // const response = await axios.get
+      // if (response.data.type === 'liked') setLike(true) && onIncrease
+    }
+    fetchLikeData()
+  }, []);
+
+    const recorderLike = async(e) => {
+      // const response = await axios.post // 사용자가 좋아요 누를 경우 DB 갱신
+      setLike(!like)
+    }
+
+  // 조건부 렌더링
+  // function neighborPost() {
+  //   return (
+  //     <Box
+  //         sx= {{
+
+  //         }}
+  //         noValidate
+  //         autoComplete="off"
+  //         >
+  //       <Button>이웃 게시물</Button>
+  //     </Box>
+  //   )
+  // }
+  
+  // function neighborPostButton(props) {
+  //   if(props.isLoggedIn) {
+  //     return <neighborPost />;
+  //   }
+  //   return null;
+  // }
+
+  function neighborPost(props) {
+    return <Button>1번 게시물</Button>;
+  }
+  
+  function neighborPosts(props) {
+    return <Button>2번 게시물</Button>
+  }
+
+  function Greeting(props) {
+    const isLoggedOut = props.isLoggedOut;
+    if (isLoggedOut) {
+      return <neighborPost />;
+    }
+    return <neighborPosts />;
+  }
+
   return (
     <ThemeProvider theme={theme}>
       <main>
@@ -61,6 +157,7 @@ export default function Main() {
               >
               <Button>최신 게시물</Button>
             </Box>
+            <Greeting isLoggedOut={false} />
           </Box>
         </Box>
 
@@ -73,19 +170,19 @@ export default function Main() {
         >
           {/* 게시글 */}
           <Grid container spacing={4}>
-            {cards.map((card) => (
-              <Grid item key={card} xs={12} sm={6} md={4}>
+            {mainPostDatas.map((mainPostData) => (
+              <Grid item key={mainPostData} xs={12} sm={6} md={4}>
                   <Card
                   sx={{ width: '86%', height: '100%', display: 'flex', flexDirection: 'column' }}
                 >
                   <CardHeader
                     avatar={
-                      <Avatar sx={{  }} aria-label="recipe">
-                        R
+                      <Avatar sx={{  }} image={mainPostData.profile} aria-label="recipe">
+                        
                       </Avatar>
                     }
-                    title="zu21un"
-                    subheader="2월 6일 14:46, 2022"
+                    title={mainPostData.nickname}
+                    subheader={mainPostData.created_time}
                   />
                   <CardActionArea component="a" href="#">
                   <CardMedia
@@ -95,21 +192,20 @@ export default function Main() {
                       height: '400px',
                       objectFit: 'cover'
                     }}
-                    image="https://source.unsplash.com/random"
-                    alt="사진"
+                    image={mainPostData.thumbnail}
                   />
                   <CardContent sx={{ flexGrow: 1 }}>
                     <Typography gutterBottom variant="h5" component="h2">
-                      1-800-273-8255
+                      {mainPostData.title}
                     </Typography>
                     <Typography>
-                      Logic, Juanes 노래입니다. I've been on the low I been taking my time I feel like I'm out of my mind
+                      {mainPostData.summary}
                     </Typography>
                   </CardContent>
                   </CardActionArea>
                   <CardActions>
                     <IconButton aria-label="like">
-                      <FavoriteIcon />
+                      <LikeButton like={like} onClick={recorderLike}/>
                     </IconButton>
                     <IconButton aria-label="share">
                       <ShareIcon />
