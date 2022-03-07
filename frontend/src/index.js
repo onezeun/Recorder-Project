@@ -4,18 +4,30 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
-import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
 
-const theme = createMuiTheme({
+import { MuiThemeProvider, createTheme } from '@material-ui/core/styles';
+
+const theme = createTheme({
   typography: {
     fontFamily: 'CookieRun Bold',
   },
 });
 
+function reducer(state = '', action) {
+  return state
+}
+
+let store = createStore(reducer)
+
+
 ReactDOM.render(
   <React.StrictMode>
     <MuiThemeProvider theme={theme}>
+      <Provider store={store}>
       <App />
+      </Provider>
     </MuiThemeProvider>
   </React.StrictMode>,
   document.getElementById('root')
