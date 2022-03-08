@@ -41,7 +41,7 @@ public class CategoryApiController {
 
 	//조회
 	@GetMapping("/board/categories")
-	public Result Categories() {
+	public Result categories() {
 		List<Category> allCategory = categoryRepository.findAll();
 		List<CategoryResponseDto> collect = allCategory.stream()
 			.map(CategoryResponseDto::new)

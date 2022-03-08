@@ -21,9 +21,9 @@ import java.util.List;
 @Getter @Setter
 public class PostResponseDto {
 
-	private Long post_id;
-	private Long user_id;
-	private String user_nickname;
+	private Long postId;
+	private Long userId;
+	private String userNickname;
 //	private byte[] user_profile_photo;
 //	private String user_introduce;
 //	private byte[] thumbnail_image;
@@ -43,9 +43,9 @@ public class PostResponseDto {
 //	private List<PostTag> postTagList;
 
 	public PostResponseDto(Post post) {
-		this.post_id = post.getId();
-		this.user_id = post.getUser().getId();
-		this.user_nickname = post.getUser().getNickname();
+		this.postId = post.getId();
+		this.userId = post.getUser().getId();
+		this.userNickname = post.getUser().getNickname();
 		this.title = post.getTitle();
 		this.content = post.getContent();
 		this.summary = post.getSummary();

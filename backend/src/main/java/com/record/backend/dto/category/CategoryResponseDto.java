@@ -14,15 +14,15 @@ import lombok.Setter;
 @NoArgsConstructor
 public class CategoryResponseDto {
 
-	private Long category_id;
-	private Long user_id;
-	private String category_name;
+	private Long categoryId;
+	private Long userId;
+	private String categoryName;
 	private List<Post> postList;
 
 	public CategoryResponseDto(Category entity) {
-		this.category_id = entity.getId();
+		this.categoryId = entity.getId();
 //		this.user_id = entity.getUser().getId();
-		this.category_name = entity.getName();
+		this.categoryName = entity.getName();
 		this.postList = entity.getPostList();
 	}
 }
