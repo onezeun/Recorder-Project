@@ -7,18 +7,18 @@ import { register } from "../components/Signup/actions/action";
 export default function SignUp(props) {
 
   const [Password, setPassword] = useState("");
-  const onChangePassword = useCallback((e) => {
-    setPassword(e.target.value);
-  }, []);
+  // const onChangePassword = useCallback((e) => {
+  //   setPassword(e.target.value);
+  // }, []);
 
-  // 중복체크
-  const [rePassword, setRePassword] = useState('');
-  const [passwordError, setPasswordError] = useState(false);
-  const onChangePasswordCheck = useCallback((e) => {
-      setRePassword(e.target.value);
-      setPasswordError(e.target.value !== Password);
-    }, [Password]);
-    
+  // // 중복체크
+  // const [rePassword, setRePassword] = useState('');
+  // const [passwordError, setPasswordError] = useState(false);
+  // const onChangePasswordCheck = useCallback((e) => {
+  //     setRePassword(e.target.value);
+  //     setPasswordError(e.target.value !== Password);
+  //   }, [Password]);
+  const [rePassword, setRePassword] = useState("");  
   const dispatch = useDispatch();
   const [Email, setEmail] = useState("");
   const [Nickname, setNickname] = useState("");
@@ -29,13 +29,13 @@ export default function SignUp(props) {
     setEmail(e.currentTarget.value);
   }
 
-  // const onPasswordHandler = (e) => {
-  //   setPassword(e.currentTarget.value);
-  // }
+  const onPasswordHandler = (e) => {
+    setPassword(e.currentTarget.value);
+  }
 
-  // const onRePasswordHandler = (e) => {
-  //   setRePassword(e.currentTarget.value);
-  // }
+  const onRePasswordHandler = (e) => {
+    setRePassword(e.currentTarget.value);
+  }
 
   const onNicknameHandler = (e) => {
     setNickname(e.currentTarget.value);
@@ -52,9 +52,10 @@ export default function SignUp(props) {
   const onSubmitHandler = (e) => {
     e.preventDefault();
     console.log('Email', Email);
-    console.log('Password', Password)
-    console.log('Nickname', Nickname)
-    console.log('Domain', Domain)
+    console.log('Password', Password);
+    console.log('Nickname', Nickname);
+    console.log('Domain', Domain);
+    console.log('Introduce', Introduce);
 
     let body = {
       email: Email,
@@ -102,19 +103,18 @@ export default function SignUp(props) {
         onSubmit={onSubmitHandler}
       >
         <TextField 
-          id="email" 
+          id="Email" 
           label="이메일" 
           variant="outlined"
           onChange={onEmailHandler}
           />
-
         <TextField
-          id="password"
+          id="Password"
           label="비밀번호"
           type="password"
           autoComplete="current-password"
           value={Password}
-          onChange={onChangePassword}
+          onChange={onPasswordHandler}
         />
         <TextField
           id="rePassword"
@@ -123,24 +123,29 @@ export default function SignUp(props) {
           type="password"
           autoComplete="current-password"
           value={rePassword}
-          onChange={onChangePasswordCheck}
+          onChange={onRePasswordHandler}
           error={Password !== rePassword}
           helperText={Password !== rePassword ? "비밀번호가 일치하지 않습니다" : ""}
         />
         <TextField 
-          id="nickname" 
+          id="Nickname" 
           label="닉네임" 
           variant="outlined" 
           onChange={onNicknameHandler}
         />
         <TextField
-          id="blogname"
+          id="Domain"
           label="블로그명(영어)"
           variant="outlined"
           onChange={onDomainHandler}
         />
-      </Box>
-
+        <TextField
+          id="Introduce"
+          label="소개 글을 작성해주세요"
+          variant="outlined"
+          onChange={onIntroduceHandler}
+        />
+        
       <Box
         component="form"
         sx={{
@@ -152,8 +157,10 @@ export default function SignUp(props) {
         noValidate
         autoComplete="off"
       >
-        <Button variant="contained">회원가입</Button>
+        <Button variant="contained" type="submit">회원가입</Button>
         <Button variant="contained">취소</Button>
+      </Box>
+
       </Box>
     </Box>
   );
