@@ -29,7 +29,7 @@ export default function Login(props) {
             if(response.payload.loginSuccess) {
                 props.history.push('/')                // 페이지 이동
             } else{
-                alert('Error')
+                alert('로그인 실패')
             }
         })
     }
@@ -75,7 +75,7 @@ export default function Login(props) {
              id="outlined-basic"
              label="이메일"
              variant="outlined"
-             autoComplete='email'
+             autoComplete="email"
              autoFocus
              onChange = {onEmailHandler}
              />  
