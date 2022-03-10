@@ -1,12 +1,12 @@
 import React, { useState, useCallback } from "react";
 import { useDispatch } from 'react-redux';
-// import { Router } from 'react-router-dom';
+import { registerUser } from "../components/Signup/actions/action";
+
 import { Box, Button, TextField } from "@mui/material";
-import { register } from "../components/Signup/actions/action";
 
 export default function SignUp(props) {
 
-  const [Password, setPassword] = useState("");
+  // const [Password, setPassword] = useState("");
   // const onChangePassword = useCallback((e) => {
   //   setPassword(e.target.value);
   // }, []);
@@ -18,36 +18,14 @@ export default function SignUp(props) {
   //     setRePassword(e.target.value);
   //     setPasswordError(e.target.value !== Password);
   //   }, [Password]);
-  const [rePassword, setRePassword] = useState("");  
+  // const [rePassword, setRePassword] = useState("");
   const dispatch = useDispatch();
-  const [Email, setEmail] = useState("");
-  const [Nickname, setNickname] = useState("");
-  const [Domain, setDomain] = useState("");
-  const [Introduce, setIntroduce] = useState("");
-
-  const onEmailHandler = (e) => {
-    setEmail(e.currentTarget.value);
-  }
-
-  const onPasswordHandler = (e) => {
-    setPassword(e.currentTarget.value);
-  }
-
-  const onRePasswordHandler = (e) => {
-    setRePassword(e.currentTarget.value);
-  }
-
-  const onNicknameHandler = (e) => {
-    setNickname(e.currentTarget.value);
-  }
-
-  const onDomainHandler = (e) => {
-    setDomain(e.currentTarget.value);
-  }
-
-  const onIntroduceHandler = (e) => {
-    setIntroduce(e.currentTarget.value);
-  }
+  const [Email, setEmail] = useState('');
+  const [Password, setPassword] = useState('');
+  const [rePassword, setRePassword] = useState('');
+  const [Nickname, setNickname] = useState('');
+  const [Domain, setDomain] = useState('');
+  const [Introduce, setIntroduce] = useState('');
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
@@ -65,30 +43,53 @@ export default function SignUp(props) {
       introduce: Introduce
     }
 
-    dispatch(register(body))
+    dispatch(registerUser(body))
       .then(response => {
-        if(response.payload.success) {
-          props.history.push('/login')
+        if(response.payload.signupSuccess) {
+            props.history.push('/login')
         } else {
-          alert('회원가입에 실패하셨습니다.')
+            alert('회원가입 실패')
         }
       })
   }
 
+  const onEmailHandler = (e) => {
+      setEmail(e.target.value);
+  }
+
+  const onPasswordHandler = (e) => {
+      setPassword(e.target.value);
+  }
+
+  const onRePasswordHandler = (e) => {
+      setRePassword(e.target.value);
+  }
+
+  const onNicknameHandler = (e) => {
+      setNickname(e.target.value);
+  }
+
+  const onDomainHandler = (e) => {
+      setDomain(e.target.value);
+  }
+
+  const onIntroduceHandler = (e) => {
+      setIntroduce(e.target.value);
+  }
+
   return (
     <Box
-      component="form"
-      gap={1}
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-        width: "100vw",
-        height: "100vh",
-        backgroundColor: "white",
-      }}
-    >
+            gap={1}
+            sx={{ 
+                display: 'flex',
+                flexDirection: 'column', 
+                justifyContent: 'center',
+                alignItems: 'center',
+                width: '100vw',
+                height: '100vh',
+                backgroundColor: 'white',
+            }}
+            >
       <h2>회원 가입</h2>
       <Box
         component="form"
@@ -106,6 +107,8 @@ export default function SignUp(props) {
           id="Email" 
           label="이메일" 
           variant="outlined"
+          autoComplete="email"
+          autoFocus
           onChange={onEmailHandler}
           />
         <TextField
@@ -147,15 +150,12 @@ export default function SignUp(props) {
         />
         
       <Box
-        component="form"
         sx={{
           display: "flex",
           flexDirection: "row",
           alignItems: "center",
           "& > :not(style)": { m: 1, width: "20ch" },
         }}
-        noValidate
-        autoComplete="off"
       >
         <Button variant="contained" type="submit">회원가입</Button>
         <Button variant="contained">취소</Button>
