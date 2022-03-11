@@ -1,10 +1,11 @@
 import React, { useState, useCallback } from "react";
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { registerUser } from "../components/Signup/actions/action";
 
 import { Box, Button, TextField } from "@mui/material";
 
-export default function SignUp(props) {
+export default function SignUp() {
 
   // const [Password, setPassword] = useState("");
   // const onChangePassword = useCallback((e) => {
@@ -19,7 +20,8 @@ export default function SignUp(props) {
   //     setPasswordError(e.target.value !== Password);
   //   }, [Password]);
   // const [rePassword, setRePassword] = useState("");
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
+  const navigate = useNavigate();
   const [Email, setEmail] = useState('');
   const [Password, setPassword] = useState('');
   const [rePassword, setRePassword] = useState('');
@@ -29,11 +31,6 @@ export default function SignUp(props) {
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
-    console.log('Email', Email);
-    console.log('Password', Password);
-    console.log('Nickname', Nickname);
-    console.log('Domain', Domain);
-    console.log('Introduce', Introduce);
 
     let body = {
       email: Email,
@@ -42,15 +39,38 @@ export default function SignUp(props) {
       domain: Domain,
       introduce: Introduce
     }
+    
+    let response = dispatch(registerUser(body));
+    console.log("response", response);
+    response.payload.then((data) => {
+      if(data) {
+        navigate('/login');
+      } else {
+        alert('회원가입 실패')
+      }
+    })
 
-    dispatch(registerUser(body))
-      .then(response => {
-        if(response.payload.signupSuccess) {
-            props.history.push('/login')
-        } else {
-            alert('회원가입 실패')
-        }
-      })
+
+
+
+
+    // console.log("response", response);
+    // console.log("response.payload", response.payload);
+    // console.log("response.payload.signupSuccess", response.payload.signupSuccess);
+
+    // if(response.payload.signupSuccess) {
+    //   props.history.push('/login')
+    // } else {
+    //   alert('회원가입 실패')
+    // }
+
+      // .then(response => {
+      //   if(response.payload.signupSuccess) {
+      //       props.history.push('/login')
+      //   } else {
+      //       alert('회원가입 실패')
+      //   }
+      // })
   }
 
   const onEmailHandler = (e) => {
