@@ -1,1 +1,1 @@
-export const REGISTER = 'register'
+export const REGISTER_USER = 'register_user'
