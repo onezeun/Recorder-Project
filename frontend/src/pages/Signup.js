@@ -7,24 +7,21 @@ import { Box, Button, TextField } from "@mui/material";
 
 export default function SignUp() {
 
-  // const [Password, setPassword] = useState("");
-  // const onChangePassword = useCallback((e) => {
-  //   setPassword(e.target.value);
-  // }, []);
+  const dispatch = useDispatch();
+  const [Password, setPassword] = useState("");
+  const onChangePassword = useCallback((e) => {
+    setPassword(e.target.value);
+  }, []);
 
-  // // 중복체크
-  // const [rePassword, setRePassword] = useState('');
-  // const [passwordError, setPasswordError] = useState(false);
-  // const onChangePasswordCheck = useCallback((e) => {
-  //     setRePassword(e.target.value);
-  //     setPasswordError(e.target.value !== Password);
-  //   }, [Password]);
-  // const [rePassword, setRePassword] = useState("");
-  const dispatch = useDispatch()
+  // 중복체크
+  const [rePassword, setRePassword] = useState('');
+  const [passwordError, setPasswordError] = useState(false);
+  const onChangePasswordCheck = useCallback((e) => {
+      setRePassword(e.target.value);
+      setPasswordError(e.target.value !== Password);
+    }, [Password]);
   const navigate = useNavigate();
   const [Email, setEmail] = useState('');
-  const [Password, setPassword] = useState('');
-  const [rePassword, setRePassword] = useState('');
   const [Nickname, setNickname] = useState('');
   const [Domain, setDomain] = useState('');
   const [Introduce, setIntroduce] = useState('');
@@ -75,14 +72,6 @@ export default function SignUp() {
 
   const onEmailHandler = (e) => {
       setEmail(e.target.value);
-  }
-
-  const onPasswordHandler = (e) => {
-      setPassword(e.target.value);
-  }
-
-  const onRePasswordHandler = (e) => {
-      setRePassword(e.target.value);
   }
 
   const onNicknameHandler = (e) => {
@@ -137,7 +126,7 @@ export default function SignUp() {
           type="password"
           autoComplete="current-password"
           value={Password}
-          onChange={onPasswordHandler}
+          onChange={onChangePassword}
         />
         <TextField
           id="rePassword"
@@ -146,7 +135,7 @@ export default function SignUp() {
           type="password"
           autoComplete="current-password"
           value={rePassword}
-          onChange={onRePasswordHandler}
+          onChange={onChangePasswordCheck}
           error={Password !== rePassword}
           helperText={Password !== rePassword ? "비밀번호가 일치하지 않습니다" : ""}
         />
