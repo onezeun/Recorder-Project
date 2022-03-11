@@ -1,4 +1,3 @@
-<<<<<<< Updated upstream
 package com.record.backend.service;
 
 import com.record.backend.domain.user.User;
@@ -53,13 +52,9 @@ public class PostService {
 		User source = findUserByDomian(user.getDomain());
 		Post target = findPostById(postId);
 
-<<<<<<< Updated upstream
 		target.postLike(source);
 		return new LikeResponseDto(target.getLikeCounts(), true);
 	}
-=======
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
 
 	@Transactional
 	public LikeResponseDto unPostLike(User user, Long postId) {
@@ -70,14 +65,10 @@ public class PostService {
 		return new LikeResponseDto(target.getLikeCounts(), false);
 	}
 
-<<<<<<< Updated upstream
 	private Post findPostById(Long postId) {
 		return postRepository.findById(postId)
 			.orElseThrow(IllegalUserException::new);
 	}
-=======
-=======
-=======
 //package com.record.backend.service;
 //
 //import java.util.List;
@@ -135,8 +126,6 @@ public class PostService {
 //	public List<Post> findPosts() {
 //		return postRepository.findAll();
 //	}
->>>>>>> Stashed changes
->>>>>>> Stashed changes
 //
 //	public Optional<Post> findPostById(Long id) {
 //		return postRepository.findById(id);
@@ -147,8 +136,6 @@ public class PostService {
 //	public void delete(Post post) {
 //		postRepository.delete(post);
 //	}
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
 
 	private User findUserByDomian(String domain) {
 		return userRepository.findByDomain(domain)
@@ -156,8 +143,6 @@ public class PostService {
 	}
 
 }
-=======
 //
 //
 //}
->>>>>>> Stashed changes

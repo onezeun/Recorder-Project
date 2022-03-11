@@ -13,7 +13,7 @@ import com.record.backend.repository.MemberRepository;
 
 @CrossOrigin(origins = "http://localhost:3000/")
 @RestController
-@RequestMapping("api/")
+@RequestMapping("/api")
 public class MemberController {
 
 	@Autowired
