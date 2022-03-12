@@ -26,9 +26,6 @@ public class Comment extends BaseEntity {
 	@Column(name = "comment_id")
 	private Long id;
 
-	@Embedded
-	private CommentContent content;
-
 	@ManyToOne(fetch = LAZY)
 	@JoinColumn(name = "user_id")
 	private User user;
@@ -36,21 +33,20 @@ public class Comment extends BaseEntity {
 	@ManyToOne(fetch = LAZY)
 	@JoinColumn(name = "post_id")
 	private Post post;
-/*
+
 	@Column
-	private String content;*/
+	private String content;
 
 	protected Comment() {
 	}
 
-	public Comment(String content, User user, Post post) {
-		this(null, content, user, post);
+	public Comment(User user, Post post) {
+		this(null, user, post);
 	}
 
 	@Builder
-	public Comment(Long id, String content, User user, Post post) {
+	public Comment(Long id, User user, Post post) {
 		this.id = id;
-		this.content = new CommentContent(content);
 		this.user = user;
 		this.post = post;
 	}

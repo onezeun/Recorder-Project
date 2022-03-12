@@ -6,13 +6,9 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 import com.record.backend.domain.BaseEntity;
 import com.record.backend.domain.category.Category;
-import com.record.backend.domain.comment.Comments;
 import com.record.backend.domain.user.User;
 import com.record.backend.domain.comment.Comment;
 
@@ -23,6 +19,17 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import static javax.persistence.FetchType.*;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 @Getter
@@ -59,20 +66,15 @@ public class Post extends BaseEntity {
 	private Category category;
 
 	//1대 다 관계
-	/*@OneToMany(mappedBy = "post")
-	private List<Comment> comments = new ArrayList<>();*/
-/*
+	@OneToMany(mappedBy = "post")
+	private List<Comment> comments = new ArrayList<>();
+
 	@OneToMany(mappedBy = "post")
 	private List<PostLike> postLikes = new ArrayList<>();
-*/
-	@Embedded
-	private Comments comments;
 
-	@Embedded
-	private PostLikes postLikes;
+	@OneToMany(mappedBy = "post")
+	private List<PostTag> postTags = new ArrayList<>();
 
-/*	@OneToMany(mappedBy = "post")
-	private List<PostTag> postTags = new ArrayList<>();*/
 
 
 /*	@Builder
@@ -91,8 +93,7 @@ public class Post extends BaseEntity {
 
 	@Builder
 	public Post(Long id, User user, String title, String content, int hits, String summary,
-		Exposure exposure, byte[] thumbnail_image, Category category, Comments comments,
-		PostLikes postLikes) {
+		Exposure exposure, byte[] thumbnail_image, Category category) {
 		this.id = id;
 		this.user = user;
 		this.title = title;
@@ -102,8 +103,6 @@ public class Post extends BaseEntity {
 		this.exposure = exposure;
 		this.thumbnail_image = thumbnail_image;
 		this.category = category;
-		this.comments = comments;
-		this.postLikes = postLikes;
 	}
 
 	public void updatePost(PostUpdateDto updateDto) {
@@ -127,20 +126,4 @@ public class Post extends BaseEntity {
 		postLikes.add(postLike);
 	}
 
-	public void unPostLike(User user) {
-		PostLike postLike = new PostLike(this, user);
-		postLikes.remove(postLike);
-	}
-
-	public int getLikeCounts() {
-		return postLikes.getCounts();
-	}
-
-	public PostLikes getPostLikes() {
-		return postLikes;
-	}
-
-	public List<User> getPostLikeUsers() {
-		return postLikes.getLikeUsers();
-	}
 }

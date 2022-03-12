@@ -79,23 +79,6 @@ public class PostApiController {
 		postService.deletePost(postId);
 	}
 
-	@PutMapping("/board/posts/{post_id}/likes")
-	public ResponseEntity<LikePresentationResponse> likePost(@PathVariable User user, @PathVariable Long postId) {
-		LikeResponseDto likeResponseDto = postService.postLike(user, postId);
-		LikePresentationResponse likePresentationResponse = PostDtoAssembler.likePresentationResponse(likeResponseDto);
-
-		return ResponseEntity.ok(likePresentationResponse);
-	}
-
-	@DeleteMapping("/board/posts/{post_id}/likes")
-	public ResponseEntity<LikePresentationResponse> unlikePost(@PathVariable User user, @PathVariable Long postId) {
-		LikeResponseDto unlikeResponseDto = postService.unPostLike(user, postId);
-		LikePresentationResponse likePresentationResponse = PostDtoAssembler.likePresentationResponse(
-			unlikeResponseDto);
-
-		return ResponseEntity.ok(likePresentationResponse);
-	}
-
 	@Data
 	@AllArgsConstructor
 	static class Result<T> {
