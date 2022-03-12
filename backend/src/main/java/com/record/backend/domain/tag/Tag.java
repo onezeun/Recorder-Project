@@ -34,7 +34,7 @@ public class Tag extends BaseEntity {
 	@Column
 	private String tagName;
 
-/*	@OneToMany(mappedBy = "tag")
-	private List<PostTag> postTagList = new ArrayList<>();*/
+	@OneToMany(mappedBy = "tag")
+	private List<PostTag> postTagList = new ArrayList<>();
 
 }

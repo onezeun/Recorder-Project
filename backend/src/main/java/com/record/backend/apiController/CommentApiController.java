@@ -36,7 +36,6 @@ import lombok.RequiredArgsConstructor;
 public class CommentApiController {
 
 	private final CommentService commentService;
-	private final CommentRepository commentRepository;
 	private final CommentQueryRepository commentQueryRepository;
 
 	@PostMapping("/board/posts/{post_id}/users/{user_id}/comments")
