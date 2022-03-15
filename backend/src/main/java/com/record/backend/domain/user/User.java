@@ -1,27 +1,30 @@
 package com.record.backend.domain.user;
 
+import static javax.persistence.CascadeType.*;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
-import javax.persistence.CascadeType;
+
 import javax.persistence.Column;
-import javax.persistence.Embedded;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
-
+import com.record.backend.domain.alert.Alert;
 import com.record.backend.domain.category.Category;
 import com.record.backend.domain.comment.Comment;
-import com.record.backend.domain.post.Post;
+
+import com.record.backend.domain.follow.Followers;
+import com.record.backend.domain.follow.Followings;
 import com.record.backend.domain.post.PostLike;
 
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
+
 import lombok.Setter;
 
 @Entity
@@ -39,43 +42,48 @@ public class User {
 
 	private String nickname;
 
-	private String domain;
+	private String picture;
 
-	private byte[] profile_photo;
+	private String domain;
 
 	private String introduce;
 
-	private LocalDateTime created_time = LocalDateTime.now();
 
 
 
-	//1대 다 관계
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-	private List<Post> postList = new ArrayList<>();
-
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "user", cascade = ALL)
 	private List<Category> categoryList = new ArrayList<>();
 
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "user", cascade = ALL)
 	private List<Comment> commentList = new ArrayList<>();
 
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "user", cascade = ALL)
 	private List<PostLike> postLikeList = new ArrayList<>();
 
+	@OneToMany(mappedBy = "user", cascade = ALL)
+	private List<Followings> followingsList = new ArrayList<>();
+
+	@OneToMany(mappedBy = "user", cascade = ALL)
+	private List<Followers> followersList = new ArrayList<>();
+
+	@OneToMany(mappedBy = "user", cascade = ALL)
+	private List<Alert> alerts = new ArrayList<>();
+
+
 	@Builder
-	public User (String email, String password, String nickname, String domain, String introduce) {
+	public User(String email, String password, String nickname, String picture, String domain,
+		String introduce) {
 		this.email = email;
 		this.password = password;
 		this.nickname = nickname;
+		this.picture = picture;
 		this.domain = domain;
 		this.introduce = introduce;
 	}
 
-
-	//==post 로직==//
-/*	public int getPostCount() {
-		return posts.count();
-	}*/
-
+/*	public String getRoleKey() {
+		return this.role.getKey();
+	}
+*/
 
 }
