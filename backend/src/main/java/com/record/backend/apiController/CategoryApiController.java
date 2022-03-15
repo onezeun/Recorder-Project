@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.record.backend.domain.category.Category;
 import com.record.backend.dto.category.request.CategorySaveRequestDto;
+import com.record.backend.dto.category.request.CategoryUpdateRequestDto;
 import com.record.backend.dto.category.response.CategoryNameDto;
 import com.record.backend.dto.category.response.CategoryResponsetDto;
 import com.record.backend.dto.category.response.CategoryUpdateResponseDto;
@@ -61,7 +62,8 @@ public class CategoryApiController {
 
 	//수정
 	@PutMapping("/board/categories/{category_id}")
-	public CategoryUpdateResponseDto updateCategory(@PathVariable("category_id") Long categoryId, @RequestBody CategoryUpdateRequestDto updateDto) {
+	public CategoryUpdateResponseDto updateCategory(@PathVariable("category_id") Long categoryId,
+		@RequestBody CategoryUpdateRequestDto updateDto) {
 		return categoryService.updateCategory(categoryId, updateDto);
 	}
 
