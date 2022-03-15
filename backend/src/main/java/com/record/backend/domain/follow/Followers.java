@@ -1,34 +1,26 @@
-package com.record.backend.domain.alert;
+package com.record.backend.domain.follow;
 
 import static javax.persistence.FetchType.*;
 
-import java.time.LocalDateTime;
-
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import com.record.backend.domain.BaseEntity;
 import com.record.backend.domain.user.User;
 
 import lombok.Getter;
 import lombok.Setter;
 
-@Entity
 @Getter @Setter
-public class Alert extends BaseEntity {
+@Entity
+public class Followers {
 
-	@Id
-	@GeneratedValue
-	@Column(name = "alert_id")
+	@Id @GeneratedValue
 	private Long id;
 
 	@ManyToOne(fetch = LAZY)
 	@JoinColumn(name = "user_id")
 	private User user;
-
-	private String content;
 }

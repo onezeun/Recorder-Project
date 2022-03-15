@@ -1,9 +1,6 @@
 package com.record.backend.apiController;
 
 import java.util.List;
-import java.util.stream.Collectors;
-
-import javax.validation.constraints.NotBlank;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,10 +12,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.record.backend.domain.category.Category;
-import com.record.backend.dto.category.CategoryUpdateDto;
-import com.record.backend.repository.category.CategoryRepository;
-import com.record.backend.dto.category.CategoryResponseDto;
-import com.record.backend.dto.category.CategorySaveRequestDto;
+import com.record.backend.dto.category.request.CategorySaveRequestDto;
+import com.record.backend.dto.category.response.CategoryNameDto;
+import com.record.backend.dto.category.response.CategoryResponsetDto;
+import com.record.backend.dto.category.response.CategoryUpdateResponseDto;
+import com.record.backend.repository.CategoryRepository;
 import com.record.backend.service.CategoryService;
 
 import lombok.AllArgsConstructor;
@@ -32,41 +30,48 @@ public class CategoryApiController {
 	private final CategoryRepository categoryRepository;
 	private final CategoryService categoryService;
 
-	// 생성
+	//카테고리 생성
 	@PostMapping("/board/categories")
 	@ResponseBody
 	public Long saveCategory(@RequestBody CategorySaveRequestDto requestDto) {
 		return categoryService.saveCategory(requestDto);
 	}
 
-	//조회
+	//카테고리 이름만 조회
 	@GetMapping("/board/categories")
-	public Result categories() {
-		List<Category> allCategory = categoryRepository.findAll();
-		List<CategoryResponseDto> collect = allCategory.stream()
-			.map(CategoryResponseDto::new)
-			.collect(Collectors.toList());
+	public Result allCategories() {
+		List<CategoryNameDto> categoryNameDtos = categoryService.showCategoryNames();
 
-		return new Result(collect);
+		return new Result(categoryNameDtos);
 	}
 
-	@GetMapping("/board/cateogries/{category_id}")
-	public CategoryResponseDto findCategory(@PathVariable("category_id") Long categoryId) {
+	//한개만 조회
+	@GetMapping("/board/categories/{category_id}")
+	public CategoryResponsetDto findCategory(@PathVariable("category_id") Long categoryId) {
 		Category findCategory = categoryRepository.findById(categoryId).get();
-		return new CategoryResponseDto(findCategory);
+		return new CategoryResponsetDto(findCategory);
 	}
+
+/*
+	@GetMapping)"/board/categories/v1/{category_id}"
+	public Result categoryV1() {
+		categoryRepository.findAll()
+	}
+*/
 
 	//수정
 	@PutMapping("/board/categories/{category_id}")
-	public Long updateCategory(@PathVariable(name = "category_id") Long categoryId, CategoryUpdateDto updateDto) {
+	public CategoryUpdateResponseDto updateCategory(@PathVariable("category_id") Long categoryId, @RequestBody CategoryUpdateRequestDto updateDto) {
 		return categoryService.updateCategory(categoryId, updateDto);
 	}
 
 	//삭제
 	@DeleteMapping("/board/categories/{category_id}")
-	public void deleteCategory(@PathVariable(name = "category_id") Long categoryId) {
+	public void deleteCateogry(@PathVariable("category_id") Long categoryId) {
 		categoryService.deleteCategory(categoryId);
 	}
+
+
 
 	@Data
 	@AllArgsConstructor

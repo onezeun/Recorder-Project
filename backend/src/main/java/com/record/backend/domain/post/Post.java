@@ -12,11 +12,11 @@ import com.record.backend.domain.category.Category;
 import com.record.backend.domain.user.User;
 import com.record.backend.domain.comment.Comment;
 
-import com.record.backend.dto.post.PostUpdateDto;
 
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import static javax.persistence.FetchType.*;
 
@@ -32,7 +32,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 @Entity
-@Getter
+@Getter @Setter
 @NoArgsConstructor
 public class Post extends BaseEntity {
 	private static final int MAX_NAME_LENGTH = 30;
@@ -59,7 +59,7 @@ public class Post extends BaseEntity {
 	@Enumerated(EnumType.STRING)
 	private Exposure exposure; // ALL, NEIGHBOR, NO
 
-	private byte[] thumbnail_image;
+	private String thumbnail_image;
 
 	@ManyToOne(fetch = LAZY)
 	@JoinColumn(name = "category_id")
@@ -76,25 +76,9 @@ public class Post extends BaseEntity {
 	private List<PostTag> postTags = new ArrayList<>();
 
 
-
-/*	@Builder
-	public Post(User user, String title,
-			  String content, String summary,
-			  Category category, Exposure exposure, PostLikes postLikes) {
-
-		this.user = user;
-		this.title = title;
-		this.content = content;
-		this.summary = summary;
-		this.category = category;
-		this.exposure = exposure;
-		this.postLikes = postLikes;
-	}*/
-
 	@Builder
-	public Post(Long id, User user, String title, String content, int hits, String summary,
-		Exposure exposure, byte[] thumbnail_image, Category category) {
-		this.id = id;
+	public Post(User user, String title, String content, int hits, String summary,
+		Exposure exposure, String thumbnail_image, Category category) {
 		this.user = user;
 		this.title = title;
 		this.content = content;
@@ -105,25 +89,11 @@ public class Post extends BaseEntity {
 		this.category = category;
 	}
 
-	public void updatePost(PostUpdateDto updateDto) {
-		this.title = updateDto.getTitle();
-		this.content = updateDto.getContent();
-		this.summary = updateDto.getSummary();
-		this.exposure = Exposure.valueOf(updateDto.getExposure());
-		//		this.thumbnail_image = updateDto.getThumbnail_image();
-		//		this.postTagList = updateDto.getPostTagList();
-	}
-
 	//==비즈니스 로직==//
 
 	//조회수
 	public void addHits() {
 		this.hits += 1;
-	}
-
-	public void postLike(User user) {
-		PostLike postLike = new PostLike(this, user);
-		postLikes.add(postLike);
 	}
 
 }

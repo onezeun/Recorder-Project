@@ -1,71 +1,79 @@
 package com.record.backend.service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.record.backend.domain.user.User;
-import com.record.backend.dto.user.FollowRequestDto;
-import com.record.backend.dto.user.FollowResponseDto;
-import com.record.backend.dto.user.UserDtoAssembler;
-import com.record.backend.dto.user.UserUpdateDto;
+import com.record.backend.dto.user.request.UserSaveRequestDto;
+import com.record.backend.dto.user.request.UserUpdateRequestDto;
+import com.record.backend.dto.user.response.UserResponseDto;
+import com.record.backend.dto.user.response.UserUpdateResponseDto;
 import com.record.backend.exception.IllegalUserException;
-import com.record.backend.repository.user.UserRepository;
-import com.record.backend.dto.user.UserSaveRequestDto;
+import com.record.backend.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 
-@Service
 @Transactional(readOnly = true)
+@Service
 @RequiredArgsConstructor
 public class UserService {
 
 	private final UserRepository userRepository;
 
-	//유저 생성
+	//생성
 	@Transactional
 	public Long saveUser(UserSaveRequestDto requestDto) {
-		validateExistUserEmail(requestDto.getEmail());
-		validateExistUserDomain(requestDto.getDomain());
+		validateDuplicateEmail(requestDto.getEmail());
+		validateDuplicateDomain(requestDto.getDomain());
 		return userRepository.save(requestDto.toEntity()).getId();
 	}
 
-
+	//수정
 	@Transactional
-	public Long updateUser (Long id, UserUpdateDto updateDto) {
-		User user = findUser(id);
-		user.setNickname(updateDto.getNickname());
-		user.setIntroduce(updateDto.getIntroduce());
-		user.setPassword(updateDto.getPassword());
-		//도메인 검증
-		validateExistUserDomain(updateDto.getDomain());
-		user.setDomain(updateDto.getDomain());
-		return user.getId();
+	public UserUpdateResponseDto updateUser(Long userId, UserUpdateRequestDto updateDto) {
+		validateDuplicateDomain(updateDto.getDomain());
+
+		User findUser = userRepository.findById(userId).get();
+		findUser.setEmail(updateDto.getEmail());
+		findUser.setNickname(updateDto.getNickname());
+		findUser.setPicture(updateDto.getPicture());
+		findUser.setDomain(updateDto.getDomain());
+		findUser.setIntroduce(updateDto.getIntroduce());
+
+		return new UserUpdateResponseDto(findUser.getId(), findUser.getEmail(), findUser.getNickname(),
+			findUser.getPicture(), findUser.getDomain(), findUser.getIntroduce());
 	}
 
+	//조회
+	public List<UserResponseDto> findAllUser() {
+		List<User> allUser = userRepository.findAll();
+		List<UserResponseDto> collect = allUser.stream()
+			.map(UserResponseDto::new)
+			.collect(Collectors.toList());
+
+		return collect;
+	}
+
+	//삭제
 	@Transactional
-	public void deleteUser (Long id) {
-		userRepository.delete(findUser(id));
+	public void deleteUser(Long userId) {
+		userRepository.deleteById(userId);
 	}
 
-	public User findUser(Long id) {
-		return userRepository.findById(id)
-			.orElseThrow(() -> new IllegalUserException("찾는 멤버 없습니다."));
-	}
 
-	private void validateExistUserEmail(String email) {
-		if (userRepository.findByEmail(email).isPresent()) {
-			throw new IllegalUserException("이미 존재하는 이메일입니다.");
-		}
-	}
-
-	public void validateExistUserDomain(String domain) {
+	//==검증 로직==//
+	public void validateDuplicateDomain(String domain) {
 		if (userRepository.findByDomain(domain).isPresent()) {
 			throw new IllegalUserException("이미 존재하는 도메인입니다.");
 		}
 	}
 
-
-	private User findUserByDomin(String domain) {
-		return userRepository.findByDomain(domain).get();
+	public void validateDuplicateEmail(String email) {
+		if (userRepository.findByEmail(email).isPresent()) {
+			throw new IllegalUserException("이미 존재하는 이메일입니다.");
+		}
 	}
 }
