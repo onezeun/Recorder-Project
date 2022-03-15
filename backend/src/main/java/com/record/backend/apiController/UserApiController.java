@@ -35,7 +35,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
-@CrossOrigin(origins = "http://localhost:3000/")
 @RestController
 @RequiredArgsConstructor
 @Slf4j

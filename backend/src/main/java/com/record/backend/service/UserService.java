@@ -64,29 +64,6 @@ public class UserService {
 		}
 	}
 
-	//==팔로우 로직==//
-	@Transactional
-	public FollowResponseDto followUser(FollowRequestDto requestDto) {
-		UserSaveRequestDto userSaveRequestDto = requestDto.getUserSaveRequestDto();
-		User source = findUserByDomin(userSaveRequestDto.getDomain());
-		User target = findUserByDomin(requestDto.getTargetName());
-
-		source.follow(target);
-
-		return UserDtoAssembler.followResponseDto(target, true);
-	}
-
-	@Transactional
-	public FollowResponseDto unfollowUser(FollowRequestDto requestDto) {
-		UserSaveRequestDto userSaveRequestDto = requestDto.getUserSaveRequestDto();
-		User source = findUserByDomin(userSaveRequestDto.getDomain());
-		User target = findUserByDomin(requestDto.getTargetName());
-
-		source.unfollow(target);
-		return UserDtoAssembler.followResponseDto(target, false);
-	}
-
-
 
 	private User findUserByDomin(String domain) {
 		return userRepository.findByDomain(domain).get();
