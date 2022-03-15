@@ -4,6 +4,7 @@ import com.record.backend.domain.comment.Comment;
 
 import lombok.Data;
 
+//조회 Dto
 @Data
 public class CommentDto {
 

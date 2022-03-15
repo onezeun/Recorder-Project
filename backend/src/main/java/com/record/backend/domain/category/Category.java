@@ -41,12 +41,11 @@ public class Category {
 	private String name;
 
 	@OneToMany(mappedBy = "category")
-	private List<Post> postList = new ArrayList<>();
+	private List<Post> posts = new ArrayList<>();
 
 	@Builder
-	public Category(User user, String name, List<Post> postList) {
+	public Category(User user, String name) {
 		this.user = user;
 		this.name = name;
-		this.postList = postList;
 	}
 }
