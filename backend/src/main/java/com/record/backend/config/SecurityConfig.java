@@ -63,12 +63,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http
 			.cors()
-				.and()
+			.and()
 			.csrf()
-				.disable()
+			.disable()
 			.exceptionHandling()
-				.authenticationEntryPoint(unauthorizedHandler)
-				.and()
+			.authenticationEntryPoint(unauthorizedHandler)
+			.and()
 			.sessionManagement()
 			.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 			.and()
@@ -87,10 +87,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.permitAll()
 			.antMatchers("/api/user/checkUsernameAvailability", "/api/user/checkEmailAvailability")
 			.permitAll()
-			.antMatchers(HttpMethod.GET, "/api/polls/**", "/api/users/**")
+			.antMatchers(HttpMethod.GET, "/api/aa/**", "/api/users/**")
 			.permitAll()
 			.anyRequest()
-			.authenticated();
+			//.authenticated();
+			.permitAll();
 
 		// Add our custom JWT security filter
 		http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);

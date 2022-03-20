@@ -1,8 +1,11 @@
 package com.record.backend.apiController;
 
+import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,8 +14,11 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.record.backend.domain.post.Post;
+import com.record.backend.dto.config.PagedResponse;
+import com.record.backend.dto.loginlogout.response.ApiResponse;
 import com.record.backend.dto.post.PostDto;
 import com.record.backend.dto.post.request.PostSaveRequestDto;
 import com.record.backend.dto.post.request.PostUpdateRequestDto;
@@ -20,6 +26,8 @@ import com.record.backend.dto.post.response.PostResponseDto;
 import com.record.backend.dto.post.response.PostUpdateResponseDto;
 import com.record.backend.repository.PostRepository;
 import com.record.backend.repository.query.PostQueryRepository;
+import com.record.backend.security.CurrentUser;
+import com.record.backend.security.UserPrincipal;
 import com.record.backend.service.PostService;
 
 import lombok.AllArgsConstructor;
@@ -34,15 +42,24 @@ public class PostApiController {
 	private final PostService postService;
 	private final PostQueryRepository postQueryRepository;
 
+
 	//생성
 	@PostMapping("/board/posts")
-	public Long savePost(@RequestBody PostSaveRequestDto requestDto) {
-		return postService.savePost(requestDto);
+	//@PreAuthorize("hasRole('USER')")
+	public ResponseEntity<?> savePost(@RequestBody PostSaveRequestDto requestDto) {
+		Post post = postService.savePost(requestDto);
+
+		URI location = ServletUriComponentsBuilder
+			.fromCurrentRequest().path("/{post_id}")
+			.buildAndExpand(post.getId()).toUri();
+
+		return ResponseEntity.created(location)
+			.body(new ApiResponse(true, "Post Created Successfully"));
 	}
 
 	//수정
 	@PutMapping("/board/posts/{post_id}")
-	public PostUpdateResponseDto updatePost(@PathVariable("post_id") Long postId,
+	public PostUpdateResponseDto updatePost( @PathVariable("post_id") Long postId,
 		@RequestBody PostUpdateRequestDto updateDto) {
 		return postService.updatePost(postId, updateDto);
 	}
@@ -72,8 +89,9 @@ public class PostApiController {
 
 	//하나만 조회
 	@GetMapping("/board/posts/{post_id}")
-	public PostResponseDto findPost(@PathVariable("post_id") Long postId) {
-		Post findPost = postRepository.findById(postId).get();
+	public PostResponseDto findPost(@CurrentUser UserPrincipal currentUser, @PathVariable("post_id") Long postId) {
+		//Post findPost = postRepository.findById(postId).get();
+		Post findPost = postService.getPostById(postId, currentUser);
 		return new PostResponseDto(findPost);
 	}
 

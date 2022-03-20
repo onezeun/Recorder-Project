@@ -9,6 +9,7 @@ server:
 spring:
   profiles:
     include: aws
+  output.ansi.enabled: always
   jpa:
     open-in-view: false
     hibernate:
