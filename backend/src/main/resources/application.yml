@@ -7,16 +7,12 @@ server:
       enabled: true
 
 spring:
-  datasource:
-    driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://postgres-database.cj8kdizre01l.us-east-1.rds.amazonaws.com:5432/recorder_db
-    username: recorder
-    password: fpzhej1234!
-
+  profiles:
+    include: aws
   jpa:
     open-in-view: false
     hibernate:
-      ddl-auto: create # create, update, none
+      ddl-auto: update # create, update, none
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     #show-sql: true
@@ -27,10 +23,20 @@ spring:
         default_schema: test
     defer-datasource-initialization: true
 
-  servlet:
-    multipart:
-      enabled: true
-      max-file-size: 2MB
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+    time-zome: Asia/Seoul
+
+
+app:
+  jwtSecret: jwtsigntutorialasdfasdfasdfasdfasdf
+  jwtExpirationInMs: 604800000
+
+#  servlet:
+#    multipart:
+#      enabled: true
+#      max-file-size: 2MB
 
 logging.level:
   org.hibernate.SQL: debug

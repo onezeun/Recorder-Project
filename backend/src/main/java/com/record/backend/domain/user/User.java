@@ -2,34 +2,37 @@ package com.record.backend.domain.user;
 
 import static javax.persistence.CascadeType.*;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
-
+import java.util.Set;
 
 import javax.persistence.Column;
-
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
-import com.record.backend.domain.alert.Alert;
+import com.record.backend.domain.BaseEntity;
 import com.record.backend.domain.category.Category;
 import com.record.backend.domain.comment.Comment;
-
 import com.record.backend.domain.follow.Followers;
 import com.record.backend.domain.follow.Followings;
 import com.record.backend.domain.post.PostLike;
 
 import lombok.Builder;
 import lombok.Getter;
-
 import lombok.Setter;
 
-@Entity
 @Getter @Setter
-public class User {
+@Entity
+@Table(name = "user")
+public class User extends BaseEntity {
 
 	@Id @GeneratedValue
 	@Column(name = "user_id")
@@ -37,6 +40,8 @@ public class User {
 
 	@Column(unique = true)
 	private String email;
+
+	//private String username;
 
 	private String password;
 
@@ -48,7 +53,11 @@ public class User {
 
 	private String introduce;
 
-
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "user_roles",
+		joinColumns = @JoinColumn(name = "user_id"),
+		inverseJoinColumns = @JoinColumn(name = "role_id"))
+	private Set<Role> roles = new HashSet<>();
 
 
 	@OneToMany(mappedBy = "user", cascade = ALL)
@@ -66,9 +75,9 @@ public class User {
 	@OneToMany(mappedBy = "user", cascade = ALL)
 	private List<Followers> followersList = new ArrayList<>();
 
-	@OneToMany(mappedBy = "user", cascade = ALL)
-	private List<Alert> alerts = new ArrayList<>();
+	public User() {
 
+	}
 
 	@Builder
 	public User(String email, String password, String nickname, String picture, String domain,
@@ -81,9 +90,14 @@ public class User {
 		this.introduce = introduce;
 	}
 
-/*	public String getRoleKey() {
-		return this.role.getKey();
+	@Builder
+	public User(String email, String password, String nickname, String domain,
+		String introduce) {
+		this.email = email;
+		this.password = password;
+		this.nickname = nickname;
+		this.domain = domain;
+		this.introduce = introduce;
 	}
-*/
 
 }
