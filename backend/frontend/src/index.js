@@ -3,9 +3,9 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import store from "./redux/store"
 
 import { Provider } from 'react-redux';
-import { createStore } from 'redux';
 
 import { MuiThemeProvider, createTheme } from '@material-ui/core/styles';
 
@@ -14,12 +14,6 @@ const theme = createTheme({
     fontFamily: 'CookieRun Bold',
   },
 });
-
-function reducer(state = '', action) {
-  return state
-}
-
-let store = createStore(reducer)
 
 
 ReactDOM.render(
