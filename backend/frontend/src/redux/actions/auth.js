@@ -53,35 +53,31 @@ export const register =
   };
 
 export const login = (email, password) => (dispatch) => {
-  return AuthService.login(email, password).then(
-    (data) => {
-      dispatch({
-        type: LOGIN_SUCCESS,
-        payload: { user: data },
-      });
+  return AuthService.login(email, password)
+    .then((data) => {
+      if (data){
+        dispatch({
+          type: LOGIN_SUCCESS,
+          payload: { user: data },
+        });
+  
+        return Promise.resolve();
 
-      return Promise.resolve();
-    },
-    (error) => {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
+      } 
+      else {
+        dispatch({
+          type: LOGIN_FAIL,
+        });
 
-      dispatch({
-        type: LOGIN_FAIL,
-      });
+        // dispatch({
+        //   type: SET_MESSAGE,
+        //   payload: message,
+        // });
 
-      dispatch({
-        type: SET_MESSAGE,
-        payload: message,
-      });
-
-      return Promise.reject();
-    },
-  );
+        return Promise.reject();
+      }
+    }
+  )
 };
 
 export const logout = () => (dispatch) => {
