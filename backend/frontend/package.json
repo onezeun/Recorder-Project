@@ -70,6 +70,7 @@
     "sass-loader": "^12.3.0",
     "semver": "^7.3.5",
     "source-map-loader": "^3.0.0",
+    "start": "^5.1.0",
     "style-loader": "^3.3.1",
     "styled-components": "^5.3.3",
     "stylis": "^4.0.13",
