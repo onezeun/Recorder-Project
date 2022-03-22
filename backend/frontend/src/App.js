@@ -1,11 +1,14 @@
-import React, { lazy } from "react";
+import React from "react";
+import { useSelector } from "react-redux";
 import { Link, Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import styled from 'styled-components';
 
 import './App.css';
 
-import Header from './components/Header/Header.js';
+import Header from './components/Header/Header';
+import UserHeader from './components/Header/UserHeader';
 import MemberComponent from './components/Member/MemberConponent.js';
+//import Category from './components/Category/Category';
 
 import Login from './pages/Login';
 import Signup from './pages/Signup';
@@ -16,15 +19,18 @@ import Main from './pages/Main';
 import UserHome from './pages/Userhome';
 import Search from './pages/Search';
 import Neighbor from './pages/Neighbor';
+//import Profile from "./pages/Profile";
 
 const StyledDiv = styled.div`
   margin-top: 50px;
 `;
 
 function App() {
+  const { isLoggedIn } = useSelector((state) => state.auth);
+
   return (
     <Router>
-      <Header />
+      {isLoggedIn ? <UserHeader /> : <Header />}
       <StyledDiv>
         <hr />
           <Link to="/login">
@@ -57,6 +63,12 @@ function App() {
           <Link to="/member">
             <button>Member</button>
           </Link>
+          {/* <Link to="/category">
+            <button>Category</button>
+          </Link>
+          <Link to="/profile">
+            <button>profile</button>
+          </Link> */}
         <hr /> 
         <Routes>
           <Route exact path="/" element={<Signup />} />
@@ -70,6 +82,8 @@ function App() {
           <Route path="/search" element={<Search />} />
           <Route path="/neighbor" element={<Neighbor />} />
           <Route path="/member" element={<MemberComponent />} />
+          {/* <Route path="/category" element={<Category />} />
+          <Route path="/profile" element={<Profile />} /> */}
         </Routes>
       </StyledDiv>
     </Router>
