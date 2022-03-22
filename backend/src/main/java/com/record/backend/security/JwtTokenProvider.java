@@ -16,6 +16,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.UnsupportedJwtException;
 import io.jsonwebtoken.security.Keys;
+import io.jsonwebtoken.security.SignatureException;
 
 /**
  * 다음 유틸리티 클래스는 사용자가 성공적으로 로그인한 후
@@ -69,6 +70,8 @@ public class JwtTokenProvider {
 		try {
 			Jwts.parserBuilder().setSigningKey(getSignKey()).build().parseClaimsJws(authToken);
 			return true;
+		} catch (SignatureException e) {
+			logger.error("Invalid JWT signature: {}", e.getMessage());
 		} catch (MalformedJwtException ex) {
 			logger.error("Invalid JWT token");
 		} catch (ExpiredJwtException ex) {
