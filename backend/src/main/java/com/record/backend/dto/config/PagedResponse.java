@@ -1,4 +1,4 @@
-package com.record.backend.dto.config;
+package com.record.backend.util.config;
 
 import java.util.List;
 

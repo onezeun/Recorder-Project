@@ -17,7 +17,7 @@ import com.record.backend.exception.ResourceNotFoundException;
 import com.record.backend.repository.CategoryRepository;
 import com.record.backend.repository.PostRepository;
 import com.record.backend.repository.UserRepository;
-import com.record.backend.security.UserPrincipal;
+import com.record.backend.auth.security.UserPrincipal;
 
 import lombok.RequiredArgsConstructor;
 

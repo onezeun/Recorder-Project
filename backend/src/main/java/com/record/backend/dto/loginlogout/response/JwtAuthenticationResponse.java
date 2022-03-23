@@ -1,4 +1,4 @@
-package com.record.backend.dto.loginlogout.response;
+package com.record.backend.auth.dto.loginlogout.response;
 
 import lombok.Getter;
 import lombok.Setter;

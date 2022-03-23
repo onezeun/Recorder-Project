@@ -9,7 +9,7 @@ import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-import com.record.backend.security.UserPrincipal;
+import com.record.backend.auth.security.UserPrincipal;
 
 @Configuration
 public class AuditingConfig {

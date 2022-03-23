@@ -44,7 +44,7 @@ public class Comment extends BaseEntity {
 	}
 
 	public String getProfilePhoto() {
-		return user.getPicture();
+		return user.getProfilePhoto();
 	}
 
 	public String getAuthorName() {

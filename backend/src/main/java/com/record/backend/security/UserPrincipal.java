@@ -1,4 +1,4 @@
-package com.record.backend.security;
+package com.record.backend.auth.security;
 
 import java.util.Collection;
 import java.util.List;
@@ -64,7 +64,7 @@ public class UserPrincipal implements UserDetails {
 			user.getNickname(),
 			user.getDomain(),
 			user.getIntroduce(),
-			user.getPicture(),
+			user.getProfilePhoto(),
 			authorities
 		);
 	}
