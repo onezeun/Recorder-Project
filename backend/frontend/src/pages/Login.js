@@ -17,7 +17,7 @@ export default function Login(props) {
   const dispatch = useDispatch();
 
   useEffect(()=>{
-    console.log(isLoggedIn);
+    console.log('LoginPage isLoggedIn', isLoggedIn);
   }, [isLoggedIn]);
   
   
