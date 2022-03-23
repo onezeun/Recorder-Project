@@ -1,7 +1,8 @@
-package com.record.backend.apiController.login;
+package com.record.backend.auth.controller.login;
 
 import java.net.URI;
 import java.util.Collections;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -19,22 +20,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.record.backend.domain.jwt.RefreshToken;
+import com.record.backend.auth.domain.RefreshToken;
+import com.record.backend.auth.repository.RefreshTokenRepository;
 import com.record.backend.domain.user.Role;
 import com.record.backend.domain.user.RoleName;
 import com.record.backend.domain.user.User;
-import com.record.backend.dto.loginlogout.request.LoginRequest;
-import com.record.backend.dto.loginlogout.request.SignUpRequest;
-import com.record.backend.dto.loginlogout.request.TokenRefreshRequest;
-import com.record.backend.dto.loginlogout.response.ApiResponse;
-import com.record.backend.dto.loginlogout.response.JwtAuthenticationResponse;
-import com.record.backend.dto.loginlogout.response.TokenRefreshResponse;
+import com.record.backend.auth.dto.loginlogout.request.LoginRequest;
+import com.record.backend.auth.dto.loginlogout.request.SignUpRequest;
+import com.record.backend.auth.dto.loginlogout.request.TokenRefreshRequest;
+import com.record.backend.auth.dto.loginlogout.response.ApiResponse;
+import com.record.backend.auth.dto.loginlogout.response.JwtAuthenticationResponse;
+import com.record.backend.auth.dto.loginlogout.response.TokenRefreshResponse;
 import com.record.backend.exception.AppException;
 import com.record.backend.exception.TokenRefreshException;
-import com.record.backend.repository.RoleRepository;
+import com.record.backend.auth.repository.RoleRepository;
 import com.record.backend.repository.UserRepository;
-import com.record.backend.security.JwtTokenProvider;
-import com.record.backend.security.RefreshTokenService;
+import com.record.backend.auth.security.JwtTokenProvider;
+import com.record.backend.auth.service.RefreshTokenService;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -45,6 +47,9 @@ public class AuthController {
 
 	@Autowired
 	RefreshTokenService refreshTokenService;
+
+	@Autowired
+	RefreshTokenRepository refreshTokenRepository;
 
 	@Autowired
 	UserRepository userRepository;
@@ -79,6 +84,23 @@ public class AuthController {
 	@PostMapping("/refreshtoken")
 	public ResponseEntity<?> refreshtoken(@Valid @RequestBody TokenRefreshRequest tokenRefreshRequest) {
 		String requestRefreshToken = tokenRefreshRequest.getRefreshToken();
+
+/*
+		long byUserForToken = refreshTokenRepository.findByUserForToken(requestRefreshToken);
+		User user = userRepository.findById(byUserForToken).get();
+
+		Authentication authentication = authenticationManager.authenticate(
+			new UsernamePasswordAuthenticationToken(
+				user.getEmail(),
+				user.getPassword()
+			)
+		);
+		SecurityContextHolder.getContext().setAuthentication(authentication);
+		String jwt = tokenProvider.generateToken(authentication);
+
+		return ResponseEntity.ok(new TokenRefreshResponse(jwt, requestRefreshToken));
+*/
+
 
 		return refreshTokenService.findByToken(requestRefreshToken)
 			.map(refreshTokenService::verifyExpiration)

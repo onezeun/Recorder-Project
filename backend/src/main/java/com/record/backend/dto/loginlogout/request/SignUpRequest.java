@@ -1,4 +1,4 @@
-package com.record.backend.dto.loginlogout.request;
+package com.record.backend.auth.dto.loginlogout.request;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;

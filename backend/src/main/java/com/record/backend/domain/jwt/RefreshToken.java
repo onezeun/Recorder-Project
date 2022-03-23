@@ -1,4 +1,4 @@
-package com.record.backend.domain.jwt;
+package com.record.backend.auth.domain;
 
 import java.time.Instant;
 
@@ -24,6 +24,7 @@ public class RefreshToken {
 	@OneToOne
 	@JoinColumn(name = "user_id", referencedColumnName = "id")
 	private User user;
+
 
 	@Column(nullable = false, unique = true)
 	private String token;

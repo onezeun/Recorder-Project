@@ -31,20 +31,18 @@ public class UserService {
 		return userRepository.save(requestDto.toEntity()).getId();
 	}
 
-	//수정
+	//마이페이지 수정
 	@Transactional
 	public UserUpdateResponseDto updateUser(Long userId, UserUpdateRequestDto updateDto) {
 		validateDuplicateDomain(updateDto.getDomain());
 
 		User findUser = userRepository.findById(userId).get();
-		findUser.setEmail(updateDto.getEmail());
 		findUser.setNickname(updateDto.getNickname());
-		findUser.setPicture(updateDto.getPicture());
 		findUser.setDomain(updateDto.getDomain());
 		findUser.setIntroduce(updateDto.getIntroduce());
 
-		return new UserUpdateResponseDto(findUser.getId(), findUser.getEmail(), findUser.getNickname(),
-			findUser.getPicture(), findUser.getDomain(), findUser.getIntroduce());
+		return new UserUpdateResponseDto(findUser.getEmail(), findUser.getNickname(),
+			findUser.getDomain(), findUser.getIntroduce());
 	}
 
 	//조회

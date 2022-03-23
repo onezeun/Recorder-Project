@@ -29,7 +29,7 @@ public class UserSaveRequestDto {
 			.email(this.email)
 			.password(this.password)
 			.nickname(this.nickname)
-			.picture(this.picture)
+			.profilePhoto(this.picture)
 			.domain(this.domain)
 			.introduce(this.introduce)
 			.build();

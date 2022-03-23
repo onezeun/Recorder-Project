@@ -19,7 +19,7 @@ public class UserResponseDto {
 		this.userId = user.getId();
 		this.email = user.getEmail();
 		this.nickname = user.getNickname();
-		this.picture = user.getPicture();
+		this.picture = user.getProfilePhoto();
 		this.domain = user.getDomain();
 		this.introduce = user.getIntroduce();
 	}

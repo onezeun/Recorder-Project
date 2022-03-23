@@ -8,10 +8,8 @@ import lombok.Data;
 @AllArgsConstructor
 public class UserUpdateResponseDto {
 
-	private Long userId;
-	private String name;
+	private String email;
 	private String nickname;
-	private String picture;
 	private String domain;
 	private String introduce;
 
