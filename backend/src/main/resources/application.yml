@@ -8,7 +8,10 @@ server:
 
 spring:
   profiles:
-    include: aws
+    include:
+      - aws
+      - credentials
+
   output.ansi.enabled: always
   jpa:
     open-in-view: false
@@ -24,6 +27,7 @@ spring:
         default_schema: test
     defer-datasource-initialization: true
 
+
   jackson:
     serialization:
       write-dates-as-timestamps: false
@@ -35,10 +39,11 @@ app:
   jwtExpirationInMs: 604800000
   jwtRefreshExpirationInMs: 86400000
 
-#  servlet:
-#    multipart:
-#      enabled: true
-#      max-file-size: 2MB
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 20MB
+      max-request-size: 20MB
 
 logging.level:
   org.hibernate.SQL: debug

@@ -13,14 +13,11 @@ import lombok.NoArgsConstructor;
 public class UserUpdateRequestDto {
 
 	@NotEmpty
-	private String email;
-	@NotEmpty
 	private String nickname;
-	private String picture;
 
 	@NotEmpty
 	private String domain;
 
-	@Size(max = 20)
+	@Size(max = 30)
 	private String introduce;
 }

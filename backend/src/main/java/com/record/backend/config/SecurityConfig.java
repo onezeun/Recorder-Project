@@ -14,10 +14,11 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
-import com.record.backend.security.CustomUserDetailsService;
-import com.record.backend.security.JwtAuthenticationEntryPoint;
-import com.record.backend.security.JwtAuthenticationFilter;
+import com.record.backend.auth.security.CustomUserDetailsService;
+import com.record.backend.auth.security.JwtAuthenticationEntryPoint;
+import com.record.backend.auth.security.JwtAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -66,6 +67,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.and()
 			.csrf()
 			.disable()
+			/*			.ignoringAntMatchers("/api/auth/signup")
+						.ignoringAntMatchers("/api/auth/signin")
+						.ignoringAntMatchers("/api/auth/refreshtoken")*/
 			.exceptionHandling()
 			.authenticationEntryPoint(unauthorizedHandler)
 			.and()
@@ -92,6 +96,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.anyRequest()
 			//.authenticated();
 			.permitAll();
+
+		/*http.csrf().ignoringAntMatchers("/api/**")//csrf예외처리
+			.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());//csrf 토큰자동생성
+		//		http.csrf().disable();//csrf 미적용
+		http.headers().frameOptions().disable();*/
 
 		// Add our custom JWT security filter
 		http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);

@@ -1,4 +1,4 @@
-package com.record.backend.security;
+package com.record.backend.auth.security;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;

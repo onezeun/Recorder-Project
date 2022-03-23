@@ -48,7 +48,7 @@ public class User extends BaseEntity {
 
 	private String nickname;
 
-	private String picture;
+	private String profilePhoto;
 
 	private String domain;
 
@@ -81,12 +81,12 @@ public class User extends BaseEntity {
 	}
 
 	@Builder
-	public User(String email, String password, String nickname, String picture, String domain,
+	public User(String email, String password, String nickname, String profilePhoto, String domain,
 		String introduce) {
 		this.email = email;
 		this.password = password;
 		this.nickname = nickname;
-		this.picture = picture;
+		this.profilePhoto = profilePhoto;
 		this.domain = domain;
 		this.introduce = introduce;
 	}

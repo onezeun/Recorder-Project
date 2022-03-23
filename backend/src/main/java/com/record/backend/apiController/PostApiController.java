@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,8 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.record.backend.domain.post.Post;
-import com.record.backend.dto.config.PagedResponse;
-import com.record.backend.dto.loginlogout.response.ApiResponse;
+import com.record.backend.auth.dto.loginlogout.response.ApiResponse;
 import com.record.backend.dto.post.PostDto;
 import com.record.backend.dto.post.request.PostSaveRequestDto;
 import com.record.backend.dto.post.request.PostUpdateRequestDto;
@@ -26,8 +24,8 @@ import com.record.backend.dto.post.response.PostResponseDto;
 import com.record.backend.dto.post.response.PostUpdateResponseDto;
 import com.record.backend.repository.PostRepository;
 import com.record.backend.repository.query.PostQueryRepository;
-import com.record.backend.security.CurrentUser;
-import com.record.backend.security.UserPrincipal;
+import com.record.backend.auth.security.CurrentUser;
+import com.record.backend.auth.security.UserPrincipal;
 import com.record.backend.service.PostService;
 
 import lombok.AllArgsConstructor;

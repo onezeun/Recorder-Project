@@ -1,8 +1,10 @@
 package com.record.backend.apiController;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,8 +13,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.ResourceAccessException;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.record.backend.aws.S3Uploader;
 import com.record.backend.domain.user.User;
 import com.record.backend.dto.user.UserIdentityAvailability;
 import com.record.backend.dto.user.UserProfile;
@@ -23,8 +26,8 @@ import com.record.backend.dto.user.response.UserResponseDto;
 import com.record.backend.dto.user.response.UserUpdateResponseDto;
 import com.record.backend.exception.ResourceNotFoundException;
 import com.record.backend.repository.UserRepository;
-import com.record.backend.security.CurrentUser;
-import com.record.backend.security.UserPrincipal;
+import com.record.backend.auth.security.CurrentUser;
+import com.record.backend.auth.security.UserPrincipal;
 import com.record.backend.service.UserService;
 
 import lombok.AllArgsConstructor;
@@ -37,6 +40,7 @@ public class UserApiController {
 
 	private final UserRepository userRepository;
 	private final UserService userService;
+	private final S3Uploader s3Uploader;
 
 	//생성
 	@PostMapping("/users/account/signup")
@@ -49,6 +53,14 @@ public class UserApiController {
 	public UserUpdateResponseDto updateUser(@PathVariable("user_id") Long userId,
 		@RequestBody UserUpdateRequestDto updateDto) {
 		return userService.updateUser(userId, updateDto);
+	}
+
+	//유저 프로필 업로드
+	@PostMapping("/users/profilePhoto")
+	public String uploadProfilePhoto(@RequestParam("profilePhoto") MultipartFile multipartFile) throws IOException {
+		//S3 Bucket 내부에 "/profile"
+		s3Uploader.upload(multipartFile, "profile");
+		return "test";
 	}
 
 	//조회
@@ -78,7 +90,7 @@ public class UserApiController {
 			.orElseThrow(() -> new ResourceNotFoundException("User", "userEmail", email));
 
 		UserProfile userProfile = new UserProfile(
-			user.getId(), user.getEmail(), user.getNickname(), user.getDomain(), user.getIntroduce()
+			user.getEmail(), user.getNickname(), user.getProfilePhoto(), user.getDomain(), user.getIntroduce()
 		);
 
 		return userProfile;
@@ -101,7 +113,6 @@ public class UserApiController {
 	public void deleteUser(@PathVariable("user_id") Long userId) {
 		userService.deleteUser(userId);
 	}
-
 
 	@Data
 	@AllArgsConstructor
