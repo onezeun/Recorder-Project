@@ -19,7 +19,7 @@ import Main from './pages/Main';
 import UserHome from './pages/Userhome';
 import Search from './pages/Search';
 import Neighbor from './pages/Neighbor';
-//import Profile from "./pages/Profile";
+import Profile from "./pages/Profile";
 
 const StyledDiv = styled.div`
   margin-top: 50px;
@@ -65,10 +65,10 @@ function App() {
           </Link>
           {/* <Link to="/category">
             <button>Category</button>
-          </Link>
+          </Link> */}
           <Link to="/profile">
             <button>profile</button>
-          </Link> */}
+          </Link>
         <hr /> 
         <Routes>
           <Route exact path="/" element={<Signup />} />
@@ -82,8 +82,8 @@ function App() {
           <Route path="/search" element={<Search />} />
           <Route path="/neighbor" element={<Neighbor />} />
           <Route path="/member" element={<MemberComponent />} />
-          {/* <Route path="/category" element={<Category />} />
-          <Route path="/profile" element={<Profile />} /> */}
+          {/* <Route path="/category" element={<Category />} /> */}
+          <Route path="/profile" element={<Profile />} />
         </Routes>
       </StyledDiv>
     </Router>
