@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from "react-redux";
-import { Navigate, Link } from 'react-router-dom';
+import { Navigate, useNavigate, Link } from 'react-router-dom';
 
 import { IconButton, Typography, MenuItem, Menu, Box, Badge } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
@@ -13,6 +13,7 @@ import { logout } from '../../redux/actions/auth';
 export default function UserHeader() {
   const { isLoggedIn } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -42,6 +43,7 @@ export default function UserHeader() {
     e.preventDefault();
     dispatch(logout())
     .then(() => {
+      navigate('/login')
       console.log('isLogin', isLoggedIn);
     });
   };
