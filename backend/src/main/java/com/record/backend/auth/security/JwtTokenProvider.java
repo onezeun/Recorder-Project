@@ -1,4 +1,4 @@
-package com.record.backend.security;
+package com.record.backend.auth.security;
 
 import java.nio.charset.StandardCharsets;
 import java.security.Key;

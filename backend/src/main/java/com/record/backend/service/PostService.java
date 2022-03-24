@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.record.backend.auth.security.UserPrincipal;
 import com.record.backend.domain.category.Category;
 import com.record.backend.domain.post.Post;
 import com.record.backend.domain.user.User;
@@ -17,7 +18,6 @@ import com.record.backend.exception.ResourceNotFoundException;
 import com.record.backend.repository.CategoryRepository;
 import com.record.backend.repository.PostRepository;
 import com.record.backend.repository.UserRepository;
-import com.record.backend.auth.security.UserPrincipal;
 
 import lombok.RequiredArgsConstructor;
 

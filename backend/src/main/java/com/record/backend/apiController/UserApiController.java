@@ -3,6 +3,8 @@ package com.record.backend.apiController;
 import java.io.IOException;
 import java.util.List;
 
+import org.apache.logging.log4j.message.Message;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.record.backend.aws.FileUploadResponse;
 import com.record.backend.aws.S3Uploader;
 import com.record.backend.domain.user.User;
 import com.record.backend.dto.user.UserIdentityAvailability;
@@ -57,10 +60,11 @@ public class UserApiController {
 
 	//유저 프로필 업로드
 	@PostMapping("/users/profilePhoto")
-	public String uploadProfilePhoto(@RequestParam("profilePhoto") MultipartFile multipartFile) throws IOException {
+	public ResponseEntity<?> uploadProfilePhoto(@RequestParam("profilePhoto") MultipartFile multipartFile) throws IOException {
 		//S3 Bucket 내부에 "/profile"
-		s3Uploader.upload(multipartFile, "profile");
-		return "test";
+
+		FileUploadResponse profile = s3Uploader.upload(multipartFile, "profile");
+		return ResponseEntity.ok(profile);
 	}
 
 	//조회
