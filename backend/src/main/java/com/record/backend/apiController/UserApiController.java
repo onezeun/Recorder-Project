@@ -60,10 +60,10 @@ public class UserApiController {
 
 	//유저 프로필 업로드
 	@PostMapping("/users/profilePhoto")
-	public ResponseEntity<?> uploadProfilePhoto(@RequestParam("profilePhoto") MultipartFile multipartFile) throws IOException {
+	public ResponseEntity<?> uploadProfilePhoto(@PathVariable("user_id") Long userId, @RequestParam("profilePhoto") MultipartFile multipartFile) throws IOException {
 		//S3 Bucket 내부에 "/profile"
 
-		FileUploadResponse profile = s3Uploader.upload(multipartFile, "profile");
+		FileUploadResponse profile = s3Uploader.upload(userId, multipartFile, "profile");
 		return ResponseEntity.ok(profile);
 	}
 
