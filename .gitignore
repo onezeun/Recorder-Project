@@ -253,3 +253,9 @@ gradle-app.setting
 .classpath
 
 # End of https://www.toptal.com/developers/gitignore/api/macos,windows,visualstudiocode,intellij,java,react,gradle
+
+
+
+#yml파일
+application-aws.yml
+application-credentials.yml
