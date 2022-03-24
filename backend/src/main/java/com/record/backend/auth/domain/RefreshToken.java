@@ -1,4 +1,4 @@
-package com.record.backend.domain.jwt;
+package com.record.backend.auth.domain;
 
 import java.time.Instant;
 

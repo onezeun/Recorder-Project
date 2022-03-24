@@ -1,4 +1,4 @@
-package com.record.backend.security;
+package com.record.backend.auth.service;
 
 import java.time.Instant;
 import java.util.Optional;
@@ -10,9 +10,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.record.backend.domain.jwt.RefreshToken;
+import com.record.backend.auth.domain.RefreshToken;
+import com.record.backend.auth.repository.RefreshTokenRepository;
+import com.record.backend.auth.security.UserPrincipal;
 import com.record.backend.exception.TokenRefreshException;
-import com.record.backend.repository.RefreshTokenRepository;
 import com.record.backend.repository.UserRepository;
 
 @Service

@@ -1,4 +1,4 @@
-package com.record.backend.apiController.login;
+package com.record.backend.auth.controller.login;
 
 import java.net.URI;
 import java.util.Collections;
@@ -19,7 +19,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.record.backend.domain.jwt.RefreshToken;
+import com.record.backend.auth.domain.RefreshToken;
+import com.record.backend.auth.repository.RoleRepository;
+import com.record.backend.auth.security.JwtTokenProvider;
+import com.record.backend.auth.service.RefreshTokenService;
 import com.record.backend.domain.user.Role;
 import com.record.backend.domain.user.RoleName;
 import com.record.backend.domain.user.User;
@@ -31,10 +34,8 @@ import com.record.backend.dto.loginlogout.response.JwtAuthenticationResponse;
 import com.record.backend.dto.loginlogout.response.TokenRefreshResponse;
 import com.record.backend.exception.AppException;
 import com.record.backend.exception.TokenRefreshException;
-import com.record.backend.repository.RoleRepository;
+
 import com.record.backend.repository.UserRepository;
-import com.record.backend.security.JwtTokenProvider;
-import com.record.backend.security.RefreshTokenService;
 
 @RestController
 @RequestMapping("/api/auth")

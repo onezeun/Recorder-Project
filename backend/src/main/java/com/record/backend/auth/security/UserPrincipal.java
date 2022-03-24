@@ -1,4 +1,4 @@
-package com.record.backend.security;
+package com.record.backend.auth.security;
 
 import java.util.Collection;
 import java.util.List;
@@ -33,12 +33,12 @@ public class UserPrincipal implements UserDetails {
 
 	private String introduce;
 
-	private String picture;
+	private String profilePhoto;
 
 	private Collection<? extends GrantedAuthority> authorities;
 
 	public UserPrincipal(Long id, String email, String password, String nickname, String domain,
-		String introduce, String picture,
+		String introduce, String profilePhoto,
 		Collection<? extends GrantedAuthority> authorities) {
 		this.id = id;
 		this.email = email;
@@ -47,7 +47,7 @@ public class UserPrincipal implements UserDetails {
 		this.nickname = nickname;
 		this.domain = domain;
 		this.introduce = introduce;
-		this.picture = picture;
+		this.profilePhoto = profilePhoto;
 		this.authorities = authorities;
 	}
 
@@ -64,7 +64,7 @@ public class UserPrincipal implements UserDetails {
 			user.getNickname(),
 			user.getDomain(),
 			user.getIntroduce(),
-			user.getPicture(),
+			user.getProfilePhoto(),
 			authorities
 		);
 	}
