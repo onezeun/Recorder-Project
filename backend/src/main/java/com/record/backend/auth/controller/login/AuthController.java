@@ -22,6 +22,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.record.backend.auth.domain.RefreshToken;
 import com.record.backend.auth.repository.RoleRepository;
 import com.record.backend.auth.security.JwtTokenProvider;
+import com.record.backend.auth.security.UserPrincipal;
 import com.record.backend.auth.service.RefreshTokenService;
 import com.record.backend.domain.user.Role;
 import com.record.backend.domain.user.RoleName;
@@ -73,8 +74,11 @@ public class AuthController {
 
 		String jwt = tokenProvider.generateToken(authentication);
 
+		UserPrincipal userPrincipal = (UserPrincipal)authentication.getPrincipal();
+
 		RefreshToken refreshToken = refreshTokenService.createRefreshToken(authentication);
-		return ResponseEntity.ok(new JwtAuthenticationResponse(jwt, refreshToken.getToken()));
+		return ResponseEntity.ok(new JwtAuthenticationResponse(jwt, refreshToken.getToken(),
+			userPrincipal.getId(), userPrincipal.getEmail(), userPrincipal.getDomain(), userPrincipal.getIntroduce()));
 	}
 
 	@PostMapping("/refreshtoken")
