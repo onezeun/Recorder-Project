@@ -88,10 +88,10 @@ public class UserApiController {
 	}
 
 	// 마이페이지에 보여줄 유저 dto
-	@GetMapping("/users/{userEmail}")
-	public UserProfile getUserProfile(@PathVariable(value = "userEmail") String email) {
-		User user = userRepository.findByEmail(email)
-			.orElseThrow(() -> new ResourceNotFoundException("User", "userEmail", email));
+	@GetMapping("/users/{user_id}")
+	public UserProfile getUserProfile(@PathVariable(value = "user_id") String userId) {
+		User user = userRepository.findById(userId)
+			.orElseThrow(() -> new ResourceNotFoundException("User", "user_id", userId));
 
 		UserProfile userProfile = new UserProfile(
 			user.getEmail(), user.getNickname(), user.getProfilePhoto(), user.getDomain(), user.getIntroduce()
