@@ -89,7 +89,7 @@ public class UserApiController {
 
 	// 마이페이지에 보여줄 유저 dto
 	@GetMapping("/users/{user_id}")
-	public UserProfile getUserProfile(@PathVariable(value = "user_id") String userId) {
+	public UserProfile getUserProfile(@PathVariable(value = "user_id") Long userId) {
 		User user = userRepository.findById(userId)
 			.orElseThrow(() -> new ResourceNotFoundException("User", "user_id", userId));
 
