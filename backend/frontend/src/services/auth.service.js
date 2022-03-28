@@ -43,11 +43,24 @@ const getCurrentUser = () => {
   return JSON.parse(localStorage.getItem('user'));
 };
 
+const registerPost = (userId, category, title, content) => {
+  return axios
+  .post('http://localhost:8080/board/posts', {
+    user_id: userId,
+    category_id: category,
+    title,
+    content
+  }) .catch((error) => {
+    console.error(error);
+  });
+};
+
 const AuthService = {
   register,
   login,
   logout,
   getCurrentUser,
+  registerPost,
 };
 
 export default AuthService;

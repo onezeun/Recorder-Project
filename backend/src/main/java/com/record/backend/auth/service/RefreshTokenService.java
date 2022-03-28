@@ -4,15 +4,15 @@ import java.time.Instant;
 import java.util.Optional;
 import java.util.UUID;
 
+import com.record.backend.auth.domain.RefreshToken;
+import com.record.backend.auth.repository.RefreshTokenRepository;
+import com.record.backend.auth.security.UserPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.record.backend.auth.domain.RefreshToken;
-import com.record.backend.auth.repository.RefreshTokenRepository;
-import com.record.backend.auth.security.UserPrincipal;
 import com.record.backend.exception.TokenRefreshException;
 import com.record.backend.repository.UserRepository;
 

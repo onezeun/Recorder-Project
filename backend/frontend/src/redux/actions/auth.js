@@ -5,6 +5,7 @@ import {
   LOGIN_FAIL,
   LOGOUT,
   SET_MESSAGE,
+  REGISTER_POST
 } from './types';
 
 import AuthService from '../../services/auth.service';
@@ -88,4 +89,45 @@ export const logout = () => (dispatch) => {
   });
 
   return Promise.resolve();
+};
+
+export const registerPost = (user_id, category_id, title, content) => (dispatch) => {
+  return AuthService.registerPost(
+    user_id,
+    category_id,
+    title,
+    content,
+  ).then(
+    (response) => {
+      dispatch({
+        type: REGISTER_POST
+      })
+
+      dispatch({
+      type: SET_MESSAGE,
+      payload: response.data.message,
+    });
+
+    return Promise.resolve();
+  },
+  (error) => {
+    const message =
+      (error.response &&
+        error.response.data &&
+        error.response.data.message) ||
+      error.message ||
+      error.toString();
+
+    dispatch({
+      type: REGISTER_FAIL,
+    });
+
+    dispatch({
+      type: SET_MESSAGE,
+      payload: message,
+    });
+
+    return Promise.reject();
+  },
+);
 };
