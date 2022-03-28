@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -41,7 +42,7 @@ public class PostApiController {
 	private final PostQueryRepository postQueryRepository;
 
 
-	//생성
+	//포스트 생성
 	@PostMapping("/board/posts")
 	//@PreAuthorize("hasRole('USER')")
 	public ResponseEntity<?> savePost(@RequestBody PostSaveRequestDto requestDto) {

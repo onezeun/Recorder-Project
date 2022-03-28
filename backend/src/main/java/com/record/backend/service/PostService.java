@@ -57,7 +57,6 @@ public class PostService {
 		findPost.setCategory(updateDto.getCategory());
 		return new PostUpdateResponseDto(findPost.getId(),findPost.getCategory().getId(), findPost.getTitle(),
 			findPost.getContent(), findPost.getSummary(), findPost.getThumbnail_image());
-
 	}
 
 	//조회
