@@ -33,8 +33,8 @@ public class PostService {
 	//생성
 	@Transactional
 	public Post savePost(PostSaveRequestDto requestDto) {
-		User user = userRepository.findById(requestDto.getUser().getId()).get();
-		Category category = categoryRepository.findById(requestDto.getCategory().getId()).get();
+		User user = userRepository.findById(requestDto.getUserId()).get();
+		Category category = categoryRepository.findById(requestDto.getCategoryId()).get();
 		requestDto.setUser(user);
 		requestDto.setCategory(category);
 
