@@ -4,6 +4,8 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAIL,
   LOGOUT,
+  REGISTER_POST,
+  CATEGORY_GET,
 } from '../actions/types';
 
 const user = JSON.parse(localStorage.getItem('user'));
@@ -44,6 +46,20 @@ export default function (state = initialState, action) {
         isLoggedIn: false,
         user: null,
       };
+      case REGISTER_POST:
+        return {
+          ...state,
+          isLoggedIn: true,
+          user: payload.user,
+        }
+
+      case CATEGORY_GET:
+        return {
+          ...state,
+          isLoggedIn: true,
+          user: payload.user,
+        }
+
     default:
       return state;
   }
