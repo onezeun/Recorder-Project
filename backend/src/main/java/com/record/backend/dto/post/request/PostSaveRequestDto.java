@@ -36,9 +36,9 @@ public class PostSaveRequestDto {
 			.category(this.category)
 			.title(this.title)
 			.content(this.content)
-			.summary(this.summary)
-			.exposure(Exposure.valueOf(this.exposure))
-			.thumbnail_image(this.thumbnailImage)
+//			.summary(this.summary)
+//			.exposure(Exposure.valueOf(this.exposure))
+//			.thumbnail_image(this.thumbnailImage)
 			.build();
 	}
 
