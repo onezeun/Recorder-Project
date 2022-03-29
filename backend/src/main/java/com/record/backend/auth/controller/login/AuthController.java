@@ -6,6 +6,7 @@ import java.util.Collections;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -127,11 +128,14 @@ public class AuthController {
 
 		User result = userRepository.save(user);
 
-		URI location = ServletUriComponentsBuilder
-			.fromCurrentContextPath().path("/api/users/{user_id}")
-			.buildAndExpand(result.getEmail()).toUri();
-
-		return ResponseEntity.created(location).body(new ApiResponse(true, "User registered successfully"));
+		/*URI location = ServletUriComponentsBuilder
+			.fromCurrentContextPath().path("/users/{user_id}")
+			.buildAndExpand(result.getId()).toUri();
+		HttpHeaders httpHeaders = new HttpHeaders();
+		httpHeaders.setLocation(location);
+		return new ResponseEntity<>(httpHeaders, HttpStatus.MOVED_PERMANENTLY);*/
+		//return ResponseEntity.created(location).body(new ApiResponse(true, "User registered successfully"))
+		return ResponseEntity.ok(new ApiResponse(true, "User registered successfully"));
 	}
 
 }

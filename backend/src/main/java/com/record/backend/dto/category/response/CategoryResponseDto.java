@@ -9,7 +9,7 @@ import com.record.backend.dto.category.CategoryPostsDto;
 import lombok.Data;
 
 @Data
-public class CategoryResponsetDto {
+public class CategoryResponseDto {
 
 	private Long categoryId;
 	private Long userId;
@@ -17,7 +17,7 @@ public class CategoryResponsetDto {
 
 	private List<CategoryPostsDto> posts;
 
-	public CategoryResponsetDto(Category category) {
+	public CategoryResponseDto(Category category) {
 		categoryId = category.getId();
 		//userId = category.getUser().getId();
 		categoryName = category.getName();
