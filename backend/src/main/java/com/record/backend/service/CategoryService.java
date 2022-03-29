@@ -3,6 +3,7 @@ package com.record.backend.service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,7 +30,8 @@ public class CategoryService {
 	//카테고리 생성
 	@Transactional
 	public Category saveCategory(CategorySaveRequestDto requestDto) {
-		User user = userRepository.findById(requestDto.getUser().getId()).get();
+		User user = userRepository.findById(requestDto.getUserId()).get();
+		System.out.println(user);
 		requestDto.setUser(user);
 
 		validateDuplicatedCategoryName(requestDto.getCategoryName());
@@ -52,8 +54,9 @@ public class CategoryService {
 	}
 
 	//글 작성 폼에 카테고리 뿌려주기, 카테고리 조회시 씀
-	public List<CategoryNameDto> showCategoryNames() {
-		return categoryRepository.findAll()
+	public List<CategoryNameDto> showCategoryNames(Long userId) {
+//		return categoryRepository.findAll()
+		return categoryRepository.findAllByUserId(userId)
 			.stream()
 			.map(CategoryNameDto::new)
 			.collect(Collectors.toList());

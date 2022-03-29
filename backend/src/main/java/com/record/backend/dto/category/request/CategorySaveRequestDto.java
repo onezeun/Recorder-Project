@@ -14,11 +14,8 @@ import lombok.NoArgsConstructor;
 @Data
 public class CategorySaveRequestDto {
 
-	private Long cateogryId;
-
 	private User user;
 	private Long userId;
-
 
 	@NotEmpty
 	@Length(max = 10)
