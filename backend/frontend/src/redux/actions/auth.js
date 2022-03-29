@@ -5,7 +5,8 @@ import {
   LOGIN_FAIL,
   LOGOUT,
   SET_MESSAGE,
-  REGISTER_POST
+  REGISTER_POST,
+  CATEGORY_GET
 } from './types';
 
 import AuthService from '../../services/auth.service';
@@ -91,10 +92,10 @@ export const logout = () => (dispatch) => {
   return Promise.resolve();
 };
 
-export const registerPost = (user_id, category_id, title, content) => (dispatch) => {
+export const registerPost = (user_id, categoryId, title, content) => (dispatch) => {
   return AuthService.registerPost(
     user_id,
-    category_id,
+    categoryId,
     title,
     content,
   ).then(
@@ -131,3 +132,42 @@ export const registerPost = (user_id, category_id, title, content) => (dispatch)
   },
 );
 };
+
+export const getCategory = (categoryId, categoryName) => (dispatch) => {
+    return AuthService.getCategory(
+      categoryId,
+      categoryName,
+    ).then(
+      (response) => {
+        dispatch({
+          type: CATEGORY_GET
+        })
+      
+        dispatch({
+          type: SET_MESSAGE,
+          payload: response.data.message,
+        });
+    
+        return Promise.resolve();
+      },
+      (error) => {
+        const message =
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+          error.message ||
+          error.toString();
+    
+        dispatch({
+          type: REGISTER_FAIL,
+        });
+    
+        dispatch({
+          type: SET_MESSAGE,
+          payload: message,
+        });
+    
+        return Promise.reject();
+      },
+    );
+    };
