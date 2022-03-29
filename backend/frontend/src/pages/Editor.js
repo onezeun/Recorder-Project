@@ -9,6 +9,8 @@ import { Box, Stack, Button, Divider, Input, Menu, MenuItem } from '@mui/materia
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { StylesProvider } from '@mui/styles';
 import { registerPost } from '../redux/actions/auth';
+import { getCategory } from '../redux/actions/auth';
+import axios from 'axios';
 
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
@@ -55,12 +57,17 @@ const StyledMenu = styled((props) => (
   }));
 
 export default function Editor() {
+    const [categoryData, setCategoryData] = useState(null);
     const [anchorEl, setAnchorEl] = useState(null);
     const [category, setCategory] = useState('');
     const [successful, setSuccessful] = useState(false);
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const { user: currentUser } = useSelector((state) => state.auth);
+
+    const [categoryId, setCategoryId] = useState('');
+    const [categoryName, setCategoryName] = useState('');
+
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -74,22 +81,31 @@ export default function Editor() {
         setAnchorEl(null);
     };
 
+    
+
     const onRegisterPost = () => {
       setSuccessful(false);
+      
+      axios
+      .get('http://localhost:8080/board/categories/users/1')
+      .then(response => {
+        setCategoryData(response.data.data[0].categoryId);
+      });
 
-  
-      dispatch(registerPost(currentUser.userId, category, title, content)) // 카테고리 타입
+      console.log('category_id', categoryData);
+
+      dispatch(registerPost(currentUser.userId, categoryData, title, content))
         .then(() => {
-          setSuccessful(true);
-          navigate('/');
-        })
+        setSuccessful(true);
+        navigate('/');
+      })
         .catch(() => {
-          setSuccessful(false);
-        });
+        setSuccessful(false);
+      });
+      
 
-        
       console.log('currentUser.userId', currentUser.userId);
-      console.log('category_id', category);
+      // console.log('category_id', categoryId);
       console.log('title', registerPost.title);
       console.log('content', registerPost.content);
     }
@@ -131,7 +147,7 @@ export default function Editor() {
                         display: 'flex',
                     }}
                 >   
-                    {category=='' ? '카테고리' : category}
+                    {categoryName=='' ? '카테고리' : categoryName}
                 </Button>
                 <StyledMenu
                     id="demo-customized-menu"
