@@ -46,8 +46,8 @@ const getCurrentUser = () => {
 const registerPost = (userId, categoryId, title, content) => {
   return axios
   .post('http://localhost:8080/board/posts', {
-    user_id: userId,
-    category_id: categoryId,
+    userId,
+    categoryId,
     title,
     content
   }) .catch((error) => {
