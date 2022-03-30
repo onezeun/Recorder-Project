@@ -3,6 +3,7 @@ package com.record.backend.apiController;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -35,17 +36,12 @@ public class CategoryApiController {
 
 	//카테고리 생성
 	@PostMapping("/board/categories/")
-	//@ResponseBody
-	//@PreAuthorize("hasRole('USER')")
+	@PreAuthorize("hasRole('USER')")
 	public ResponseEntity<?> createCategory(@RequestBody CategorySaveRequestDto requestDto) {
 
 		Category category = categoryService.saveCategory(requestDto);
 
-/*		URI location = ServletUriComponentsBuilder
-			.fromCurrentRequest().path("/{category_id}")
-			.buildAndExpand(category.getId()).toUri();
-*/
-		return ResponseEntity.ok(new ApiResponse(true, "Category Created Successfully"));
+		return ResponseEntity.ok(new ApiResponse(true, "Category Created Successfully!"));
 	}
 
 	// user의 모든 카테고리 목록을 반환
@@ -62,13 +58,6 @@ public class CategoryApiController {
 		Category findCategory = categoryRepository.findById(categoryId).get();
 		return new CategoryResponseDto(findCategory);
 	}
-
-/*
-	@GetMapping)"/board/categories/v1/{category_id}"
-	public Result categoryV1() {
-		categoryRepository.findAll()
-	}
-*/
 
 	//수정
 	@PutMapping("/board/categories/{category_id}")
