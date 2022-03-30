@@ -27,8 +27,8 @@ public class CommentService {
 	//생성
 	@Transactional
 	public Long saveComment(CommentSaveRequestDto requestDto) {
-		User user = userRepository.findById(requestDto.getUser().getId()).get();
-		Post post = postRepository.findById(requestDto.getPost().getId()).get();
+		User user = userRepository.findById(requestDto.getUserId()).get();
+		Post post = postRepository.findById(requestDto.getPostId()).get();
 		requestDto.setUser(user);
 		requestDto.setPost(post);
 

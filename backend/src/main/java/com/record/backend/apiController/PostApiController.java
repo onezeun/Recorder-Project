@@ -37,7 +37,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class PostApiController {
 
-	private final PostRepository postRepository;
 	private final PostService postService;
 	private final PostQueryRepository postQueryRepository;
 
@@ -48,12 +47,7 @@ public class PostApiController {
 	public ResponseEntity<?> savePost(@RequestBody PostSaveRequestDto requestDto) {
 		Post post = postService.savePost(requestDto);
 
-		URI location = ServletUriComponentsBuilder
-			.fromCurrentRequest().path("/{post_id}")
-			.buildAndExpand(post.getId()).toUri();
-
-		return ResponseEntity.created(location)
-			.body(new ApiResponse(true, "Post Created Successfully"));
+		return ResponseEntity.ok(new ApiResponse(true, "Post Created Successfully!"));
 	}
 
 	//수정

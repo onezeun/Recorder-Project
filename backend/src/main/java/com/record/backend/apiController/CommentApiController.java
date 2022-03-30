@@ -3,6 +3,7 @@ package com.record.backend.apiController;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.record.backend.auth.dto.loginlogout.response.ApiResponse;
 import com.record.backend.domain.comment.Comment;
 import com.record.backend.dto.comment.CommentDto;
 import com.record.backend.dto.comment.request.CommentSaveRequestDto;
@@ -33,8 +35,10 @@ public class CommentApiController {
 
 	//생성
 	@PostMapping("/board/comments/")
-	public Long saveComment(@RequestBody CommentSaveRequestDto requestDto) {
-		return commentService.saveComment(requestDto);
+	public ResponseEntity<?> saveComment(@RequestBody CommentSaveRequestDto requestDto) {
+		commentService.saveComment(requestDto);
+
+		return ResponseEntity.ok(new ApiResponse(true, "Comment Created Successfully!"));
 	}
 
 	//조회
