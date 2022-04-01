@@ -1,18 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { styled, ThemeProvider, createTheme } from '@mui/material/styles';
-import { ListItem, Link, Stack, Button, Divider, Paper, Avatar, Box, IconButton, Collapse, InputBase, Typography } from '@mui/material';
+import { Link, Stack, Button, Divider, Paper, Avatar, Box, InputBase, Typography } from '@mui/material';
 import List from '@mui/material/List';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemText from '@mui/material/ListItemText';
-import ExpandLess from '@mui/icons-material/ExpandLess';
-import ExpandMore from '@mui/icons-material/ExpandMore';
 import SearchIcon from '@mui/icons-material/Search';
-import EditIcon from '@mui/icons-material/Edit';
-import Tooltip from '@mui/material/Tooltip';
-import ArrowRight from '@mui/icons-material/ArrowRight';
-//import Settings from '@mui/icons-material/Settings';
 
-import Category from '../Category';
+import Category from '../Category/Category';
 
 /* 검색바 스타일 */
 const Search = styled('div')(({ theme }) => ({
@@ -66,16 +58,17 @@ const Nav = styled(List)({
   },
 });
 
-export default function Sidebar(props) {
-  const [open, setOpen] = React.useState(true);
+export default function Sidebar() {
+  const [categoryName, setCategoryName] = useState('');
+  const onChangeCategory = (e) => {
+    e.preventDefault();
+    sessionStorage.setItem('category', setCategoryName);
+  }
 
-  const handleClick = () => {
-    setOpen((prevOpen) => !prevOpen);
-  };
 
   return (
     <Box>
-      <Box sx={{ display: 'flex', mr:10 }}>
+      <Box sx={{ display: 'flex', mr: 10 }}>
         <ThemeProvider
           theme={createTheme({
             components: {
@@ -89,7 +82,11 @@ export default function Sidebar(props) {
         >
           <Paper elevation={0} sx={{ maxWidth: 256 }}>
             <Nav component="nav" disablePadding>
-              <Stack direction='column' spacing={1} sx={{ ml: 1, mr: 2, mt: 5, my: 3, alignItems: 'center' }}>
+              <Stack
+                direction="column"
+                spacing={1}
+                sx={{ ml: 1, mr: 2, mt: 5, my: 3, alignItems: 'center' }}
+              >
                 <Avatar
                   sx={{
                     display: 'flex',
@@ -98,53 +95,26 @@ export default function Sidebar(props) {
                     height: '130px',
                   }}
                   alt="Remy Sharp"
-                  src='https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'
+                  src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
                 />
-                <Typography variant="h6" component="div" sx={{ my: 2, mx: 4.5, fontWeight: 'bold' }}>
+                <Typography
+                  variant="h6"
+                  component="div"
+                  sx={{ my: 2, mx: 4.5, fontWeight: 'bold' }}
+                >
                   ezerone
                 </Typography>
-                <Typography variant="button" component="div" sx={{ my: 2, mx: 4.5 }}>
+                <Typography
+                  variant="button"
+                  component="div"
+                  sx={{ my: 2, mx: 4.5 }}
+                >
                   바보의 블로그 (한줄자기소개)
                 </Typography>
                 <Stack direction="row">
                   <Button size="small">이웃추가</Button>
                 </Stack>
               </Stack>
-              {/* 설정 버튼
-              <Tooltip title="Project Settings">
-                <IconButton
-                  size="large"
-                  sx={{
-                    '& svg': {
-                      transition: '0.2s',
-                      transform: 'translateX(0) rotate(0)',
-                    },
-                    '&:hover, &:focus': {
-                      bgcolor: 'unset',
-                      '& svg:first-of-type': {
-                        transform: 'translateX(-4px) rotate(-20deg)',
-                      },
-                      '& svg:last-of-type': {
-                        right: 0,
-                        opacity: 1,
-                      },
-                    },
-                    '&:after': {
-                      content: '""',
-                      position: 'absolute',
-                      height: '80%',
-                      display: 'block',
-                      left: 0,
-                      width: '1px',
-                      bgcolor: 'divider',
-                    },
-                  }}
-                >
-                  <Settings />
-                  <ArrowRight sx={{ position: 'absolute', right: 4, opacity: 0 }} />
-                </IconButton>
-              </Tooltip>
-                */}
               <Search>
                 <SearchIconWrapper>
                   <SearchIcon />
@@ -155,71 +125,13 @@ export default function Sidebar(props) {
                 />
               </Search>
               <Divider />
-              <ListItem component="div" disablePadding>
-              <ListItemButton sx={{ height: 56 }}>
-                <ListItemText
-                  primary="전체보기"
-                  primaryTypographyProps={{
-                    fontWeight: 'bold',
-                    variant: 'button',
-                  }} />
-              </ListItemButton>
-              <Tooltip title="카테고리 설정">
-                  <Category/>
-              </Tooltip>
-            </ListItem>
-              <List
-                sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}
-                component="nav"
-                aria-labelledby="nested-list-subheader">
-                <ListItemButton>
-                  <ListItemText
-                    primary="카테고리1"
-                    primaryTypographyProps={{
-                      fontWeight: 'midium',
-                      variant: 'button',
-                    }} />
-                </ListItemButton>
-                <ListItemButton>
-                  <ListItemText
-                    primary="카테고리2"
-                    primaryTypographyProps={{
-                      fontWeight: 'midium',
-                      variant: 'button',
-                    }} />
-                </ListItemButton>
-                <ListItemButton>
-                  <ListItemText
-                    primary="카테고리3"
-                    primaryTypographyProps={{
-                      fontWeight: 'midium',
-                      variant: 'button',
-                    }} />
-                </ListItemButton>
-                <ListItemButton onClick={handleClick}>
-                  <ListItemText
-                    primary="카테고리4"
-                    primaryTypographyProps={{
-                      fontWeight: 'midium',
-                      variant: 'button',
-                    }} />
-                  {open ? <ExpandLess /> : <ExpandMore />}
-                </ListItemButton>
-                <Collapse in={open} timeout="auto" unmountOnExit>
-                  <List component="div" disablePadding>
-                    <ListItemButton sx={{ pl: 4 }}>
-                      <ListItemText
-                        primary="하이"
-                        primaryTypographyProps={{
-                          fontWeight: 'midium',
-                          variant: 'button',
-                        }} />
-                    </ListItemButton>
-                  </List>
-                </Collapse>
-              </List>
-              <Stack direction='column' sx={{ mb: 5}}>
-                <Typography variant="button" component="div" sx={{ mt: 2, mx: 3, fontWeight: 'bold' }}>
+              <Link to='/' component={Category} exact/>
+              <Stack direction="column" sx={{ mb: 5 }}>
+                <Typography
+                  variant="button"
+                  component="div"
+                  sx={{ mt: 2, mx: 3, fontWeight: 'bold' }}
+                >
                   태그
                 </Typography>
                 <Stack direction="row" spacing={2}>
