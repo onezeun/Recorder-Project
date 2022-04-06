@@ -65,9 +65,9 @@ public class PostApiController {
 		return new Result(allPost);
 	}
 
-	//조회
+	//사용자 블로그에 들어갔을 시, 카테고리별로 누르면 해당 카테고리에 있는 포스트가 불려온다.
 	@GetMapping("/board/posts/v1")
-	public Result findAllPosts(
+	public Result findAllCategoryPosts(
 		@RequestParam(value = "offset", defaultValue = "0") int offset,
 		@RequestParam(value = "limit", defaultValue = "100") int limit) {
 		//XtoOne은 fetch join으로 가져옴
