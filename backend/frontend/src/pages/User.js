@@ -1,18 +1,62 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Stack, Paper, Grid, Avatar, Button, Box, IconButton, Typography, Switch } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
-import EditIcon from "@mui/icons-material/Edit";
+import { useSelector, useDispatch } from "react-redux";
+import { getUser } from "../redux/actions/user";
+
+import axios from 'axios';
 
 const Input = styled("input")({
   display: "none",
 });
 
-const label = { inputProps: { "aria-label": "Switch demo" } };
-
 export default function User() {
+  const { user: currentUser } = useSelector((state) => state.auth);
+  const [ userData, setUserData ] = useState([]);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    getUsers();
+  }, []);
+
+  function getUsers() {
+    dispatch(getUser(currentUser.userId))
+    .then((data) => {
+      setUserData([data]);
+    })
+    .catch((error) => {
+      console.error(error);
+    })
+  }
+
+  console.log(getUser(currentUser.userId));
+
+
+//   useEffect(async() => {
+//     try {
+//       const res = await axios.get('http://localhost:8080/users/' + `${currentUser.userId}`)
+      
+//       const inputData = await res.data.map((rowData) => ({
+//         email: rowData.email,
+//         nickname: rowData.nickname,
+//         profilePhoto: rowData.profilePhoto,
+//         domain: rowData.domain,
+//         introduce: rowData.introduce
+//       })
+//     ) 
+//       setUserData(userData.concat(inputData))
+//     }catch(e) {
+//       console.error(e.message)
+//     }
+  
+// }, [])
+
   return (
     <Box sx={{ flexGrow: "wrap", overflow: "hidden", px: 3 }}>
+      
+      {/* MY PAGE, 이미지 관리 */}
       <Paper
         elevation={0}
         sx={{ maxWidth: 800, mx: "auto", pt: 4, pl: 5, pr: 4 }}
@@ -21,13 +65,10 @@ export default function User() {
         <Box sx={{ display: "flex", justifyContent: "center", pb: 5 }}>
           <h2>MY PAGE</h2>
         </Box>
-        <Grid container wrap="nowrap" spacing={2}>
-          <Grid item>
+        <Box sx={{ display: "flex", justifyContent: "center", pb: 5 }}>
             <Avatar
               sx={{
                 display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
                 alignItems: "center",
                 width: "150px",
                 height: "150px",
@@ -36,36 +77,9 @@ export default function User() {
               alt="Remy Sharp"
               src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
             />
-            
-          </Grid>
-          <Box sx={{ my: 4, mx: 4 }}>
-            <Stack direction="row" spacing={1}>
-              <Typography
-                variant="h4"
-                component="div"
-                sx={{ fontWeight: "bold", ml: 4 }}
-              >
-                닉네임
-              </Typography>
-              <Box sx={{ pt: 1 }}>
-              <IconButton size="small">
-                <EditIcon fontSize="inherit" />
-              </IconButton>
-              </Box>
-            </Stack>
-            <Stack direction="row" spacing={1}>
-              <Typography variant="h6" component="div" sx={{ my: 2, ml: 4.5 }}>
-                한줄자기소개
-              </Typography>
-              <Box sx={{ pt: 2.5 }}>
-              <IconButton size="small">
-                <EditIcon fontSize="inherit" />
-              </IconButton>
-              </Box>
-            </Stack>
-          </Box>
-        </Grid>
+        </Box>
         </Paper>
+        <Box sx={{ display: "flex", justifyContent: "center", pb: 5 }}>
         <Stack direction="row" spacing={1} sx={{ ml: 1, mr: 2, my: 1 }}>
           <Input
             accept="image/*"
@@ -74,69 +88,66 @@ export default function User() {
             type="file"
           />
           <Button variant="contained" component="span" size="small">
-            이미지 업로드
+            이미지 변경
           </Button>
           <IconButton aria-label="delete" size="small">
             <DeleteIcon fontSize="inherit" />
           </IconButton>
         </Stack>
+        </Box>      
       </Paper>
+
+      {/* 첫 번째 칸 */}
       <Paper
         elevation={2}
         sx={{ maxWidth: 800, my: 1, mx: "auto", mt: 4, p: 2 }}
       >
-        <Stack direction="row" spacing={2} sx={{ my: 1, p: 2 }}>
-          <Typography variant="h6" sx={{ fontWeight: "bold" }}>
-            운영중인 블로그
-          </Typography>
-          <Typography sx={{ my: 1, p: 1 }}>블로그명</Typography>
-          <Box sx={{ flexGrow: 1 }} />
-          <Button size="small">수정</Button>
-        </Stack>
+          <Stack direction="column" sx={{ my: 1, p: 1 }}>
+
+            <Stack direction='row' sx={{ my: 1, p: 1}}>
+              <Typography variant="h6" sx={{ fontWeight: "bold"}}>닉네임</Typography>
+              <Typography sx={{ marginLeft: 10.8, p: 0.5 }}>{setUserData.nickname}</Typography>
+            </Stack>
+
+
+            <Stack direction='row' sx={{ my: 1, p: 1}}>
+              <Typography variant="h6" sx={{ fontWeight: "bold" }}>자기소개</Typography>
+              <Typography sx={{ marginLeft: 8.3, p: 0.5 }}>{setUserData.introduce}</Typography>
+            </Stack>
+
+            <Stack direction='row' sx={{ my: 1, p: 1}}>
+              <Typography variant="h6" sx={{ fontWeight: "bold" }}>블로그 주소</Typography>
+              <Typography sx={{ marginLeft: 5, p: 0.5 }}>{setUserData.domain}</Typography>
+              <Box sx={{ flexGrow: 1 }} />
+              <Button size="small">수정하기</Button>
+            </Stack>
+
+            <Stack direction='row' sx={{ my: 1, p: 1}}>
+              <Typography variant="h6" sx={{ fontWeight: "bold" }}>이메일 주소</Typography>
+              <Typography sx={{ marginLeft: 5, p: 0.5 }}>{setUserData.email}</Typography>
+            </Stack>
+    
+          </Stack>
       </Paper>
+
+      {/* 두 번째 칸 */}
       <Paper
         elevation={2}
-        sx={{ maxWidth: 800, my: 1, mx: "auto", px: 2, pt: 2 }}
+        sx={{ maxWidth: 800, my: 1, mx: "auto", mt: 1, p: 2 }}
       >
-        <Stack direction="row" spacing={2} sx={{ my: 1, px: 2, pt: 2 }}>
-          <Typography variant="h6" component="div" sx={{ fontWeight: "bold" }}>
-            이메일
-          </Typography>
-          <Stack direction="column" spacing={2}>
-            <Typography variant="h6" sx={{ fontWeight: "bold" }}>
-              주소
-            </Typography>
-            <Typography variant="h6" sx={{ fontWeight: "bold" }}>
-              수신설정
-            </Typography>
-          </Stack>
-          <Stack direction="column" spacing={3} sx={{ p: 1 }}>
-            <Typography variant="body1">메일주소</Typography>
-            <Typography variant="body1">댓글알림</Typography>
-            <Typography variant="body1">
-              서비스 관련 소식 및 마케팅 메일
-            </Typography>
-          </Stack>
-          <Box sx={{ justifyContent: "flex-end" }}>
-            <Stack direction="column" spacing={1} sx={{ my: 6 }}>
-              <Switch {...label} />
-              <Switch {...label} />
+          <Stack direction="column" sx={{ my: 1, p: 1 }}>
+
+            <Stack direction='row' sx={{ my: 1, p: 1}}>
+              <Typography variant="h6" sx={{ fontWeight: "bold" }}>이웃 관리</Typography>
+              <Typography sx={{ marginLeft: 7.5, p: 0.5 }}>ㅗㄹㅋ</Typography>
+              <Box sx={{ flexGrow: 1 }} />
+              <Button size="small">이웃 관리</Button>
             </Stack>
-          </Box>
-        </Stack>
+    
+          </Stack>
       </Paper>
-      <Paper elevation={2} sx={{ maxWidth: 800, my: 1, mx: "auto", p: 2 }}>
-        <Stack direction="row" spacing={2} sx={{ my: 1, p: 2 }}>
-          <Typography variant="h6" component="div" sx={{ fontWeight: "bold" }}>
-            이웃관리
-          </Typography>
-          <Typography variant="body1" component="div" sx={{ p: 1 }}>
-            현재 n명과 이웃입니다
-          </Typography>
-          <Box sx={{ flexGrow: 1 }} />
-          <Button size="small">이웃관리</Button>
-        </Stack>
-      </Paper>
+
+      {/* 세 번째 칸 */}
       <Paper elevation={2} sx={{ maxWidth: 800, my: 1, mx: "auto", p: 2 }}>
         <Stack direction="row" spacing={2} sx={{ my: 1, p: 2 }}>
           <Typography variant="h6" component="div" sx={{ fontWeight: "bold" }}>
