@@ -5,35 +5,20 @@ import CategoryService from "../../services/category.service";
 
 export const createCategory = (user_id, categoryName) => async (dispatch) => {
   try {
-    const res = await CategoryService.createCategory({ user_id, categoryName });
+    const res = await CategoryService.createCategory(user_id, categoryName); //API 호출
     dispatch({
       type: CREATE_CATEGORY,
       payload: res.data,
     });
-    return Promise.resolve(res.data);
+    return Promise.resolve(res.data); //성공
   } catch (err) {
-    return Promise.reject(err);
+    return Promise.reject(err); //실패
   }
 };
 
-// export const allCategories = (categoryId, categoryName) => (dispatch) => {
-//   return AuthService.allCategories(
-//     categoryId,
-//     categoryName,
-//   ).then((response) => {
-//       dispatch({
-//         type: ALL_CATEGORIES
-//       })
-//       return Promise.resolve();
-//       })
-//     .catch((error) => {
-//       console.error(error);
-//     });
-//   }
-
-export const allCategories = () => async (dispatch) => {
+export const allCategories = (user_id) => async (dispatch) => {
   try {
-    const res = await CategoryService.allCategories();
+    const res = await CategoryService.allCategories(user_id);
     dispatch({
       type: ALL_CATEGORIES,
       payload: res.data
@@ -68,12 +53,12 @@ export const updateCategory = (id, data) => async (dispatch) => {
   }
 };
 
-export const deleteCategory = (id) => async (dispatch) => {
+export const deleteCategory = (category_id) => async (dispatch) => {
   try {
-    await CategoryService.deleteCategory(id);
+    await CategoryService.deleteCategory(category_id);
     dispatch({
       type: DELETE_CATEGORY,
-      payload: { id },
+      payload: { category_id },
     });
   } catch (err) {
     console.log(err);

@@ -3,15 +3,15 @@ import authHeader from './auth-header';
 
 const API_URL = 'http://localhost:8080';
 
-const createCategory = (categoryId, categoryName ) => {
+const createCategory = (userId, categoryName ) => {
   return axios.post(API_URL + '/board/categories/', {
-    category_id: categoryId,
+    userId,
     categoryName
   }, { headers: authHeader() });
 };
 
-const allCategories = () => {
-  return axios.get(API_URL + `/board/categories/users/1`, { headers: authHeader() });
+const allCategories = (user_id) => {
+  return axios.get(API_URL + `/board/categories/users/${user_id}`, { headers: authHeader() });
 };
 
 const findCategory = (category_id) => {
@@ -29,12 +29,17 @@ const deleteCategory = (category_id) => {
   });
 };
 
+const getCurrentCategory = () => {
+  return JSON.parse(localStorage.getItem('category'));
+};
+
 const CategoryService = {
   createCategory,
   allCategories,
   findCategory,
   updateCategory,
   deleteCategory,
+  getCurrentCategory,
 };
 
 export default CategoryService;

@@ -8,9 +8,8 @@ import {
   updateCategory,
   deleteCategory,
 } from '../../redux/actions/category';
-import CategoryService from '../../services/category.service';
 
-import { ListItem, Box, IconButton, Input, Stack, FormControl, InputLabel, InputAdornment } from '@mui/material';
+import { ListItem, Box, IconButton, Input, FormControl, TextField, InputAdornment, Stack } from '@mui/material';
 import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
@@ -20,43 +19,95 @@ import ArrowRight from '@mui/icons-material/ArrowRight';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import AddIcon from '@mui/icons-material/Add';
+import CheckIcon from '@mui/icons-material/Check';
 
-export default function Category({ onChangeCategory }) {
+export default function Category() {
   const dispatch = useDispatch();
+  const [categories, setCategories] = useState([]);
+  const [categoryName, setCategoryName] = useState('');
   const { data } = useSelector((state) => state.category);
   const { isLoggedIn } = useSelector((state) => state.auth);
   const [edit, setEdit] = useState(false);
-  const [category, setCategory] = useState([]);
-  const [submitted, setSubmitted] = useState(false);
+  const { user: currentUser } = useSelector((state) => state.auth);
+  const { category: currentCategory } = useSelector((state) => state.category);
 
-
+  // 조회
   useEffect(() => {
-    dispatch(allCategories());
+    getCategories();
   }, []);
 
-  //추가
-  const saveCategory = () => {
-    const { user_id, categoryName } = category;
-    dispatch(createCategory(user_id, categoryName))
-      .then(data => {
-        setCategory({
-          user_id: data.user_id,
-          categoryName: data.categoryName,
-          published: data.published
-        });
-        setSubmitted(true);
+  function getCategories () {
+    dispatch(allCategories(currentUser.userId))
+    .then((data) => {
+      setCategories(data);
+    })
+    .catch((error) => {
+      console.error(error)
+    })
+  }
 
-        console.log(data);
+  //추가
+  function addCategory (e) {
+    const addCategory = () => {
+      dispatch(createCategory(currentUser.userId, categoryName))
+      .then((response) => {
+        console.log(response.data)
+        setCategoryName('');
       })
-      .catch(e => {
-        console.log(e);
-      });
-  };
+      .catch((error) => {
+        console.error(error);
+      })
+    }
+    addCategory();
+    console.log('categoryName', categoryName)
+    console.log('카테고리 생성')
+  }
+
+  function changeCategory (e) {
+    e.preventDefault();
+    setCategoryName(e.target.value);
+  }
+
+
+  // 수정
+  // function putCategory (category_id) {
+  //   console.log(category_id)
+
+  //   const putCategory = () => {
+  //     dispatch(updateCategory(currentUser.userId, categoryName))
+  //     .then((response) => {
+  //       setCategories(
+  //         categories.map((category) => 
+  //           category.category_id === category_id ? { ...category, completed: !category.completed } : category
+  //         )
+  //       );
+  //     })
+  //     .catch((error) => {
+  //       console.error(error);
+  //     })
+  //   }
+  //   addCategory();
+  //   console.log('categoryName', categoryName)
+  //   console.log('카테고리 수정')
+  // }
+
+  // 삭제
+  const removeCategory = () => {
+    dispatch(deleteCategory())
+    .then(() => {
+      getCategories();
+    })
+    .catch((error) => {
+      console.error(error);
+    })
+  }
+
+  // 저장
 
   return (
     <Box>
       <ListItem component="div" disablePadding>
-        <ListItemButton sx={{ height: 56 }} onClick={allCategories}>
+        <ListItemButton sx={{ height: 56 }}>
           <ListItemText
             primary="전체보기"
             primaryTypographyProps={{
@@ -104,7 +155,7 @@ export default function Category({ onChangeCategory }) {
               </IconButton>
             </Tooltip>
           ) : (
-            <Tooltip title="카테고리 수정">
+            <Tooltip title="저장">
               <IconButton
                 size="large"
                 sx={{
@@ -119,12 +170,19 @@ export default function Category({ onChangeCategory }) {
                   },
                 }}
               >
-                <EditIcon />
+                <CheckIcon />
               </IconButton>
             </Tooltip>
           )
         ) : null}
       </ListItem>
+      {isLoggedIn ? (
+          !edit ? null : (
+            <Stack direction="row" spacing={2} sx={{ px: 0.5, pt: 1 }}>
+              <TextField onChange={changeCategory} id="outlined-basic" size="small" label="카테고리 추가" variant="outlined" placeholder="카테고리명을 입력해주세요"/>
+              <IconButton onClick={addCategory}><AddIcon/></IconButton>
+            </Stack>
+          )) : null}
       <List
         sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}
         component="nav"
@@ -148,16 +206,14 @@ export default function Category({ onChangeCategory }) {
             } else {
               return (
                 <FormControl sx={{ m: 1, width: '25ch' }} variant="standard">
-                  <InputLabel htmlFor="categoryname">
-                    카테고리명
-                  </InputLabel>
                   <Input
+                    defaultValue={category.categoryName}
                     endAdornment={
                       <InputAdornment position="end">
-                        <IconButton onClick={saveCategory}>
-                          <AddIcon />
-                        </IconButton>
                         <IconButton>
+                          <EditIcon />
+                        </IconButton>
+                        <IconButton onClick={removeCategory}>
                           <DeleteIcon />
                         </IconButton>
                       </InputAdornment>

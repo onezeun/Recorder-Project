@@ -9,7 +9,6 @@ export default function categoryReducer(category = initialState, action) {
       return [...category, payload];
 
     case ALL_CATEGORIES:
-      console.log('payload', payload)
       return payload;
     
     case FIND_CATEGORY:
@@ -28,7 +27,7 @@ export default function categoryReducer(category = initialState, action) {
       });
 
     case DELETE_CATEGORY:
-      return category.filter(({ id }) => id !== payload.id);
+      return category.filter(({ category_id }) => category_id !== payload.category_id);
     default:
       return category;
   }
