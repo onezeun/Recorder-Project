@@ -16,11 +16,14 @@
 
 <p>
   <img src="https://user-images.githubusercontent.com/52682603/138834243-fb74d81e-e90d-4c6a-8793-05df588f59ab.png" alt="react" width=15%>
+  <img src="https://user-images.githubusercontent.com/50399088/162935064-1a225739-f7cc-49d0-8780-40db06d5a98f.png" alt="react" width=15%>
+  <img src="https://user-images.githubusercontent.com/50399088/162935074-b694ba10-8a3b-477d-8918-28f1489afb81.png" alt="react" width=15%>
 </p>
 
 - **React**  Component를 이용하여 편하게 페이지를 관리하였고,  재사용성과 코드 가독성이 좋아 웹페이지를 효율적으로 구현했습니다.
 - **Redux** state를 편하고 효율적으로 관리하기 위해 사용한 라이브러리로 에러를 찾을 때도 비교적 수월했습니다.
 - **nodejs** 리액트를 더 쉽게 사용하기 위한 도구들을 내장하고 있어 더 나은 개발환경으로 개선시켰습니다.
+
 
 ### Back-end
 
