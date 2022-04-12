@@ -12,7 +12,6 @@
 
 ## 💡 Skills
 
----
 ### Front-end
 
 <p>
