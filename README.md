@@ -7,6 +7,7 @@
 <img src="https://img.shields.io/badge/Redux-v4.1.2-764ABC?style=plastic&logo=Redux">
 <img src="https://img.shields.io/badge/Spring Boot-v2.5.8-6DB33F?style=plastic&logo=Spring Boot">
 <img src="https://img.shields.io/badge/PostgreSQL-v11.14-4169E1?style=plastic&logo=PostgreSQL">
+
 일상을 기록하는 Record:er
 
 ## ⚒ Skills
