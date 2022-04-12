@@ -38,23 +38,29 @@
 
 ### Infra Structure
 
+<p>
+<img src="https://user-images.githubusercontent.com/50399088/162920037-797dc57e-59b1-48ef-8f1e-cc714fd38dec.png" alt="hybernate" width=15%>
+</p>
+
 - **AWS RDS**를 이용하여 DB서버를 구축했습니다.
 
 #### DB
 
 <p>
   <img src="https://user-images.githubusercontent.com/50399088/162910736-f6f3125b-5138-4c82-b77f-ae0ac19369ea.png" alt="mysql" width=15%>
-
 </p>
 
 - 데이터베이스는 **PostgreSQL**을 사용하였습니다.
 
 #### Network
 
-- **Axios**를 사용하여 프록시를 설정하였습니다.
-  
-
+<p>
+  <img src="https://user-images.githubusercontent.com/50399088/162919662-53056e70-0625-4baf-9072-222bae28bea2.png" alt="spring_boot" width=15%>
 </p>
+
+
+- **Axios**를 사용하여 비동기 통신을 하였습니다.
+  
 **REST API 명세서**
 https://beautiful-shawl-a13.notion.site/0b4d239292374636ab66e54a762d0d94
 
@@ -63,6 +69,5 @@ https://beautiful-shawl-a13.notion.site/0b4d239292374636ab66e54a762d0d94
 
 |            [주지운](https://github.com/zu21un)             |            [이혜지](https://github.com/zzambbang)             |             [한지은](https://github.com/onezeun)             |             [이영한](https://github.com/2zerone)             |
 | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
-| <img src="https://user-images.githubusercontent.com/50399088/162911701-048db6d2-ab2e-4ce3-a05d-321f9aef8480.png" width=200px alt="_"/> | <img src="https://user-images.githubusercontent.com/50399088/162911631-0556ac60-8d1d-470f-aaec-c506d0ce7a08.png" width=200px alt="_"/> | <img src="https://user-images.githubusercontent.com/50399088/162911994-c1afe36a-5a07-42b5-97fd-21068df542f3.png" width=200px alt="_"/> | <img src="https://user-images.githubusercontent.com/50399088/162911925-09047743-5808-489d-92e2-0eab3fcf6807.png" width=200px alt="_"> |
+| <img src="https://user-images.githubusercontent.com/50399088/162911701-048db6d2-ab2e-4ce3-a05d-321f9aef8480.png" width=200px alt="_"/> | <img src="https://user-images.githubusercontent.com/50399088/162911631-0556ac60-8d1d-470f-aaec-c506d0ce7a08.png" width=200px alt="_"/> | <img src="https://user-images.githubusercontent.com/50399088/162919943-1a4ff1c4-8265-45b2-84d3-e36707e5244f.png" width=200px alt="_"/> | <img src="https://user-images.githubusercontent.com/50399088/162911925-09047743-5808-489d-92e2-0eab3fcf6807.png" width=200px alt="_"> |
 |                         백엔드                         |                         백엔드                         |                           프론트엔드                           |                           프론트엔드                           |
-
