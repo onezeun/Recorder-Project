@@ -32,7 +32,7 @@
 </p>
 
 - **Springboot** 로 웹 어플리케이션 서버를 구축했습니다.
-- **Springboot** 로 웹 어플리케이션 서버를 구축했습니다**Spring Data JPA(Hibernate)** 로 객체 지향 데이터 로직을 작성했습니다.
+- **Spring Data JPA(Hibernate)** 로 객체 지향 데이터 로직을 작성했습니다.
 - **JWT**으로 회원 인증이나 정보 전달에 사용되는 토큰을 구현하였습니다.
 
 ### Infra Structure
