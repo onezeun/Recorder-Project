@@ -10,13 +10,18 @@
 
 일상을 기록하는 Record:er
 
-## ⚒ Skills
+## 💡 Skills
+
 ---
 ### Front-end
 
 <p>
   <img src="https://user-images.githubusercontent.com/52682603/138834243-fb74d81e-e90d-4c6a-8793-05df588f59ab.png" alt="react" width=15%>
 </p>
+
+- **React**  Component를 이용하여 편하게 페이지를 관리하였고,  재사용성과 코드 가독성이 좋아 웹페이지를 효율적으로 구현했습니다.
+- **Redux** state를 편하고 효율적으로 관리하기 위해 사용한 라이브러리로 에러를 찾을 때도 비교적 수월했습니다.
+- **nodejs** 리액트를 더 쉽게 사용하기 위한 도구들을 내장하고 있어 더 나은 개발환경으로 개선시켰습니다.
 
 ### Back-end
 
@@ -27,6 +32,14 @@
   <img src="https://user-images.githubusercontent.com/50399088/162910460-7eba9cf6-f787-4216-96c5-be56fb735cdf.png" alt="hybernate" width=15%>
 </p>
 
+- **Springboot** 로 웹 어플리케이션 서버를 구축했습니다.
+- **Springboot** 로 웹 어플리케이션 서버를 구축했습니다**Spring Data JPA(Hibernate)** 로 객체 지향 데이터 로직을 작성했습니다.
+- **JWT**으로 회원 인증이나 정보 전달에 사용되는 토큰을 구현하였습니다.
+
+### Infra Structure
+
+- **AWS RDS**를 이용하여 DB서버를 구축했습니다.
+
 #### DB
 
 <p>
@@ -34,6 +47,14 @@
 
 </p>
 
+- 데이터베이스는 **PostgreSQL**을 사용하였습니다.
+
+#### Network
+
+- **Axios**를 사용하여 프록시를 설정하였습니다.
+  
+
+</p>
 **REST API 명세서**
 https://beautiful-shawl-a13.notion.site/0b4d239292374636ab66e54a762d0d94
 
