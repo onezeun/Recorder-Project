@@ -18,4 +18,4 @@ export const DELETE_CATEGORY = 'DELETE_CATEGORY';
 export const RECENT_POST = 'RECENT_POST';
 
 export const USER_GET = 'USER_GET';
-export const GET_FAIL = 'GET_FAIL';
+export const USER_UPDATE = 'USER_UPDATE';
