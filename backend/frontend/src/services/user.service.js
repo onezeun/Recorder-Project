@@ -11,8 +11,22 @@ const getUser = (user_id) => {
      });
 }
 
+const updateUser = (user_id, email, nickname, domain, introduce) => {
+    return axios
+    .put(API_URL + `${user_id}`, {
+        email,
+        nickname,
+        domain,
+        introduce,
+    }, { headers: authHeader() })
+    .catch((error) => {
+        console.error(error);
+    })
+}
+
 const UserService = {
     getUser,
+    updateUser,
 }
   
 export default UserService;
