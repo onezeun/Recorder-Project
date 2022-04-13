@@ -1,13 +1,17 @@
-import { USER_GET } from "../actions/types";
+import { USER_GET, USER_UPDATE } from "../actions/types";
 
-const user = JSON.parse(localStorage.getItem('user'));
-
-const initialState = user ? { isLoggedIn: true, user} : { isLoggedIn: false, user: null};
+const initialState = {};
 
 export default function getUser(user = initialState, action) {
     const { type, payload } = action;
     switch (type) {
         case USER_GET:
             return payload;
+
+        case USER_UPDATE:
+            return [...user, payload];
+            
+        default:
+        return user;
     }
 }

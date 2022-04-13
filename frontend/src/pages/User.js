@@ -3,7 +3,8 @@ import styled from "styled-components";
 import { Stack, Paper, Grid, Avatar, Button, Box, IconButton, Typography, Switch } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useSelector, useDispatch } from "react-redux";
-import { getUser } from "../redux/actions/user";
+import { getUser, updateUser } from "../redux/actions/user";
+import { TextField } from "@mui/material";
 
 import axios from 'axios';
 
@@ -13,6 +14,7 @@ const Input = styled("input")({
 
 export default function User() {
   const { user: currentUser } = useSelector((state) => state.auth);
+  const data = useSelector((state) => state.user);
   const [ userData, setUserData ] = useState([]);
 
   const dispatch = useDispatch();
@@ -24,35 +26,61 @@ export default function User() {
   function getUsers() {
     dispatch(getUser(currentUser.userId))
     .then((data) => {
-      setUserData([data]);
+      setUserData(data);
     })
     .catch((error) => {
       console.error(error);
     })
   }
 
-  console.log(getUser(currentUser.userId));
-
-
-//   useEffect(async() => {
-//     try {
-//       const res = await axios.get('http://localhost:8080/users/' + `${currentUser.userId}`)
-      
-//       const inputData = await res.data.map((rowData) => ({
-//         email: rowData.email,
-//         nickname: rowData.nickname,
-//         profilePhoto: rowData.profilePhoto,
-//         domain: rowData.domain,
-//         introduce: rowData.introduce
-//       })
-//     ) 
-//       setUserData(userData.concat(inputData))
-//     }catch(e) {
-//       console.error(e.message)
-//     }
+  const [update, setUpdate] = useState(true);
+  const [email, setEmail] = useState('');
+  const [nickname, setNickname] = useState('');
+  const [domain, setDomain] = useState(''); 
+  const [introduce, setIntroduce] = useState('');
+  let updateNickname, updateIntroduce, updateDomain, updateButton = null;
   
-// }, [])
+  const onClickUpdate = () => {
+      setUpdate(!update);
+  }
 
+  const onClickRegister = () => {
+      
+      dispatch(updateUser(currentUser.userId, email, nickname, domain, introduce))
+      .then(() => {
+      })
+      .catch(() => {  
+      })
+      setUpdate(!update);
+      
+      window.location.reload();
+  }
+
+  const onNicknameHandler = (e) => {
+    setNickname(e.target.value);
+  };
+
+  const onIntroduceHandler = (e) => {
+    setIntroduce(e.target.value);
+  };
+
+  const onDomainHandler = (e) => {
+    setDomain(e.target.value);
+  };
+
+
+  if (update) {
+    updateNickname = <Typography sx={{ marginLeft: 10.8, p: 0.5 }}>{data.nickname}</Typography>;
+    updateIntroduce = <Typography sx={{ marginLeft: 8.3, p: 0.5 }}>{data.introduce}</Typography>
+    updateDomain = <Typography sx={{ marginLeft: 5, p: 0.5 }}>{data.domain}</Typography>
+    updateButton = <Button size="small" onClick={onClickUpdate}>수정하기</Button>
+  } else {
+    updateNickname = <TextField sx={{ marginLeft: 10, p: 0.5}} id="outlined-basic" onChange={onNicknameHandler} defaultValue={data.nickname} variant="outlined" />
+    updateIntroduce = <TextField sx={{ marginLeft: 7.4, p: 0.5}} id="outlined-basic" onChange={onIntroduceHandler} defaultValue={data.introduce} variant="outlined" />
+    updateDomain = <TextField sx={{ marginLeft: 4.2, p: 0.5}} id="outlined-basic" onChange={onDomainHandler} defaultValue={data.domain} variant="outlined" />
+    updateButton = <Button size="small" onClick={onClickRegister}>저장하기</Button>
+  }
+  
   return (
     <Box sx={{ flexGrow: "wrap", overflow: "hidden", px: 3 }}>
       
@@ -106,26 +134,27 @@ export default function User() {
 
             <Stack direction='row' sx={{ my: 1, p: 1}}>
               <Typography variant="h6" sx={{ fontWeight: "bold"}}>닉네임</Typography>
-              <Typography sx={{ marginLeft: 10.8, p: 0.5 }}>{setUserData.nickname}</Typography>
+              {updateNickname}
             </Stack>
 
-
+              
             <Stack direction='row' sx={{ my: 1, p: 1}}>
               <Typography variant="h6" sx={{ fontWeight: "bold" }}>자기소개</Typography>
-              <Typography sx={{ marginLeft: 8.3, p: 0.5 }}>{setUserData.introduce}</Typography>
+              {updateIntroduce}
             </Stack>
 
+            
             <Stack direction='row' sx={{ my: 1, p: 1}}>
               <Typography variant="h6" sx={{ fontWeight: "bold" }}>블로그 주소</Typography>
-              <Typography sx={{ marginLeft: 5, p: 0.5 }}>{setUserData.domain}</Typography>
-              <Box sx={{ flexGrow: 1 }} />
-              <Button size="small">수정하기</Button>
+              {updateDomain}
             </Stack>
 
             <Stack direction='row' sx={{ my: 1, p: 1}}>
               <Typography variant="h6" sx={{ fontWeight: "bold" }}>이메일 주소</Typography>
-              <Typography sx={{ marginLeft: 5, p: 0.5 }}>{setUserData.email}</Typography>
+              <Typography sx={{ marginLeft: 5, p: 0.5 }}>{data.email}</Typography>
             </Stack>
+
+            {updateButton}
     
           </Stack>
       </Paper>
@@ -139,25 +168,28 @@ export default function User() {
 
             <Stack direction='row' sx={{ my: 1, p: 1}}>
               <Typography variant="h6" sx={{ fontWeight: "bold" }}>이웃 관리</Typography>
-              <Typography sx={{ marginLeft: 7.5, p: 0.5 }}>ㅗㄹㅋ</Typography>
+              <Typography sx={{ marginLeft: 7.5, p: 0.5 }}>3명</Typography>
               <Box sx={{ flexGrow: 1 }} />
-              <Button size="small">이웃 관리</Button>
             </Stack>
-    
+
+            <Button size="small">이웃 관리</Button>    
           </Stack>
       </Paper>
 
       {/* 세 번째 칸 */}
-      <Paper elevation={2} sx={{ maxWidth: 800, my: 1, mx: "auto", p: 2 }}>
-        <Stack direction="row" spacing={2} sx={{ my: 1, p: 2 }}>
-          <Typography variant="h6" component="div" sx={{ fontWeight: "bold" }}>
-            회원탈퇴
-          </Typography>
-          <Box sx={{ flexGrow: 1 }} />
-          <Button size="small" color="error">
-            회원탈퇴
-          </Button>
-        </Stack>
+      <Paper
+        elevation={2}
+        sx={{ maxWidth: 800, my: 1, mx: "auto", mt: 1, p: 2 }}
+      >
+          <Stack direction="column" sx={{ my: 1, p: 1 }}>
+
+            <Stack direction='row' sx={{ my: 1, p: 1}}>
+              <Typography variant="h6" sx={{ fontWeight: "bold" }}>회원 탈퇴</Typography>
+              <Box sx={{ flexGrow: 1 }} />
+            </Stack>
+
+            <Button size="small" color="error">회원 탈퇴</Button>    
+          </Stack>
       </Paper>
     </Box>
   );
