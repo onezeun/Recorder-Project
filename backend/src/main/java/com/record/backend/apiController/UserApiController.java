@@ -59,7 +59,7 @@ public class UserApiController {
 	}
 
 	//유저 프로필 업로드
-	@PostMapping("/users/profilePhoto")
+	@PostMapping("/users/{user_id}/profilePhoto")
 	public ResponseEntity<?> uploadProfilePhoto(@PathVariable("user_id") Long userId, @RequestParam("profilePhoto") MultipartFile multipartFile) throws IOException {
 		//S3 Bucket 내부에 "/profile"
 
