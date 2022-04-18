@@ -67,6 +67,14 @@ public class UserApiController {
 		return ResponseEntity.ok(profile);
 	}
 
+	//유저 프로필 삭제
+	@DeleteMapping("/users/{user_id}/profilePhoto")
+	public ResponseEntity<?> deleteProfilePhoto(@PathVariable("user_id") Long userId) {
+		s3Uploader.fileDelete(userId);
+
+		return ResponseEntity.ok("delete success!");
+	}
+
 	//조회
 	@GetMapping("/users")
 	public Result allUsers() {
