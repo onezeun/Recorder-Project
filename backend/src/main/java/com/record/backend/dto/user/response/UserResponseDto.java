@@ -11,7 +11,7 @@ public class UserResponseDto {
 	private Long userId;
 	private String email;
 	private String nickname;
-	private String picture;
+	private String profilePhoto;
 	private String domain;
 	private String introduce;
 
@@ -19,7 +19,7 @@ public class UserResponseDto {
 		this.userId = user.getId();
 		this.email = user.getEmail();
 		this.nickname = user.getNickname();
-		this.picture = user.getProfilePhoto();
+		this.profilePhoto = user.getProfilePhoto();
 		this.domain = user.getDomain();
 		this.introduce = user.getIntroduce();
 	}
