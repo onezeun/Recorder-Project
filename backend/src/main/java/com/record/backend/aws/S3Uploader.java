@@ -33,6 +33,8 @@ public class S3Uploader {
 	private final AmazonS3Client amazonS3Client;
 	private final UserRepository userRepository;
 
+	public static final String key = "/photo";
+
 	@Value("${cloud.aws.s3.bucket}")
 	private String bucket;
 
@@ -48,7 +50,7 @@ public class S3Uploader {
 
 	@Transactional
 	private FileUploadResponse upload(Long userId, File uploadFile, String dirName) {
-		String fileName = dirName + "/" + userId + "/" + "photo";
+		String fileName = dirName + "/" + userId + key;
 		String uploadImageUrl = putS3(uploadFile, fileName);
 		removeNewFile(uploadFile);
 
