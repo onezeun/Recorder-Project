@@ -1,14 +1,27 @@
 import React from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate, useNavigate, Link } from 'react-router-dom';
+import styled from "styled-components";
+import logo from '../../img/logo-removebg.png'
 
-import { IconButton, Typography, MenuItem, Menu, Box, Badge } from '@mui/material';
+import { IconButton, MenuItem, Menu, Box, Badge, Typography } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import MoreIcon from '@mui/icons-material/MoreVert';
 
 import { logout } from '../../redux/actions/auth';
+
+const Img = styled.img`
+  width: 25vw;
+  height: 5vw;
+
+  @media screen and (max-width: 610px) {
+    width: 35vw;
+    height: 7vw;
+    flex-direction: column;
+  }
+`;
 
 export default function UserHeader() {
   const { isLoggedIn } = useSelector((state) => state.auth);
@@ -48,29 +61,6 @@ export default function UserHeader() {
     });
   };
 
-  const menuId = 'primary-search-account-menu';
-  const renderMenu = (
-    <Menu
-      anchorEl={anchorEl}
-      anchorOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
-      }}
-      id={menuId}
-      keepMounted
-      transformOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
-      }}
-      open={isMenuOpen}
-      onClose={handleMenuClose}
-    >
-      <MenuItem onClick={handleMenuClose}>내블로그</MenuItem>
-      <MenuItem onClick={handleMenuClose}>계정설정</MenuItem>
-      <MenuItem onClick={onLogOut}>로그아웃</MenuItem>
-    </Menu>
-  );
-
   const mobileMenuId = 'primary-search-account-menu-mobile';
   const renderMobileMenu = (
     <Menu
@@ -89,34 +79,13 @@ export default function UserHeader() {
       onClose={handleMobileMenuClose}
     >
       <MenuItem>
-        <IconButton size="large" aria-label="search" color="inherit">
-          <SearchIcon />
-        </IconButton>
-        <p>검색</p>
+        <Typography textAlign="center">내블로그</Typography>
       </MenuItem>
       <MenuItem>
-        <IconButton
-          size="large"
-          aria-label="show 610 new notifications"
-          color="inherit"
-        >
-          <Badge badgeContent={610} color="error">
-            <NotificationsIcon />
-          </Badge>
-        </IconButton>
-        <p>알림</p>
+        <Typography textAlign="center">계정설정</Typography>
       </MenuItem>
-      <MenuItem onClick={handleProfileMenuOpen}>
-        <IconButton
-          size="large"
-          aria-label="account of current user"
-          aria-controls="primary-search-account-menu"
-          aria-haspopup="true"
-          color="inherit"
-        >
-          <AccountCircle />
-        </IconButton>
-        <p>내정보</p>
+      <MenuItem onClick={onLogOut}>
+        <Typography textAlign="center">로그아웃</Typography>
       </MenuItem>
     </Menu>
   );
@@ -130,38 +99,24 @@ export default function UserHeader() {
       pr: '1rem',
       pl: '1rem'
     }}>
-      <Box sx={{ mx:5, mt:4 }}>
-      <Link to="/main"><Typography variant="h6" component="div">
-        RECORD:ER
-      </Typography></Link>
+      <Box sx={{ mx:5, mt:7 }}>
+      <Link to="/main">
+        <Img src={logo} />
+      </Link>
       </Box>
       <Box sx={{ flexGrow: 1 }} />
-      <Box sx={{ display: { xs: 'none', md: 'flex' },  mt:2 }}>
-        <IconButton size="large" aria-label="search" color="inherit">
-          <SearchIcon />
-        </IconButton>
-        <IconButton
-          size="large"
-          aria-label="show 17 new notifications"
-          color="inherit"
-        >
-          <Badge badgeContent={17} color="error">
-            <NotificationsIcon />
-          </Badge>
-        </IconButton>
-        <IconButton
-          size="large"
-          edge="center"
-          aria-label="account of current user"
-          aria-controls={menuId}
-          aria-haspopup="true"
-          onClick={handleProfileMenuOpen}
-          color="inherit"
-        >
-          <AccountCircle />
-        </IconButton>
+      <Box sx={{ display: { xs: 'none', md: 'flex' },  mt:6 }}>
+        <MenuItem component={Link} to={'/Userhome'}>
+          <Typography textAlign="center">내블로그</Typography>
+        </MenuItem>
+        <MenuItem component={Link} to={'/User'}>
+          <Typography textAlign="center">계정설정</Typography>
+        </MenuItem>
+        <MenuItem onClick={onLogOut}>
+          <Typography textAlign="center">로그아웃</Typography>
+        </MenuItem>
       </Box>
-      <Box sx={{ display: { xs: 'flex', md: 'none' }, mt:2 }}>
+      <Box sx={{ display: { xs: 'flex', md: 'none' }, mt:7 }}>
         <IconButton
           size="large"
           aria-label="show more"
@@ -173,7 +128,6 @@ export default function UserHeader() {
           <MoreIcon />
         </IconButton>
         {renderMobileMenu}
-        {renderMenu}
       </Box>
     </Box>
   );
