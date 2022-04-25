@@ -12,7 +12,7 @@ import com.record.backend.domain.post.Post;
 import com.record.backend.domain.user.User;
 import com.record.backend.dto.post.request.PostSaveRequestDto;
 import com.record.backend.dto.post.request.PostUpdateRequestDto;
-import com.record.backend.dto.post.response.PostResponseDto;
+import com.record.backend.dto.post.response.PostAllUsersResponseDto;
 import com.record.backend.dto.post.response.PostUpdateResponseDto;
 import com.record.backend.exception.ResourceNotFoundException;
 import com.record.backend.repository.CategoryRepository;
@@ -60,13 +60,22 @@ public class PostService {
 	}
 
 	//조회
-	public List<PostResponseDto> findAllPost() {
+	public List<PostAllUsersResponseDto> findUsersAllPosts() {
 		List<Post> allPost = postRepository.findAll();
-		List<PostResponseDto> collect = allPost.stream()
-			.map(PostResponseDto::new)
+		List<PostAllUsersResponseDto> collect = allPost.stream()
+			.map(PostAllUsersResponseDto::new)
 			.collect(Collectors.toList());
 
 		return collect;
+	}
+
+	public List<PostAllUsersResponseDto> findUserAllPosts(Long userId) {
+
+		return postRepository.findAllByUserId(userId)
+			.stream()
+			.map(PostAllUsersResponseDto::new)
+			.collect(Collectors.toList());
+
 	}
 
 	//삭제
@@ -82,4 +91,5 @@ public class PostService {
 
 		return findPost;
 	}
+
 }

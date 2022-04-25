@@ -6,7 +6,7 @@ import com.record.backend.domain.post.Post;
 import lombok.Data;
 
 @Data
-public class PostResponseDto {
+public class PostAllUsersResponseDto {
 	private Long postId;
 	private Long userId;
 	private Long categoryId;
@@ -17,7 +17,7 @@ public class PostResponseDto {
 	private Exposure exposure;
 	private String thumbnailImage;
 
-	public PostResponseDto(Post post) {
+	public PostAllUsersResponseDto(Post post) {
 		this.postId = post.getId();
 		this.userId = post.getUser().getId();
 		this.categoryId = post.getCategory().getId();
