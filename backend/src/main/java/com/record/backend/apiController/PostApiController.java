@@ -1,11 +1,9 @@
 package com.record.backend.apiController;
 
-import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,18 +12,19 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.record.backend.auth.security.CurrentUser;
 import com.record.backend.auth.security.UserPrincipal;
 import com.record.backend.domain.post.Post;
 import com.record.backend.auth.dto.loginlogout.response.ApiResponse;
+import com.record.backend.domain.user.User;
 import com.record.backend.dto.post.PostDto;
 import com.record.backend.dto.post.request.PostSaveRequestDto;
 import com.record.backend.dto.post.request.PostUpdateRequestDto;
-import com.record.backend.dto.post.response.PostResponseDto;
+import com.record.backend.dto.post.response.PostAllUserResponseDto;
+import com.record.backend.dto.post.response.PostAllUsersResponseDto;
 import com.record.backend.dto.post.response.PostUpdateResponseDto;
-import com.record.backend.repository.PostRepository;
+import com.record.backend.repository.UserRepository;
 import com.record.backend.repository.query.PostQueryRepository;
 import com.record.backend.service.PostService;
 
@@ -39,6 +38,7 @@ public class PostApiController {
 
 	private final PostService postService;
 	private final PostQueryRepository postQueryRepository;
+	private final UserRepository userRepository;
 
 
 	//포스트 생성
@@ -57,16 +57,25 @@ public class PostApiController {
 		return postService.updatePost(postId, updateDto);
 	}
 
-	//조회
+	//조회(사용자 상관없이 전체 조회가능)
 	@GetMapping("/board/posts")
-	public Result allPosts() {
-		List<PostResponseDto> allPost = postService.findAllPost();
+	public Result allUsersPosts() {
+		List<PostAllUsersResponseDto> allUsersPost = postService.findUsersAllPosts();
 
-		return new Result(allPost);
+		return new Result(allUsersPost);
 	}
 
-	//사용자 블로그에 들어갔을 시, 카테고리별로 누르면 해당 카테고리에 있는 포스트가 불려온다.
-	@GetMapping("/board/posts/v1")
+	//사용자 블로그에 들어갔을 시, 카테고리 상관없이 전체 조회
+	@GetMapping("/board/users/{user_id}/posts")
+	public Result allUserPosts(@PathVariable("user_id") Long userId) {
+		List<PostAllUsersResponseDto> userAllPosts = postService.findUserAllPosts(userId);
+
+		return new Result(userAllPosts);
+	}
+
+	//===2개 이상의 인자를 쿼리로 조회 리팩토링 필요===//
+/*	//사용자 블로그에 들어갔을 시, 카테고리별로 누르면 해당 카테고리에 있는 포스트가 불려온다.
+	@GetMapping("/board/users/{user_id}/categories/{category_id}")
 	public Result findAllCategoryPosts(
 		@RequestParam(value = "offset", defaultValue = "0") int offset,
 		@RequestParam(value = "limit", defaultValue = "100") int limit) {
@@ -78,14 +87,14 @@ public class PostApiController {
 			.collect(Collectors.toList());
 
 		return new Result(result);
-	}
+	}*/
 
 	//하나만 조회
 	@GetMapping("/board/posts/{post_id}")
-	public PostResponseDto findPost(@CurrentUser UserPrincipal currentUser, @PathVariable("post_id") Long postId) {
+	public PostAllUsersResponseDto findPost(@CurrentUser UserPrincipal currentUser, @PathVariable("post_id") Long postId) {
 		//Post findPost = postRepository.findById(postId).get();
 		Post findPost = postService.getPostById(postId, currentUser);
-		return new PostResponseDto(findPost);
+		return new PostAllUsersResponseDto(findPost);
 	}
 
 	//삭제
