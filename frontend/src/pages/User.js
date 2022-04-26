@@ -3,9 +3,8 @@ import styled from "styled-components";
 import { Stack, Paper, Grid, Avatar, Button, Box, IconButton, Typography, Switch } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useSelector, useDispatch } from "react-redux";
-import { getUser, updateUser } from "../redux/actions/user";
+import { getUser, updateUser, updateImage } from "../redux/actions/user";
 import { TextField } from "@mui/material";
-
 import axios from 'axios';
 
 const Input = styled("input")({
@@ -19,6 +18,7 @@ export default function User() {
 
   const dispatch = useDispatch();
 
+  // 유저 정보 가져오기
   useEffect(() => {
     getUsers();
   }, []);
@@ -33,6 +33,7 @@ export default function User() {
     })
   }
 
+  // 유저 정보 변경하기
   const [update, setUpdate] = useState(true);
   const [email, setEmail] = useState('');
   const [nickname, setNickname] = useState('');
@@ -81,6 +82,119 @@ export default function User() {
     updateButton = <Button size="small" onClick={onClickRegister}>저장하기</Button>
   }
   
+  // 이미지 변경하기
+
+  // const [image, setImage] = useState("https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png");
+
+  // const onImgChange = (e) => {
+  //   setImage(e.target.files[0]);
+  // }
+
+  // const imageRegister = (e) => {
+  //     e.preventDefault();
+  //     const formData = new FormData();
+  //     formData.append('file', image);
+
+  //     dispatch().updateImage((currentUser.userId))
+  //     .then((res) => {
+  //       console.log(res.data);
+  //     })
+  //     .catch((error) => {
+  //       console.error(error);
+  //     })
+  //   }
+
+  // const [image, setImage] = useState({
+  //   image_file: "",
+  //   preview_URL: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
+  // });
+
+  // const uploadImage = (e) => {
+  //   e.stopPropagation();
+  //   let reader = new FileReader();
+  //   let file = e.target.files[0];
+  //   const filesInArr = Array.from(e.target.files);
+   
+  //   reader.onloadend = () => {
+  //     setImage({
+  //       image_file: filesInArr,
+  //       preview_URL: reader.result,
+  //     });
+  //   };
+
+  // 이미지, 비디오 
+  //   let profile_preview = null;
+  //   if (image.image_file !== null) {
+  //     profile_preview = image.file[0]?.type.includes('image/') ? (<img src={image.preview_URL} />) : (<video src={image.preview_URL} />); 
+  //   }
+  // }
+
+  // const deleteImage = () => {
+  //   setImage({
+  //     image_file: "",
+  //     preview_URL: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
+  //   });
+  //   setLoaded(false);
+  // }
+
+  // const sendImageToServer = () => {
+  //   if(image.image_file){
+  //     const formData = new FormData()
+  //     formData.append('file', image.image_file);
+  //     dispatch().updateImage(currentUser.userId, setImage.preview_URL)
+  //     .then(() => {
+  //       alert("서버에 등록이 완료되었습니다!");
+  //       setImage({
+  //         image_file: "",
+  //         preview_URL: "img/default_image.png",
+  //       });
+  //       setLoaded(false);
+  //     })
+      
+  //   }
+  //   else{
+  //     alert("사진을 등록하세요!")
+  //   }
+  // }
+  // const onImgInputBtnClick = (e) => {
+  //   e.preventDefault();
+  //   logoImgInput.current.click();
+  // }
+
+  // const onImgChange = async (e) => {
+  //   const formData = new FormData();
+  //   formData.append('file', e.target.files[0]);
+    
+  //   dispatch(updateImage(currentUser.userId, formData))
+  //   .then(() => {
+
+  //   })
+  //   .catch(() => {
+
+  //   })
+  // }
+
+  const [selectedFile, setSelectedFile] = useState(null);
+
+  const handleSubmit = (event) => {
+    event.preventDefault()
+    const formData = new FormData();
+    formData.append("selectedFile", selectedFile);
+    console.log(formData);
+   
+    dispatch(updateImage(currentUser.userId, formData))
+    .then(() => {
+
+    })
+    .catch((error) => {
+      console.error(error);
+    })
+  }
+
+  const handleFileSelect = (event) => {
+    setSelectedFile(event.target.files[0])
+  }
+
   return (
     <Box sx={{ flexGrow: "wrap", overflow: "hidden", px: 3 }}>
       
@@ -94,7 +208,7 @@ export default function User() {
           <Typography>MY PAGE</Typography>
         </Box>
         <Box sx={{ display: "flex", justifyContent: "center", pb: 5 }}>
-            <Avatar
+            {/* <Avatar
               sx={{
                 display: "flex",
                 alignItems: "center",
@@ -103,24 +217,28 @@ export default function User() {
                 backgroundColor: "white",
               }}
               alt="Remy Sharp"
-              src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
-            />
+              src={formData}
+              
+            /> */}
         </Box>
         </Paper>
         <Box sx={{ display: "flex", justifyContent: "center", pb: 5 }}>
         <Stack direction="row" spacing={1} sx={{ ml: 1, mr: 2, my: 1 }}>
-          <Input
-            accept="image/*"
-            id="contained-button-file"
-            multiple
+           {/* <input
+            ref={logoImgInput}
             type="file"
+            accept="image/*"
+            id="logoImg"
+            multiple
+            onChange={onImgChange}
+            // style={{ display: "none" }}
           />
-          <Button variant="contained" component="span" size="small">
-            이미지 변경
-          </Button>
-          <IconButton aria-label="delete" size="small">
-            <DeleteIcon fontSize="inherit" />
-          </IconButton>
+         <Button variant="contained" component="span" size="small" onClick={onImgInputBtnClick}> 사진 등록 </Button> */}
+
+         <form onSubmit={handleSubmit}>
+            <input type="file" onChange={handleFileSelect}/>
+            <input type="submit" value="Upload File" />
+         </form>
         </Stack>
         </Box>      
       </Paper>
