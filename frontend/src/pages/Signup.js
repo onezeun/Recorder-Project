@@ -6,7 +6,31 @@ import { Box, Button, TextField } from '@mui/material';
 import { register } from '../redux/actions/auth';
 
 import styled from 'styled-components'
+import { withStyles } from '@material-ui/core/styles';
 import { Typography } from '@material-ui/core';
+import { ClassNames } from '@emotion/react';
+
+  const RecorderTextField = withStyles({
+    root: {
+      '& label.Mui-focused': {
+        color: '#ff5f70',
+      },
+      '& .MuiInput-underline:after': {
+        borderBottomColor: '#ff5f70',
+      },
+      '& .MuiOutlinedInput-root': {
+        '& fieldset': {
+          borderColor: '#ff5f70',
+        },
+        '&:hover fieldset': {
+          borderColor: '#ff5f70',
+        },
+        '&.Mui-focused fieldset': {
+          borderColor: '#ff5f70',
+        },
+      },
+    },
+  })(TextField);
 
 export default function SignUp() {
 
@@ -20,6 +44,18 @@ export default function SignUp() {
   border: solid 1px;
   color: #ff5f70
   `;
+
+// & label.Mui-focused {
+//   color: #ff5f70;
+// }
+// & .MuiOutlinedInput-root {
+//   &.Mui-focused fieldset {
+//     border-color: #ff5f70;
+//   }
+// }
+// & .MuiFromHelperText-root.Mui-error {
+//   color: green;
+// }
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -132,6 +168,11 @@ export default function SignUp() {
       });
   };
 
+  // 취소 버튼
+  const onClickCancleButton = () => {
+    navigate('/login');
+  }
+
   return (
     <Box
       gap={1}
@@ -145,6 +186,7 @@ export default function SignUp() {
         backgroundColor: 'white',
       }}
     >
+      
       <Typography>회원 가입</Typography>
       <Box
         component="form"
@@ -158,7 +200,7 @@ export default function SignUp() {
         autoComplete="off"
         onSubmit={onSubmitHandler}
       >
-        <TextField
+        <RecorderTextField
           id="Email"
           label="이메일"
           autoComplete="email"
@@ -167,7 +209,7 @@ export default function SignUp() {
           error={emailError}
           helperText={emailError ? emailErrorMessage : ''}
         />
-        <TextField
+        <RecorderTextField
           id="password"
           label="비밀번호"
           type="password"
@@ -177,7 +219,7 @@ export default function SignUp() {
           error={passwordError}
           helperText={passwordError ? passwordErrorMessage : ''}
         />
-        <TextField
+        <RecorderTextField
           id="rePassword"
           name="rePassword"
           label="비밀번호 확인"
@@ -190,7 +232,7 @@ export default function SignUp() {
             password !== rePassword ? '비밀번호가 일치하지 않습니다' : ''
           }
         />
-        <TextField
+        <RecorderTextField
           id="Nickname"
           label="닉네임"
           variant="outlined"
@@ -198,7 +240,7 @@ export default function SignUp() {
           error={nicknameError}
           helperText={nicknameError ? nicknameErrorMessage : ''}
         />
-        <TextField
+        <RecorderTextField
           id="Domain"
           label="블로그명(도메인)"
           variant="outlined"
@@ -206,7 +248,7 @@ export default function SignUp() {
           error={domainError}
           helperText={domainError ? domainErrorMessage : ''}
         />
-        <TextField
+        <RecorderTextField
           id="Introduce"
           label="소개 글을 작성해주세요"
           variant="outlined"
@@ -224,7 +266,7 @@ export default function SignUp() {
           <RegisterButton type="submit">
             회원가입
           </RegisterButton>
-          <CancleButton>취소</CancleButton>
+          <CancleButton onClick={onClickCancleButton}>취소</CancleButton>
         </Box>
       </Box>
     </Box>
