@@ -33,27 +33,27 @@ function App() {
       {isLoggedIn ? <UserHeader /> : <Header />}
       <StyledDiv>
         <hr />
-          <Link to="/login">
+          {/* <Link to="/login">
             <button>Login</button>
           </Link>
           <Link to="/signup">
             <button>Signup</button>
-          </Link>
+          </Link> */}
           <Link to="/editor">
             <button>Editor</button>
           </Link>
-          <Link to="/user">
+          {/* <Link to="/user">
             <button>User</button>
-          </Link>
+          </Link> */}
           <Link to="/post">
             <button>Post</button>
           </Link>
           <Link to="/main">
             <button>Main</button>
           </Link>
-          <Link to="/userhome">
+          {/* <Link to="/userhome">
             <button>Userhome</button>
-          </Link>
+          </Link> */}
           {/* <Link to="/search">
             <button>Search</button>
           </Link>
@@ -68,7 +68,7 @@ function App() {
           </Link> */}
         <hr /> 
         <Routes>
-          <Route exact path="/" element={<Signup />} />
+          <Route exact path="/" element={<Main />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/editor" element={<Editor />} />
@@ -76,10 +76,10 @@ function App() {
           <Route path="/post" element={<Post />} />
           <Route path="/main" element={<Main />} />
           <Route path="/userhome" element={<UserHome />} />
-          {/* <Route path="/search" element={<Search />} />
-          <Route path="/neighbor" element={<Neighbor />} /> */}
+          <Route path="/search" element={<Search />} />
+          <Route path="/neighbor" element={<Neighbor />} />
           <Route path="/category" element={<Category />} />
-          {/* <Route path="/profile" element={<Profile />} /> */}
+          <Route path="/profile" element={<Profile />} />
         </Routes>
       </StyledDiv>
     </Router>

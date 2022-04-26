@@ -7,8 +7,43 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { FormControlLabel, Checkbox } from '@mui/material';
+import styled from 'styled-components'
+import { withStyles } from '@material-ui/core/styles';
+
+  const RecorderTextField = withStyles({
+    root: {
+      '& label.Mui-focused': {
+        color: '#ff5f70',
+      },
+      '& .MuiInput-underline:after': {
+        borderBottomColor: '#ff5f70',
+      },
+      '& .MuiOutlinedInput-root': {
+        '& fieldset': {
+          borderColor: '#ff5f70',
+        },
+        '&:hover fieldset': {
+          borderColor: '#ff5f70',
+        },
+        '&.Mui-focused fieldset': {
+          borderColor: '#ff5f70',
+        },
+      },
+    },
+  })(TextField);
 
 export default function Login(props) {
+
+  const LoginButton = styled(Button)`
+  background: #ff5f70;
+  color: white;
+  `;
+
+  const EtcButton = styled(Button)`
+  background: white;
+  color: #ff5f70;
+  `;
+
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -44,6 +79,10 @@ export default function Login(props) {
   const onPasswordHandler = (e) => {
     setPassword(e.target.value);
   };
+
+  const onClickSignupButton = () => {
+    navigate('/signup')
+  }
   
   
   if (isLoggedIn) {
@@ -75,7 +114,7 @@ export default function Login(props) {
           autoComplete='off'
           onSubmit={onSubmitHandler}
         >
-          <TextField
+          <RecorderTextField
             id='outlined-basic'
             label='이메일'
             variant='outlined'
@@ -83,7 +122,7 @@ export default function Login(props) {
             autoFocus
             onChange={onEmailHandler}
           />
-          <TextField
+          <RecorderTextField
             id='outlined-password-input'
             label='비밀번호'
             type='password'
@@ -92,7 +131,7 @@ export default function Login(props) {
           />
   
           {/* 로그인 정보 기억 */}
-          <Box
+          {/* <Box
             sx={{
               display: 'flex',
               flexDirection: 'column',
@@ -107,7 +146,7 @@ export default function Login(props) {
               control={<Checkbox value='로그인 정보 기억하기' color='primary' />}
               label='Remember'
             />
-          </Box>
+          </Box> */}
   
           {/* 로그인 버튼 */}
           <Box
@@ -117,13 +156,14 @@ export default function Login(props) {
               alignItems: 'center',
               '& > *': {
                 m: 1,
-                width: '35ch',
+                marginTop: 3,
+                width: '38ch',
               },
             }}
           >
-            <Button variant='contained' type='submit'>
+            <LoginButton type='submit'>
               로그인
-            </Button>
+            </LoginButton>
           </Box>
         </Box>
   
@@ -137,8 +177,8 @@ export default function Login(props) {
             },
           }}
         >
-          <Button variant='text'>회원 가입</Button>
-          <Button variant='text'>비밀번호 찾기</Button>
+          <EtcButton onClick={onClickSignupButton}>회원 가입</EtcButton>
+          <EtcButton>비밀번호 찾기</EtcButton>
         </Box>
       </Box>
     );
