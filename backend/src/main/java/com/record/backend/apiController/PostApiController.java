@@ -74,7 +74,7 @@ public class PostApiController {
 	}
 
 	//===2개 이상의 인자를 쿼리로 조회 리팩토링 필요===//
-/*	//사용자 블로그에 들어갔을 시, 카테고리별로 누르면 해당 카테고리에 있는 포스트가 불려온다.
+	//사용자 블로그에 들어갔을 시, 카테고리별로 누르면 해당 카테고리에 있는 포스트가 불려온다.
 	@GetMapping("/board/users/{user_id}/categories/{category_id}")
 	public Result findAllCategoryPosts(
 		@RequestParam(value = "offset", defaultValue = "0") int offset,
@@ -87,7 +87,7 @@ public class PostApiController {
 			.collect(Collectors.toList());
 
 		return new Result(result);
-	}*/
+	}
 
 	//하나만 조회
 	@GetMapping("/board/posts/{post_id}")
