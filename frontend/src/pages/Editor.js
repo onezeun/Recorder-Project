@@ -9,7 +9,7 @@ import { Box, Stack, Button, Divider, Input, Menu, MenuItem } from '@mui/materia
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { StylesProvider } from '@mui/styles';
 import { registerPost } from '../redux/actions/auth';
-import { getCategory } from '../redux/actions/auth';
+import { allCategories } from '../redux/actions/category';
 import axios from 'axios';
 
 import { CKEditor } from '@ckeditor/ckeditor5-react';
@@ -85,11 +85,9 @@ export default function Editor() {
 
     const onRegisterPost = () => {
       setSuccessful(false);
-      
-      axios
-      .get('http://localhost:8080/board/categories/users/1')
-      .then(response => {
-        setCategoryData(response.data.data[0].categoryId);
+      dispatch(allCategories(currentUser.userId))
+      .then(data => {
+        setCategoryData(data.data[0].categoryId);
       });
 
       console.log('category_id', categoryData);
@@ -221,7 +219,7 @@ export default function Editor() {
                     width: '90%',
                 }}>
                 <Stack spacing={1} direction="row" >
-                    <Button variant="outlined" disableElevation>임시저장</Button>
+                    <Button variant="outlined" disableElevation>취소</Button>
                     <Button variant="contained" onClick={onRegisterPost} disableElevation >Record</Button>
                 </Stack>
             </Box>

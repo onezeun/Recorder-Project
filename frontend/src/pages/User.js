@@ -91,7 +91,7 @@ export default function User() {
       >
       <Paper elevation={0} sx={{ maxWidth: 800, mx: "auto", pt: 4, pl: 5, pr:4 }}>
         <Box sx={{ display: "flex", justifyContent: "center", pb: 5 }}>
-          <h2>MY PAGE</h2>
+          <Typography>MY PAGE</Typography>
         </Box>
         <Box sx={{ display: "flex", justifyContent: "center", pb: 5 }}>
             <Avatar

@@ -5,7 +5,22 @@ import { useNavigate } from 'react-router-dom';
 import { Box, Button, TextField } from '@mui/material';
 import { register } from '../redux/actions/auth';
 
+import styled from 'styled-components'
+import { Typography } from '@material-ui/core';
+
 export default function SignUp() {
+
+  const RegisterButton = styled(Button)`
+  background: #ff5f70;
+  color: white;
+  `;
+
+  const CancleButton = styled(Button)`
+  background: white;
+  border: solid 1px;
+  color: #ff5f70
+  `;
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -130,7 +145,7 @@ export default function SignUp() {
         backgroundColor: 'white',
       }}
     >
-      <h2>회원 가입</h2>
+      <Typography>회원 가입</Typography>
       <Box
         component="form"
         sx={{
@@ -146,7 +161,6 @@ export default function SignUp() {
         <TextField
           id="Email"
           label="이메일"
-          variant="outlined"
           autoComplete="email"
           autoFocus
           onChange={onChangeEmail}
@@ -207,10 +221,10 @@ export default function SignUp() {
             '& > :not(style)': { m: 1, width: '20ch' },
           }}
         >
-          <Button variant="contained" type="submit">
+          <RegisterButton type="submit">
             회원가입
-          </Button>
-          <Button variant="contained">취소</Button>
+          </RegisterButton>
+          <CancleButton>취소</CancleButton>
         </Box>
       </Box>
     </Box>

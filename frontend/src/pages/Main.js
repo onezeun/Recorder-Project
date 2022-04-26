@@ -130,7 +130,7 @@ export default function Main() {
           }}
         >
 
-          {/* 인기, 최근, 이웃 게시물 버튼 */}
+          {/* 인기, 최근, 이웃 게시물 버튼
           <Box
             sx= {{
               display: 'flex',
@@ -167,7 +167,7 @@ export default function Main() {
         }}
         noValidate
         autoComplete="off"
-        >
+        > */}
           {/* 게시글 */}
           <Grid container spacing={4}>
             {mainPostDatas.map((mainPostData) => (
@@ -203,14 +203,14 @@ export default function Main() {
                     </Typography>
                   </CardContent>
                   </CardActionArea>
-                  <CardActions>
+                  {/* <CardActions>
                     <IconButton aria-label="like">
                       <LikeButton like={like} onClick={recorderLike}/>
                     </IconButton>
                     <IconButton aria-label="share">
                       <ShareIcon />
                     </IconButton>
-                  </CardActions>
+                  </CardActions> */}
                 </Card>
               </Grid>
             ))}
