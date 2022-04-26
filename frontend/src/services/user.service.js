@@ -24,9 +24,21 @@ const updateUser = (user_id, email, nickname, domain, introduce) => {
     })
 }
 
+const updateImage = (user_id, url) => {
+    return axios
+    .post(API_URL + `${user_id}/profilePhoto`, {
+        user_id,
+        url,
+    }, { headers: {'content-type': 'multipart/form-data'} })
+    .catch((error) => {
+        console.error(error);
+    });
+}
+
 const UserService = {
     getUser,
     updateUser,
+    updateImage,
 }
   
 export default UserService;
