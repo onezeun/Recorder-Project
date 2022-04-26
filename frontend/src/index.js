@@ -11,7 +11,7 @@ import { MuiThemeProvider, createTheme } from '@material-ui/core/styles';
 
 const theme = createTheme({
   typography: {
-    fontFamily: 'CookieRun Bold',
+    fontFamily: 'Pretendard',
   },
 });
 
