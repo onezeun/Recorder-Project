@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.record.backend.domain.post.Post;
 
@@ -16,6 +17,7 @@ public class PostQueryRepository {
 
 	private final EntityManager em;
 
+	@Transactional
 	public List<Post> findAllWithUserCategory(int offset, int limit) {
 		return em.createQuery(
 				"select p from Post p" +
