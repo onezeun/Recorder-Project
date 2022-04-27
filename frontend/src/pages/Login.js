@@ -13,24 +13,45 @@ import { withStyles } from '@material-ui/core/styles';
   const RecorderTextField = withStyles({
     root: {
       '& label.Mui-focused': {
-        color: '#ff5f70',
+        color: '#ffc0cb',
       },
       '& .MuiInput-underline:after': {
-        borderBottomColor: '#ff5f70',
+        borderBottomColor: '#ffc0cb',
       },
       '& .MuiOutlinedInput-root': {
         '& fieldset': {
-          borderColor: '#ff5f70',
+          borderColor: '#ffc0cb',
         },
+        // 마우스 올렸을 때
         '&:hover fieldset': {
-          borderColor: '#ff5f70',
+          borderColor: '#ffc0cb',
         },
+        // 클릭했을 때
         '&.Mui-focused fieldset': {
-          borderColor: '#ff5f70',
+          borderColor: '#ffc0cb',
         },
+
+        // "& .MuiFormLabel-root.Mui-error": {
+        //   color: "orange !important"
+        // },
+        // "& .MuiInput-underline.Mui-error:after": {
+        //   borderBottomColor: "orange !important"
+        // },
+        // "& .MuiFormHelperText-root.Mui-error": {
+        //   color: "orange !important"
+        // },
+
+        // "& .Mui-error": {
+        //   color: 'black'
+        // },
+        // "& .MuiFormHelperText-root": {
+        //   color: '#8b00ff'
+        // }
+
       },
     },
   })(TextField);
+
 
 export default function Login(props) {
 

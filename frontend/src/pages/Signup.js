@@ -13,20 +13,20 @@ import { ClassNames } from '@emotion/react';
   const RecorderTextField = withStyles({
     root: {
       '& label.Mui-focused': {
-        color: '#ff5f70',
+        color: '#ffc0cb',
       },
       '& .MuiInput-underline:after': {
-        borderBottomColor: '#ff5f70',
+        borderBottomColor: '#ffc0cb',
       },
       '& .MuiOutlinedInput-root': {
         '& fieldset': {
-          borderColor: '#ff5f70',
+          borderColor: '#ffc0cb',
         },
         '&:hover fieldset': {
-          borderColor: '#ff5f70',
+          borderColor: '#ffc0cb',
         },
         '&.Mui-focused fieldset': {
-          borderColor: '#ff5f70',
+          borderColor: '#ffc0cb',
         },
       },
     },
