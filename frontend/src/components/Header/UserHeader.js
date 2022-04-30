@@ -78,11 +78,14 @@ export default function UserHeader() {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <MenuItem>
-        <Typography textAlign="center">내블로그</Typography>
+      <MenuItem component={Link} to={'/Editor'}>
+        <Typography textAlign="center">새 글 작성</Typography>
       </MenuItem>
-      <MenuItem>
-        <Typography textAlign="center">계정설정</Typography>
+      <MenuItem component={Link} to={'/Userhome'}>
+        <Typography textAlign="center">내 블로그</Typography>
+      </MenuItem>
+      <MenuItem component={Link} to={'/User'}>
+        <Typography textAlign="center">계정 설정</Typography>
       </MenuItem>
       <MenuItem onClick={onLogOut}>
         <Typography textAlign="center">로그아웃</Typography>
@@ -106,11 +109,14 @@ export default function UserHeader() {
       </Box>
       <Box sx={{ flexGrow: 1 }} />
       <Box sx={{ display: { xs: 'none', md: 'flex' },  mt:6 }}>
+        <MenuItem component={Link} to={'/Editor'}>
+          <Typography textAlign="center">새 글 작성</Typography>
+        </MenuItem>
         <MenuItem component={Link} to={'/Userhome'}>
-          <Typography textAlign="center">내블로그</Typography>
+          <Typography textAlign="center">내 블로그</Typography>
         </MenuItem>
         <MenuItem component={Link} to={'/User'}>
-          <Typography textAlign="center">계정설정</Typography>
+          <Typography textAlign="center">계정 설정</Typography>
         </MenuItem>
         <MenuItem onClick={onLogOut}>
           <Typography textAlign="center">로그아웃</Typography>
