@@ -65,6 +65,7 @@ public class Post extends BaseEntity {
 	@JoinColumn(name = "category_id")
 	private Category category;
 
+
 	//1대 다 관계
 	@OneToMany(mappedBy = "post")
 	private List<Comment> comments = new ArrayList<>();

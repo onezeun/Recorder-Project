@@ -76,6 +76,7 @@ public class PostService {
 			.map(PostAllUsersResponseDto::new)
 			.collect(Collectors.toList());
 
+
 	}
 
 	//삭제
