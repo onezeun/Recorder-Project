@@ -1,10 +1,16 @@
-import { RECENT_POST } from "../actions/types";
+import { RECENT_POST, GET_POST } from "../actions/types";
 
-export default function postReducer(post = initialState, action) {
+const initialState = {};
+
+export default function getPost(post = initialState, action) {
     const { type, payload } = action;
     switch (type) {
         case RECENT_POST:
-            console.log('post_payload', payload)
             return [...post, payload];
+        case GET_POST:
+            return payload;
+
+        default:
+            return post;
     }
 };
