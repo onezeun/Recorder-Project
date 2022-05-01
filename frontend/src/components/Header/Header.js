@@ -1,55 +1,104 @@
 import React from 'react';
-import styled from 'styled-components';
-import { IconButton, Typography, Box, Stack, MenuItem } from '@mui/material';
+import { useDispatch, useSelector } from "react-redux";
+import { Navigate, useNavigate, Link } from 'react-router-dom';
+import styled from "styled-components";
+import logo from '../../img/logo-removebg.png'
+
+import { IconButton, MenuItem, Menu, Box, Badge, Typography, Stack } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
-import { Link } from 'react-router-dom';
-import logo from '../../img/logo-removebg.png';
+import NotificationsIcon from '@mui/icons-material/Notifications';
+import AccountCircle from '@mui/icons-material/AccountCircle';
+import MoreIcon from '@mui/icons-material/MoreVert';
+
+import { logout } from '../../redux/actions/auth';
+import Modal from './Modal.js';
 
 const Img = styled.img`
-  width: 25vw;
-  height: 5vw;
-
-  @media screen and (max-width: 610px) {
-    width: 35vw;
-    height: 7vw;
-    flex-direction: column;
-  }
+  width: 175px;
+  height: 35px;
 `;
 
 export default function Header() {
+  const { isLoggedIn } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const onLogOut = (e) => {
+    e.preventDefault();
+    dispatch(logout())
+    .then(() => {
+      navigate('/login')
+      console.log('isLogin', isLoggedIn);
+    });
+  };
+
+  const Logo = () => {
+    return (
+      <Box>
+        <Link to="/main">
+          <Img src={logo} />
+        </Link>        
+      </Box>
+    )
+  }
+
   return (
-    <Box
-      flexDirection="row"
-      alignItems="center"
+    <Box flexDirection = 'row' alignItems = 'center' 
       sx={{
         display: 'flex',
         justifyContent: 'center',
-        pr: '1rem',
-        pl: '1rem',
-      }}
-    >
-      <Box sx={{ mx: 5, mt: 4 }}>
-        <Link to="/main">
-          <Img src={logo} />
-        </Link>
-      </Box>
-      <Box
-        sx={{
-          display: 'flex',
-          justifyContent: 'flex-end',
-          width: '90%',
-        }}
-      >
-        {/* 검색
+        px: '1rem',
+        mt: '2rem',
+    }}>
+      
+      <Logo />
+      {isLoggedIn ? 
+        <>
+          <Box sx={{ flexGrow: 1 }} />
+            <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+            <MenuItem component={Link} to={'/Editor'}>
+              <Typography textAlign="center">새 글 작성</Typography>
+            </MenuItem>
+            <MenuItem component={Link} to={'/Userhome'}>
+              <Typography textAlign="center">내 블로그</Typography>
+            </MenuItem>
+            <MenuItem component={Link} to={'/User'}>
+              <Typography textAlign="center">계정 설정</Typography>
+            </MenuItem>
+            <MenuItem onClick={onLogOut}>
+              <Typography textAlign="center">로그아웃</Typography>
+            </MenuItem>
+          </Box>
+          <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
+            <Modal />
+          </Box>
+        </> :
+        <>
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'flex-end',
+              width: '90%',
+          }}>
+          {/* 검색
             <IconButton size="large" aria-label="search" color="inherit">
               <SearchIcon />
             </IconButton> */}
-        <Box spacing={1} sx={{ mt:6 }}>
-            <MenuItem component={Link} to={'/login'}>
-              <Typography textAlign="center">로그인</Typography>
-            </MenuItem>
-        </Box>
-      </Box>
+            <Box spacing={1}>
+                <Stack direction="row">
+                  <MenuItem component={Link} to={'/login'}>
+                    <Typography textAlign="center">로그인</Typography>
+                  </MenuItem>
+                  <MenuItem component={Link} to={'/signup'}>
+                    <Typography textAlign="center">회원가입</Typography>
+                  </MenuItem>
+                </Stack>
+            </Box>
+          </Box>
+        </> 
+    }
+    
+
     </Box>
   );
 }
