@@ -20,3 +20,5 @@ export const RECENT_POST = 'RECENT_POST';
 export const USER_GET = 'USER_GET';
 export const USER_UPDATE = 'USER_UPDATE';
 export const IMAGE_UPDATE = 'IMAGE_UPDATE';
+
+export const GET_POST = 'GET_POST';

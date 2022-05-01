@@ -1,4 +1,4 @@
-import { RECENT_POST } from "./types";
+import { RECENT_POST, GET_POST } from "./types";
 import PostService from "../../services/post.service";
 
 export const getRecentPost = (postId, userId, categoryId, title, content, summary, hits, exposure, thumbnailImage) => async (dispatch) => {
@@ -13,3 +13,15 @@ export const getRecentPost = (postId, userId, categoryId, title, content, summar
         return Promise.reject(err);
     }
 };
+
+export const getPost = (post_id) => async (dispatch) => {
+    try {
+        const res = await PostService.getPost(post_id);
+        dispatch({
+            type: GET_POST,
+            payload: res.data
+        })
+    } catch (error) {
+        console.error(error.message);
+    }
+}

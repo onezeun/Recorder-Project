@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Clock from 'react-live-clock'
 
 import InputUnstyled from '@mui/base/InputUnstyled';
 import { styled } from '@mui/system';
-import { Button, Stack, Avatar, Box, ImageList, ImageListItem, IconButton } from '@mui/material';
+import { Button, Stack, Avatar, Box, ImageList, ImageListItem, IconButton, Typography, getPopoverUtilityClass } from '@mui/material';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
+import { useSelector, useDispatch } from 'react-redux';
+import { getUser } from '../redux/actions/user';
+import { getPost } from '../redux/actions/post';
 // import Fab from '@mui/material/Fab';
 // import FavoriteIcon from '@mui/icons-material/Favorite';
 // import ShareIcon from '@mui/icons-material/Share';
@@ -61,56 +64,43 @@ export default function Post() {
     );
   });
   
-  const itemData = [
-    {
-      img: 'https://images.unsplash.com/photo-1551963831-b3b1ca40c98e',
-      title: 'Breakfast',
-    },
-    {
-      img: 'https://images.unsplash.com/photo-1551782450-a2132b4ba21d',
-      title: 'Burger',
-    },
-    {
-      img: 'https://images.unsplash.com/photo-1522770179533-24471fcdba45',
-      title: 'Camera',
-    },
-    {
-      img: 'https://images.unsplash.com/photo-1444418776041-9c7e33cc5a9c',
-      title: 'Coffee',
-    },
-    {
-      img: 'https://images.unsplash.com/photo-1533827432537-70133748f5c8',
-      title: 'Hats',
-    },
-    {
-      img: 'https://images.unsplash.com/photo-1558642452-9d2a7deb7f62',
-      title: 'Honey',
-    },
-    {
-      img: 'https://images.unsplash.com/photo-1516802273409-68526ee1bdd6',
-      title: 'Basketball',
-    },
-    {
-      img: 'https://images.unsplash.com/photo-1518756131217-31eb79b20e8f',
-      title: 'Fern',
-    },
-    {
-      img: 'https://images.unsplash.com/photo-1597645587822-e99fa5d45d25',
-      title: 'Mushrooms',
-    },
-    {
-      img: 'https://images.unsplash.com/photo-1567306301408-9b74779a11af',
-      title: 'Tomato basil',
-    },
-    {
-      img: 'https://images.unsplash.com/photo-1471357674240-e1a485acb3e1',
-      title: 'Sea star',
-    },
-    {
-      img: 'https://images.unsplash.com/photo-1589118949245-7d38baf380d6',
-      title: 'Bike',
-    },
-  ];
+  const { user: currentUser } = useSelector((state) => state.auth);
+  const data = useSelector((state) => state.user);
+  const datas = useSelector((state) => state.post);
+  const [ userData, setUserData ] = useState([]);
+  const [ postData, setPostData ] = useState([]);
+
+  const dispatch = useDispatch();
+
+  // 유저 정보 가져오기
+  useEffect(() => {
+    getUsers();
+    getPosts();
+  }, []);
+
+  function getUsers() {
+    dispatch(getUser(currentUser.userId))
+    .then((data) => {
+      setUserData(data);
+      console.log('data', data);
+    })
+    .catch((error) => {
+      console.error(error);
+    })
+  }
+  console.log('datas.postId', datas.postId);
+  console.log('currentUser.userId', currentUser.userId)
+
+  function getPosts() {
+    dispatch(getPost(datas.postId))
+    .then((datas) => {
+      setPostData(datas);
+      console.log('datas', datas);
+    })
+    .catch((error) => {
+      console.error(error);
+    })
+  }
 
   return(
     <Box
@@ -125,7 +115,7 @@ export default function Post() {
             <Box
             sx= {{
             display: 'flex',
-            width: '20vw',
+            width: '40vw',
             height: '100vh',
             }}>
                 
@@ -136,30 +126,45 @@ export default function Post() {
             gap={1}
             sx={{ 
                 display: 'flex',
-                flexDirection: 'column', 
-                // justifyContent: 'center',
-                // alignItems: 'center',
-                alignSelf: 'flex-start',
+                flexDirection: 'column',
                 backgroundColor: 'white',
                 width: '100vw', // 컴퓨터 브라우저에서는 60vw
                 height: '100vh',
             }}
             >
 
+            <Box 
+            gap={1}
+            sx={{ 
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+            }}
+            >
                 {/* 게시물 타이틀 */}
                 <Box
                 component="form"
                 sx={{
                     display: 'flex',
-                    // alignItems: 'center',
+                    alignItems: 'center',
                     '& > :not(style)': { m: 1 },
                 }}
                 noValidate
                 autoComplete="off"
                 >
-                <h1>내가 찍은 사진</h1>
+                <Typography variant="h4" sx={{ marginLeft: 10.8, p: 0.5 }}>{datas.title}제목 들어갈 것임</Typography>
                 </Box>
+            </Box>
 
+            <Box 
+            gap={1}
+            sx={{ 
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'flex-end',
+            }}
+            >
+              
                 {/* 게시글 작성자 닉네임 및 게시 시간 */}
                 <Box
                 component="form"
@@ -170,10 +175,12 @@ export default function Post() {
                 noValidate
                 autoComplete="off"
                 >
-                  <h4>쿼카</h4>
-                  <Clock format = {'YYYY-MM-DD HH:mm'} ticking = {true} timezone = {'KR/pacific'} />
+                  <Typography sx={{ marginLeft: 10.8, p: 0.5 }}>{data.nickname}</Typography>
+                  {/* <Clock format = {'YYYY-MM-DD HH:mm'} ticking = {true} timezone = {'KR/pacific'} /> */}
                 </Box>
 
+            </Box>
+    
                 {/* 게시물 내용 */}
                 <Box component="form"
                   sx={{
@@ -185,19 +192,7 @@ export default function Post() {
                   autoComplete="off"
                   >
                   <h4>평소에 사진 찍는 걸 좋아해서 제가 찍은 사진이에요~</h4>
-                  <ImageList sx={{ width: 300, height: 300 }} cols={3} rowHeight={120}>
-                    {itemData.map((item) => (
-                      <ImageListItem key={item.img}>
-                        <img
-                          src={`${item.img}?w=164&h=164&fit=crop&auto=format`}
-                          srcSet={`${item.img}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
-                          alt={item.title}
-                          loading="lazy"
-                        />
-                      </ImageListItem>
-                    ))}
-                  </ImageList>
-                  <h4>게시물 내용 채우기용 게시물 내용 채우기용 게시물 내용 채우기용 게시물 내용 채우기용 게시물 내용 채우기용 게시물 내용 채우기용 게시물 내용 채우기용 게시물 내용 채우기용 게시물 내용 채우기용 게시물 내용 채우기용 게시물 내용 채우기용 게시물 내용 채우기용 게시물 내용 채우기용 게시물 내용 채우기용 게시물 내용 채우기용 게시물 내용 채우기용 게시물 내용 채우기용 게시물 내용 채우기용 게시물 내용 채우기용 게시물 내용 채우기용 게시물 내용 채우기용 게시물 내용 채우기용 게시물 내용 채우기용 게시물 내용 채우기용 게시물 내용 채우기용 게시물 내용 채우기용 게시물 내용 채우기용 게시물 내용 채우기용 게시물 내용 채우기용 게시물 내용 채우기용 게시물 내용 채우기용 게시물 내용 채우기용 게시물 내용 채우기용 게시물 내용 채우기용 게시물 내용 채우기용 게시물 내용 채우기용 게시물 내용 채우기용 게시물 내용 채우기용 게시물 내용 채우기용 게시물 내용 채우기용 게시물 내용 채우기용 게시물 내용 채우기용 게시물 내용 채우기용 게시물 내용 채우기용 게시물 내용 채우기용 게시물 내용 채우기용 게시물 내용 채우기용 게시물 내용 채우기용 게시물 내용 채우기용 게시물 내용 채우기용 게시물 내용 채우기용 게시물 내용 채우기용 게시물 내용 채우기용 게시물 내용 채우기용 게시물 내용 채우기용 게시물 내용 채우기용 게시물 내용 채우기용 게시물 내용 채우기용 게시물 내용 채우기용 게시물 내용 채우기용 게시물 내용 채우기용 게시물 내용 채우기용 게시물 내용 채우기용 게시물 내용 채우기용 게시물 내용 채우기용 게시물 내용 채우기용 게시물 내용 채우기용 게시물 내용 채우기용 게시물 내용 채우기용 게시물 내용 채우기용 게시물 내용 채우기용 게시물 내용 채우기용 게시물 내용 채우기용 게시물 내용 채우기용 게시물 내용 채우기용 게시물 내용 채우기용 게시물 내용 채우기용 게시물 내용 채우기용 게시물 내용 채우기용 게시물 내용 채우기용 게시물 내용 채우기용 게시물 내용 채우기용 </h4>
+                  <h4>게시물 내용 채우기용</h4>
                 </Box>
 
                 {/* 하단 작성자 프로필사진, 이름, 설명 */}
@@ -220,7 +215,7 @@ export default function Post() {
                   autoComplete="off"
                   >
                   <Stack direction="row" spacing={2}>
-                  <Avatar alt="jiwoon-jo" src="" sx={{ width: 70, height: 70 }}/>
+                  <Avatar alt="jiwoon-jo" src={data.profilePhoto} sx={{ width: 70, height: 70 }}/>
                   </Stack>
                  </Box>
 
@@ -233,8 +228,10 @@ export default function Post() {
                   noValidate
                   autoComplete="off"
                   >
-                  <h3>jwjoo03</h3>
-                  <h5>쿼카를 닮은 예비 풀스택 개발자 주지운입니다.</h5>
+
+                  <Typography variant="h6" sx={{ marginLeft: 10.8 }}>{data.nickname}</Typography>
+                  <Typography sx={{ marginLeft: 10.8 }}>{data.introduce}</Typography>
+                  
                  </Box>
                </Box>
               
@@ -255,7 +252,7 @@ export default function Post() {
                 </Box>
 
                 {/* 게시글 댓글 */}
-                <Box component="form"
+                {/* <Box component="form"
                 sx={{
                     display: 'flex',
                     flexDirection: 'row',
@@ -301,26 +298,18 @@ export default function Post() {
                   noValidate
                   autoComplete="off"
                 >
-                <IconButton aria-label="addCircle" color="primary">
-                  <AddCircleIcon />  
-                </IconButton>
-                </Box>
+                <Button variant="text">댓글 더보기</Button>
+                </Box> */}
 
             </Box>
 
 
             {/* 우측 Box 및 좋아요 및 공유버튼 */}
             <Box sx={{
-            width: '20vw',
+            width: '40vw',
             height: '100vh',
             position: 'sticky',
             '& > :not(style)': { m: 1 } }}>
-                {/* <Fab aria-label="like">
-                <FavoriteIcon />
-                </Fab>
-                <Fab aria-label="share">
-                <ShareIcon />
-                </Fab> */}
             </Box>
     </Box>
     
