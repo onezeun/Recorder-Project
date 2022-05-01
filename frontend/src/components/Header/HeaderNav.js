@@ -12,7 +12,7 @@ import MoreIcon from '@mui/icons-material/MoreVert';
 import { logout } from '../../redux/actions/auth';
 
 
-export default function Modal() {
+export default function HeaderNav() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
