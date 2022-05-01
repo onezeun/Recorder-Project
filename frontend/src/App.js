@@ -3,7 +3,8 @@ import CssBaseline from '@mui/material/CssBaseline';
 
 import { useSelector } from "react-redux";
 import { Link, Route, BrowserRouter as Router, Routes } from "react-router-dom";
-import styled from 'styled-components';
+
+import Box from '@mui/material/Box';
 
 import './App.css';
 
@@ -23,9 +24,6 @@ import Search from './pages/Search';
 import Neighbor from './pages/Neighbor';
 import Profile from "./pages/Profile";
 
-const StyledDiv = styled.div`
-  margin-top: 50px;
-`;
 
 function App() {
   return (
@@ -33,8 +31,9 @@ function App() {
       <CssBaseline />
       <Router>
         <Header />
-        <StyledDiv>
-          <hr />
+
+        <main>
+        <hr /> 
             {/* <Link to="/login">
               <button>Login</button>
             </Link>
@@ -83,7 +82,11 @@ function App() {
             <Route path="/category" element={<Category />} />
             <Route path="/profile" element={<Profile />} />
           </Routes>
-        </StyledDiv>
+        </main>
+
+        <footer style={{ textAlign: "center", margin: "30px 0" }}>
+          <h3>Team Recoder</h3>
+        </footer>
       </Router>
     </>
   );

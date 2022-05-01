@@ -11,7 +11,7 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import MoreIcon from '@mui/icons-material/MoreVert';
 
 import { logout } from '../../redux/actions/auth';
-import Modal from './Modal.js';
+import HeaderNav from './HeaderNav.js';
 
 const Img = styled.img`
   width: 175px;
@@ -48,7 +48,7 @@ export default function Header() {
         display: 'flex',
         justifyContent: 'center',
         px: '1rem',
-        mt: '2rem',
+        my: '1rem',
     }}>
       
       <Logo />
@@ -70,7 +70,7 @@ export default function Header() {
             </MenuItem>
           </Box>
           <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
-            <Modal />
+            <HeaderNav />
           </Box>
         </> :
         <>
