@@ -32,8 +32,8 @@ function App() {
       <Router>
         <Header />
 
-        <main>
-        <hr /> 
+        <hr />
+          <div style={{ display:'inline' }}>
             {/* <Link to="/login">
               <button>Login</button>
             </Link>
@@ -67,7 +67,14 @@ function App() {
             {/* <Link to="/profile">
               <button>profile</button>
             </Link> */}
+          </div>
           <hr /> 
+
+        <main style={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center' 
+        }}>
           <Routes>
             <Route exact path="/" element={<Main />} />
             <Route path="/login" element={<Login />} />
