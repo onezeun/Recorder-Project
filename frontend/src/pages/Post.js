@@ -35,7 +35,7 @@ export default function Post() {
   };
   const StyledInputElement = styled('input')(
     ({ theme }) => `
-    width: 50vw;
+    width: 500px;
     font-size: 0.875rem;
     font-family: IBM Plex Sans, sans-serif;
     font-weight: 400;
@@ -104,214 +104,61 @@ export default function Post() {
 
   return(
     <Box
-      sx= {{
+      sx={{
+        mt: '20px',
+        width: '800px',
+        border: '1px solid pink',
         display: 'flex',
-        flexDirection: 'row',
-        width: '100vw',
-        height: '100vh',
-      }}>
+        flexDirection: 'column',
+        alignItems: 'center',
+      }}
+    >
+      {/* 타이틀 */}
+      <Typography variant="h4" sx={{ py: '20px' }}>{datas.title}제목 들어갈 것임</Typography>
 
-            {/* 좌측 Box */}
-            <Box
-            sx= {{
-            display: 'flex',
-            width: '40vw',
-            height: '100vh',
-            }}>
-                
-            </Box>
+      {/* 작성자 */}
+      <Box sx={{ 
+        width: '600px',
+        display: 'flex', 
+        flexDirection: 'column', 
+        p: 0.5, 
+        alignItems: 'end' 
+        }}
+      >
+        <Typography >{data.nickname}</Typography>
+        {/* 작성시간으로 수정해야함 */}
+        <Clock format = {'YYYY-MM-DD HH:mm'} ticking = {true} timezone = {'KR/pacific'} />
+      </Box>
 
-            {/* 가운데 Box */}
-            <Box 
-            gap={1}
-            sx={{ 
-                display: 'flex',
-                flexDirection: 'column',
-                backgroundColor: 'white',
-                width: '100vw', // 컴퓨터 브라우저에서는 60vw
-                height: '100vh',
-            }}
-            >
+      {/* 내용 */}
+      <h4>평소에 사진 찍는 걸 좋아해서 제가 찍은 사진이에요~</h4>
+      <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FzM3mp%2Fbtrr3oghEUP%2FboYYynkXF9FjhuqxFUSe41%2Fimg.png" width='600px' height='400px' />
+      <h4>게시물 내용 채우기용</h4>
 
-            <Box 
-            gap={1}
-            sx={{ 
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-            }}
-            >
-                {/* 게시물 타이틀 */}
-                <Box
-                component="form"
-                sx={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    '& > :not(style)': { m: 1 },
-                }}
-                noValidate
-                autoComplete="off"
-                >
-                <Typography variant="h4" sx={{ marginLeft: 10.8, p: 0.5 }}>{datas.title}제목 들어갈 것임</Typography>
-                </Box>
-            </Box>
+      {/* 하단 작성자 프로필사진, 이름, 설명 */}
+      <Box 
+        sx={{ 
+          width: '500px',
+          display: 'flex', 
+          flexDirection: 'row',
+          justifyContent: 'flex-start',
+          alignItems: 'center',
+        }}
+      >
+        <Avatar alt="jiwoon-joo" src={data.profilePhoto} sx={{ width: 80, height: 80, mr: '10px' }}/>
+        <Stack spacing={1}>
+          <Typography variant="h6" >{data.nickname}</Typography>
+          <Typography variant="h7" >{data.introduce}</Typography>
+        </Stack>
+      </Box>
 
-            <Box 
-            gap={1}
-            sx={{ 
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'flex-end',
-            }}
-            >
-              
-                {/* 게시글 작성자 닉네임 및 게시 시간 */}
-                <Box
-                component="form"
-                sx={{
-                    display: 'flex',
-                    '& > :not(style)': { m: 1 },
-                }}
-                noValidate
-                autoComplete="off"
-                >
-                  <Typography sx={{ marginLeft: 10.8, p: 0.5 }}>{data.nickname}</Typography>
-                  {/* <Clock format = {'YYYY-MM-DD HH:mm'} ticking = {true} timezone = {'KR/pacific'} /> */}
-                </Box>
+      
+      {/* 댓글 입력 */}
+      <Stack direction="row" spacing={1} sx={{ my: 3 }}>
+        <CustomInput aria-label="Demo input" placeholder="댓글을 입력해주세요" />
+        <Button variant="contained" size="small" sx={{ backgroundColor: '#ff5f70', color: 'white' }}>등록</Button>
+      </Stack>
 
-            </Box>
-    
-                {/* 게시물 내용 */}
-                <Box component="form"
-                  sx={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      '& > :not(style)': { m: 1, marginTop: 5},
-                  }}
-                  noValidate
-                  autoComplete="off"
-                  >
-                  <h4>평소에 사진 찍는 걸 좋아해서 제가 찍은 사진이에요~</h4>
-                  <h4>게시물 내용 채우기용</h4>
-                </Box>
-
-                {/* 하단 작성자 프로필사진, 이름, 설명 */}
-                <Box component="form"
-                sx={{
-                    display: 'flex',
-                    flexDirection: 'row',
-                    '& > :not(style)': { m: 1, marginTop: 5},
-                }}
-                noValidate
-                autoComplete="off"
-                >
-                 <Box component="form"
-                  sx={{
-                      display: 'flex',
-                      flexDirection: 'row',
-                      '& > :not(style)': { m: 1},
-                  }}
-                  noValidate
-                  autoComplete="off"
-                  >
-                  <Stack direction="row" spacing={2}>
-                  <Avatar alt="jiwoon-jo" src={data.profilePhoto} sx={{ width: 70, height: 70 }}/>
-                  </Stack>
-                 </Box>
-
-                 <Box component="form"
-                  sx={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      '& > :not(style)': { m: 1},
-                  }}
-                  noValidate
-                  autoComplete="off"
-                  >
-
-                  <Typography variant="h6" sx={{ marginLeft: 10.8 }}>{data.nickname}</Typography>
-                  <Typography sx={{ marginLeft: 10.8 }}>{data.introduce}</Typography>
-                  
-                 </Box>
-               </Box>
-              
-                {/* 댓글 입력 */}
-                <Box
-                component="form"
-                sx={{
-                    display: 'flex',
-                    flexDirection: 'row',
-                    width: '20vw',
-                    '& > :not(style)': { m: 1, marginTop: 5},
-                }}
-                noValidate
-                autoComplete="off"
-                >
-                  <CustomInput aria-label="Demo input" placeholder="댓글을 입력해주세요" />
-                  <Button variant="contained" size="small">등록</Button>
-                </Box>
-
-                {/* 게시글 댓글 */}
-                {/* <Box component="form"
-                sx={{
-                    display: 'flex',
-                    flexDirection: 'row',
-                    '& > :not(style)': { m: 1, marginTop: 5},
-                }}
-                noValidate
-                autoComplete="off"
-                >
-                 <Box component="form"
-                  sx={{
-                      display: 'flex',
-                      flexDirection: 'row',
-                      '& > :not(style)': { m: 1},
-                  }}
-                  noValidate
-                  autoComplete="off"
-                  >
-                  <Stack direction="row" spacing={2}>
-                  <Avatar alt="younghan" src="" sx={{ width: 70, height: 70 }}/>
-                  </Stack>
-                 </Box>
-
-                 <Box component="form"
-                  sx={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      '& > :not(style)': { m: 1},
-                  }}
-                  noValidate
-                  autoComplete="off"
-                  >
-                  <h3>ezerone&nbsp;&nbsp;&nbsp;&nbsp;2시간 전</h3>
-                  <h4>주지운씨 블로그 잘 보고 있습니다!!</h4>
-                 </Box>
-                </Box>
-
-                <Box component="form"
-                  sx={{
-                      display: 'flex',
-                      flexDirection: 'row',
-                      '& > :not(style)': { m: 1 },
-                  }}
-                  noValidate
-                  autoComplete="off"
-                >
-                <Button variant="text">댓글 더보기</Button>
-                </Box> */}
-
-            </Box>
-
-
-            {/* 우측 Box 및 좋아요 및 공유버튼 */}
-            <Box sx={{
-            width: '40vw',
-            height: '100vh',
-            position: 'sticky',
-            '& > :not(style)': { m: 1 } }}>
-            </Box>
     </Box>
-    
-  );
+  );   
 }
