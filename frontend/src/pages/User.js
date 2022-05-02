@@ -1,15 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect} from "react";
+import { useNavigate } from 'react-router-dom';
 import styled from "styled-components";
 import { Stack, Paper, Grid, Avatar, Button, Box, IconButton, Typography, Switch } from "@mui/material";
-import DeleteIcon from "@mui/icons-material/Delete";
+import { DeleteIcon, PhotoCamera } from "@mui/icons-material";
 import { useSelector, useDispatch } from "react-redux";
 import { getUser, updateUser, updateImage } from "../redux/actions/user";
 import { TextField } from "@mui/material";
 import axios from 'axios';
-
-const Input = styled("input")({
-  display: "none",
-});
 
 export default function User() {
   const { user: currentUser } = useSelector((state) => state.auth);
@@ -17,6 +14,17 @@ export default function User() {
   const [ userData, setUserData ] = useState([]);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  
+  const Input = styled("input")({
+    display: "none",
+  });
+
+  const EtcButton = styled(Button)`
+  background: white;
+  color: #ff5f70;
+  `;
 
   // 유저 정보 가져오기
   useEffect(() => {
@@ -39,7 +47,7 @@ export default function User() {
   const [nickname, setNickname] = useState('');
   const [domain, setDomain] = useState(''); 
   const [introduce, setIntroduce] = useState('');
-  let updateNickname, updateIntroduce, updateDomain, updateButton = null;
+  let updateNickname, updateIntroduce, updateDomain, updateButton, cancleButton = null;
   
   const onClickUpdate = () => {
       setUpdate(!update);
@@ -57,6 +65,10 @@ export default function User() {
       window.location.reload();
   }
 
+  const onClickCancle = () => {
+      navigate(0);
+  }
+
   const onNicknameHandler = (e) => {
     setNickname(e.target.value);
   };
@@ -71,15 +83,16 @@ export default function User() {
 
 
   if (update) {
-    updateNickname = <Typography sx={{ marginLeft: 10.8, p: 0.5 }}>{data.nickname}</Typography>;
+    updateNickname = <Typography sx={{ marginLeft: 10.8, p: 0.5 }}>{data.nickname}</Typography>
     updateIntroduce = <Typography sx={{ marginLeft: 8.3, p: 0.5 }}>{data.introduce}</Typography>
     updateDomain = <Typography sx={{ marginLeft: 5, p: 0.5 }}>{data.domain}</Typography>
-    updateButton = <Button size="small" onClick={onClickUpdate}>수정하기</Button>
+    updateButton = <EtcButton size="small" onClick={onClickUpdate}>수정하기</EtcButton>
   } else {
     updateNickname = <TextField sx={{ marginLeft: 10, p: 0.5}} id="outlined-basic" onChange={onNicknameHandler} defaultValue={data.nickname} variant="outlined" />
     updateIntroduce = <TextField sx={{ marginLeft: 7.4, p: 0.5}} id="outlined-basic" onChange={onIntroduceHandler} defaultValue={data.introduce} variant="outlined" />
     updateDomain = <TextField sx={{ marginLeft: 4.2, p: 0.5}} id="outlined-basic" onChange={onDomainHandler} defaultValue={data.domain} variant="outlined" />
-    updateButton = <Button size="small" onClick={onClickRegister}>저장하기</Button>
+    updateButton = <EtcButton size="small" onClick={onClickRegister}>저장하기</EtcButton>
+    cancleButton = <EtcButton size="small" onClick={onClickCancle}>취소</EtcButton>
   }
   
   // 이미지 변경하기
@@ -196,72 +209,59 @@ export default function User() {
   }
 
   return (
-    <Box sx={{ flexGrow: "wrap", overflow: "hidden", px: 3 }}>
+    <Box
+      sx={{
+        mt: '20px',
+        width: '800px',
+        border: '1px solid pink',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+      }}
+    >
       
       {/* MY PAGE, 이미지 관리 */}
-      <Paper
-        elevation={0}
-        sx={{ maxWidth: 800, mx: "auto", pt: 4, pl: 5, pr: 4 }}
-      >
-      <Paper elevation={0} sx={{ maxWidth: 800, mx: "auto", pt: 4, pl: 5, pr:4 }}>
-        <Box sx={{ display: "flex", justifyContent: "center", pb: 5 }}>
-          <Typography>MY PAGE</Typography>
-        </Box>
-        <Box sx={{ display: "flex", justifyContent: "center", pb: 5 }}>
-            {/* <Avatar
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                width: "150px",
-                height: "150px",
-                backgroundColor: "white",
-              }}
-              alt="Remy Sharp"
-              src={formData}
-              
-            /> */}
-        </Box>
-        </Paper>
-        <Box sx={{ display: "flex", justifyContent: "center", pb: 5 }}>
-        <Stack direction="row" spacing={1} sx={{ ml: 1, mr: 2, my: 1 }}>
-           {/* <input
-            ref={logoImgInput}
-            type="file"
-            accept="image/*"
-            id="logoImg"
-            multiple
-            onChange={onImgChange}
-            // style={{ display: "none" }}
+      <Paper elevation={0} sx={{ maxWidth: 800, pt: 4, pl: 5, pr:4 }}>
+        <Box sx={{ display: "flex", flexDirection: 'column', justifyContent: "center", alignItems: 'center', pb: 5 }}>
+          <Typography variant='h4'>MY PAGE</Typography>
+          <Avatar
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              width: "150px",
+              height: "150px",
+              mt: "30px",
+              mb: "30px",
+            }}
+            alt="user profilePhoto"
+            src={data.profilePhoto}    
           />
-         <Button variant="contained" component="span" size="small" onClick={onImgInputBtnClick}> 사진 등록 </Button> */}
-
-         <form onSubmit={handleSubmit}>
-            <input type="file" onChange={handleFileSelect}/>
-            <input type="submit" value="Upload File" />
-         </form>
-        </Stack>
+            <label htmlFor="contained-button-file">
+              <Input accept="image/*" id="contained-button-file" multiple type="file" />
+              <Button component="span" sx = {{ alignItems: 'center', color: 'white', bgcolor: '#ff5f70', ':hover': { bgcolor: '#ffc0cb'} }}>
+                사진 변경
+              </Button>
+            </label>
         </Box>      
       </Paper>
 
       {/* 첫 번째 칸 */}
       <Paper
         elevation={2}
-        sx={{ maxWidth: 800, my: 1, mx: "auto", mt: 4, p: 2 }}
+        sx={{ width: 700, my: 1, mt: 4, p: 2 }}
       >
           <Stack direction="column" sx={{ my: 1, p: 1 }}>
 
             <Stack direction='row' sx={{ my: 1, p: 1}}>
               <Typography variant="h6" sx={{ fontWeight: "bold"}}>닉네임</Typography>
               {updateNickname}
-            </Stack>
+            </Stack>  
 
-              
             <Stack direction='row' sx={{ my: 1, p: 1}}>
               <Typography variant="h6" sx={{ fontWeight: "bold" }}>자기소개</Typography>
               {updateIntroduce}
             </Stack>
 
-            
             <Stack direction='row' sx={{ my: 1, p: 1}}>
               <Typography variant="h6" sx={{ fontWeight: "bold" }}>블로그 주소</Typography>
               {updateDomain}
@@ -271,8 +271,8 @@ export default function User() {
               <Typography variant="h6" sx={{ fontWeight: "bold" }}>이메일 주소</Typography>
               <Typography sx={{ marginLeft: 5, p: 0.5 }}>{data.email}</Typography>
             </Stack>
-
             {updateButton}
+            {cancleButton}
     
           </Stack>
       </Paper>
@@ -280,7 +280,7 @@ export default function User() {
       {/* 두 번째 칸 */}
       <Paper
         elevation={2}
-        sx={{ maxWidth: 800, my: 1, mx: "auto", mt: 1, p: 2 }}
+        sx={{ width: 700, my: 1, mt: 1, p: 2 }}
       >
           <Stack direction="column" sx={{ my: 1, p: 1 }}>
 
@@ -290,14 +290,15 @@ export default function User() {
               <Box sx={{ flexGrow: 1 }} />
             </Stack>
 
-            <Button size="small">이웃 관리</Button>    
+            <EtcButton size="small">이웃 관리</EtcButton>    
+
           </Stack>
       </Paper>
 
       {/* 세 번째 칸 */}
       <Paper
         elevation={2}
-        sx={{ maxWidth: 800, my: 1, mx: "auto", mt: 1, p: 2 }}
+        sx={{ width: 700, my: 1, mt: 1, p: 2 }}
       >
           <Stack direction="column" sx={{ my: 1, p: 1 }}>
 
@@ -306,7 +307,8 @@ export default function User() {
               <Box sx={{ flexGrow: 1 }} />
             </Stack>
 
-            <Button size="small" color="error">회원 탈퇴</Button>    
+            <EtcButton size="small" color="error">회원 탈퇴</EtcButton>
+               
           </Stack>
       </Paper>
     </Box>
