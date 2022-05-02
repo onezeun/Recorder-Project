@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-// import { useParams } from 'react-router-dom';
 import {
   createCategory,
   allCategories,
@@ -29,11 +28,11 @@ export default function Category() {
   const { isLoggedIn } = useSelector((state) => state.auth);
   const [edit, setEdit] = useState(false);
   const { user: currentUser } = useSelector((state) => state.auth);
-  const { category: currentCategory } = useSelector((state) => state.category);
 
   // 조회
   useEffect(() => {
     getCategories();
+    console.log(data)
   }, []);
 
   function getCategories () {
@@ -47,7 +46,7 @@ export default function Category() {
   }
 
   //추가
-  function addCategory (e) {
+  function addCategory () {
     const addCategory = () => {
       dispatch(createCategory(currentUser.userId, categoryName))
       .then((response) => {
@@ -59,8 +58,6 @@ export default function Category() {
       })
     }
     addCategory();
-    console.log('categoryName', categoryName)
-    console.log('카테고리 생성')
   }
 
   function changeCategory (e) {
@@ -70,30 +67,22 @@ export default function Category() {
 
 
   // 수정
-  // function putCategory (category_id) {
-  //   console.log(category_id)
-
-  //   const putCategory = () => {
-  //     dispatch(updateCategory(currentUser.userId, categoryName))
-  //     .then((response) => {
-  //       setCategories(
-  //         categories.map((category) => 
-  //           category.category_id === category_id ? { ...category, completed: !category.completed } : category
-  //         )
-  //       );
-  //     })
-  //     .catch((error) => {
-  //       console.error(error);
-  //     })
-  //   }
-  //   addCategory();
-  //   console.log('categoryName', categoryName)
-  //   console.log('카테고리 수정')
-  // }
+  function putCategory () {
+    const putCategory = (id) => {
+      dispatch(updateCategory(data[id].categoryId))
+      .then(() => {
+      })
+      .catch((error) => {
+        console.error(error);
+      })
+    }
+    putCategory();
+    console.log('카테고리 수정')
+  }
 
   // 삭제
-  const removeCategory = () => {
-    dispatch(deleteCategory())
+  const removeCategory = (id) => {
+    dispatch(deleteCategory(data[id].categoryId))
     .then(() => {
       getCategories();
     })
@@ -102,7 +91,11 @@ export default function Category() {
     })
   }
 
-  // 저장
+  // const onToggle = useCallback(categoryId => dispatch(deleteCategory(categoryId),[dispatch]))
+  // const removeCategory = (category) => {
+  //   onToggle(category.categoryId)
+  // }
+  // 저장s
 
   return (
     <Box>
@@ -112,7 +105,7 @@ export default function Category() {
             primary="전체보기"
             primaryTypographyProps={{
               fontWeight: 'bold',
-              variant: 'button',
+              variant: 'botton'
             }}
           />
         </ListItemButton>
@@ -194,26 +187,27 @@ export default function Category() {
               return (
                 <ListItemButton>
                   <ListItemText
-                    key={category.category_id}
+                    onRemove={removeCategory}
+                    key={category.id}
                     primary={category.categoryName}
                     primaryTypographyProps={{
-                      fontWeight: 'midium',
-                      variant: 'button',
+                      variant: 'botton'
                     }}
+                    sx={{ fontSize: 15 }}
                   />
                 </ListItemButton>
               );
             } else {
               return (
-                <FormControl sx={{ m: 1, width: '25ch' }} variant="standard">
+                <FormControl sx={{ m: 1, width: '20ch' }} variant="standard">
                   <Input
                     defaultValue={category.categoryName}
                     endAdornment={
                       <InputAdornment position="end">
-                        <IconButton>
+                        <IconButton onClick={putCategory}>
                           <EditIcon />
                         </IconButton>
-                        <IconButton onClick={removeCategory}>
+                        <IconButton onClick={()=> removeCategory(category.categoryId)}>
                           <DeleteIcon />
                         </IconButton>
                       </InputAdornment>
