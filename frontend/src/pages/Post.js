@@ -156,7 +156,7 @@ export default function Post() {
       {/* 댓글 입력 */}
       <Stack direction="row" spacing={1} sx={{ my: 3 }}>
         <CustomInput aria-label="Demo input" placeholder="댓글을 입력해주세요" />
-        <Button variant="contained" size="small" sx={{ backgroundColor: '#ff5f70', color: 'white' }}>등록</Button>
+        <Button size="small" sx={{ backgroundColor: '#ff5f70', color: 'white', ':hover': { bgcolor: '#ffc0cb'}}}>등록</Button>
       </Stack>
 
     </Box>
