@@ -34,11 +34,16 @@ public class UserService {
 	//마이페이지 수정
 	@Transactional
 	public UserUpdateResponseDto updateUser(Long userId, UserUpdateRequestDto updateDto) {
-		validateDuplicateDomain(updateDto.getDomain());
 
 		User findUser = userRepository.findById(userId).get();
-		findUser.setNickname(updateDto.getNickname());
-		findUser.setDomain(updateDto.getDomain());
+
+		if (!findUser.getDomain().equals(updateDto.getDomain())) {
+			validateDuplicateDomain(updateDto.getDomain());
+			findUser.setDomain(updateDto.getDomain());
+		}
+		if (!findUser.getNickname().equals(updateDto.getNickname())) {
+			findUser.setNickname(updateDto.getNickname());
+		}
 		findUser.setIntroduce(updateDto.getIntroduce());
 
 		return new UserUpdateResponseDto(findUser.getEmail(), findUser.getNickname(),
