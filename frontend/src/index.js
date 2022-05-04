@@ -7,32 +7,21 @@ import store from "./redux/store"
 
 import { Provider } from 'react-redux';
 
-import { MuiThemeProvider, createTheme } from '@material-ui/core/styles';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 
 const theme = createTheme({
   typography: {
     fontFamily: 'Pretendard',
   },
-  components: {
-    MuiCssBaseline: {
-      styleOverrides: `
-      @font-face { 
-        font-family: 'Pretendard'; 
-        src: url('./fonts/Pretendard.ttf')
-      }
-    `,
-    },
-  },
 });
-
 
 ReactDOM.render(
   <React.StrictMode>
-    <MuiThemeProvider theme={theme}>
+    <ThemeProvider theme={theme}>
       <Provider store={store}>
       <App />
       </Provider>
-    </MuiThemeProvider>
+    </ThemeProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );
