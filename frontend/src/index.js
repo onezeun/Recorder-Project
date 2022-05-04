@@ -13,6 +13,16 @@ const theme = createTheme({
   typography: {
     fontFamily: 'Pretendard',
   },
+  components: {
+    MuiCssBaseline: {
+      styleOverrides: `
+      @font-face { 
+        font-family: 'Pretendard'; 
+        src: url('./fonts/Pretendard.ttf')
+      }
+    `,
+    },
+  },
 });
 
 
