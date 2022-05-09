@@ -3,10 +3,8 @@ package com.record.backend.apiController;
 import java.io.IOException;
 import java.util.List;
 
-import org.apache.logging.log4j.message.Message;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -63,7 +61,7 @@ public class UserApiController {
 	public ResponseEntity<?> uploadProfilePhoto(@PathVariable("user_id") Long userId, @RequestParam("profilePhoto") MultipartFile multipartFile) throws IOException {
 		//S3 Bucket 내부에 "/profile"
 
-		FileUploadResponse profile = s3Uploader.upload(userId, multipartFile, "profile");
+		FileUploadResponse profile = s3Uploader.uploadProfile(userId, multipartFile, "profile");
 		return ResponseEntity.ok(profile);
 	}
 

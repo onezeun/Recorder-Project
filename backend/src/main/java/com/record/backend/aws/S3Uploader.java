@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -12,10 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.amazonaws.services.s3.AmazonS3Client;
-import com.amazonaws.services.s3.model.AmazonS3Exception;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 
-import com.amazonaws.services.s3.model.DeleteObjectRequest;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.record.backend.domain.user.User;
 import com.record.backend.repository.UserRepository;
@@ -39,32 +38,50 @@ public class S3Uploader {
 	private String bucket;
 
 	@Transactional
-	public FileUploadResponse upload(Long userId, MultipartFile multipartFile, String dirName) throws IOException {
+	public FileUploadResponse uploadProfile(Long userId, MultipartFile multipartFile, String dirName) throws IOException {
 
 
 		File uploadFile = convert(multipartFile)
 			.orElseThrow(() -> new IllegalArgumentException("MultipartFile -> File로 전환이 실패했습니다."));
 
-		return upload(userId, uploadFile, dirName);
+		return uploadProfile(userId, uploadFile, dirName);
 	}
 
 	@Transactional
-	private FileUploadResponse upload(Long userId, File uploadFile, String dirName) {
+	private FileUploadResponse uploadProfile(Long userId, File uploadFile, String dirName) {
 		String fileName = dirName + "/" + userId + key;
 		String uploadImageUrl = putS3(uploadFile, fileName);
 		removeNewFile(uploadFile);
 
-		System.out.println(uploadImageUrl);
-
 		User user = userRepository.findById(userId).get();
 		user.setProfilePhoto(uploadImageUrl);
-
-		System.out.println(user.getProfilePhoto());
 
 		return new FileUploadResponse(userId, fileName, uploadImageUrl);
 	}
 
+	@Transactional
+	public FileUploadResponse uploadPostPhoto(Long userId, MultipartFile multipartFile, String dirName) throws IOException {
+		File uploadFile = convert(multipartFile)
+			.orElseThrow(() -> new IllegalArgumentException("MultipartFile -> File로 전환이 실패했습니다."));
+
+		return uploadPostPhoto(userId, uploadFile, dirName);
+	}
+
 	private String putS3(File uploadFile, String fileName) {
+		amazonS3Client.putObject(new PutObjectRequest(bucket, fileName, uploadFile).withCannedAcl(
+			CannedAccessControlList.PublicRead));
+		return amazonS3Client.getUrl(bucket, fileName).toString();
+	}
+
+	@Transactional
+	private FileUploadResponse uploadPostPhoto(Long userId, File uploadFile, String dirName) {
+		String fileName = dirName + "/" + UUID.randomUUID();
+		String uploadImageUrl = putS3PostPhoto(uploadFile, fileName);
+		removeNewFile(uploadFile);
+		return new FileUploadResponse(userId, fileName, uploadImageUrl);
+	}
+
+	private String putS3PostPhoto(File uploadFile, String fileName) {
 		amazonS3Client.putObject(new PutObjectRequest(bucket, fileName, uploadFile).withCannedAcl(
 			CannedAccessControlList.PublicRead));
 		return amazonS3Client.getUrl(bucket, fileName).toString();

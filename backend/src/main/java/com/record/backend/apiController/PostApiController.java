@@ -1,5 +1,6 @@
 package com.record.backend.apiController;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -12,17 +13,18 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.record.backend.auth.security.CurrentUser;
 import com.record.backend.auth.security.UserPrincipal;
+import com.record.backend.aws.FileUploadResponse;
+import com.record.backend.aws.S3Uploader;
 import com.record.backend.domain.post.Post;
 import com.record.backend.auth.dto.loginlogout.response.ApiResponse;
-import com.record.backend.domain.user.User;
 import com.record.backend.dto.category.response.PostUserByCategory;
 import com.record.backend.dto.post.PostDto;
 import com.record.backend.dto.post.request.PostSaveRequestDto;
 import com.record.backend.dto.post.request.PostUpdateRequestDto;
-import com.record.backend.dto.post.response.PostAllUserResponseDto;
 import com.record.backend.dto.post.response.PostAllUsersResponseDto;
 import com.record.backend.dto.post.response.PostUpdateResponseDto;
 import com.record.backend.repository.UserRepository;
@@ -40,6 +42,7 @@ public class PostApiController {
 	private final PostService postService;
 	private final PostQueryRepository postQueryRepository;
 	private final UserRepository userRepository;
+	private final S3Uploader s3Uploader;
 
 
 	//포스트 생성
@@ -49,6 +52,16 @@ public class PostApiController {
 		Post post = postService.savePost(requestDto);
 
 		return ResponseEntity.ok(new ApiResponse(true, "Post Created Successfully!"));
+	}
+
+	//포스트 파일 업로드
+	@PostMapping("/board/posts/postPhoto")
+	public ResponseEntity<?> uploadPostPhoto(@PathVariable("user_id") Long userId, @RequestParam("profilePhoto") MultipartFile multipartFile) throws
+		IOException {
+		//S3 Bucket 내부에 "/profile"
+
+		FileUploadResponse profile = s3Uploader.uploadPostPhoto(userId, multipartFile, "postPhoto");
+		return ResponseEntity.ok(profile);
 	}
 
 	//수정
