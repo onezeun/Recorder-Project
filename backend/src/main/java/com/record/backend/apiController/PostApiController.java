@@ -55,8 +55,8 @@ public class PostApiController {
 	}
 
 	//포스트 파일 업로드
-	@PostMapping("/board/posts/postPhoto")
-	public ResponseEntity<?> uploadPostPhoto(@PathVariable("user_id") Long userId, @RequestParam("profilePhoto") MultipartFile multipartFile) throws
+	@PostMapping("/board/posts/{user_id}/postPhoto")
+	public ResponseEntity<?> uploadPostPhoto(@PathVariable("user_id") Long userId, @RequestParam("postPhoto") MultipartFile multipartFile) throws
 		IOException {
 		//S3 Bucket 내부에 "/profile"
 

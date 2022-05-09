@@ -12,8 +12,10 @@ import { registerPost } from '../redux/actions/auth';
 import { allCategories } from '../redux/actions/category';
 import axios from 'axios';
 
-import { CKEditor } from '@ckeditor/ckeditor5-react';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import EditorBox from '../components/Editor/EditorBox';
+
+import parse from 'html-react-parser';
+
 
 const StyledMenu = styled((props) => (
     <Menu
@@ -56,82 +58,103 @@ const StyledMenu = styled((props) => (
     },
   }));
 
+
+
 export default function Editor() {
-    const [categoryData, setCategoryData] = useState(null);
-    const [anchorEl, setAnchorEl] = useState(null);
-    const [category, setCategory] = useState('');
-    const [successful, setSuccessful] = useState(false);
-    const [title, setTitle] = useState('');
-    const [content, setContent] = useState('');
-    const { user: currentUser } = useSelector((state) => state.auth);
-
-    const [categoryId, setCategoryId] = useState('');
-    const [categoryName, setCategoryName] = useState('');
-
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
+    const [anchorEl, setAnchorEl] = useState(null);
+    const [successful, setSuccessful] = useState(false);
+    const [title, setTitle] = useState('');
+    const [content, setContent] = useState('');
+    const [categories, setCategories] = useState([]);
+
+    const { user: currentUser } = useSelector((state) => state.auth);
+    const { data } = useSelector((state) => state.category);
+
+    const [disabled, setDisabled] = useState(false);
+
+
+    // 카테고리 조회
+    useEffect(() => {
+      getCategories();
+      console.log(data)
+    }, []);
+
+    function getCategories () {
+      dispatch(allCategories(currentUser.userId))
+      .then((data) => {
+        setCategories(data);
+      })
+      .catch((error) => {
+        console.error(error)
+      })
+    }
+
+
     const open = Boolean(anchorEl);
+
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
+
     const handleClose = (event) => {
         // console.log('event', event.target.innerText);
-        setCategory(event.target.innerText);
+        // setCategory(event.target.innerText);
         setAnchorEl(null);
     };
 
-    
+    const onRegisterPost = async (e) => {
+      setDisabled(true);
 
-    const onRegisterPost = () => {
-      setSuccessful(false);
-      dispatch(allCategories(currentUser.userId))
-      .then(data => {
-        setCategoryData(data.data[0].categoryId);
-      });
-
-      console.log('category_id', categoryData);
-
-      dispatch(registerPost(currentUser.userId, categoryData, title, content))
-        .then(() => {
-        setSuccessful(true);
-        navigate('/');
-      })
-        .catch(() => {
-        setSuccessful(false);
-      });
+      e.preventDefault();
+      await new Promise((r) => setTimeout(r, 1000));
       
 
       console.log('currentUser.userId', currentUser.userId);
-      // console.log('category_id', categoryId);
-      console.log('title', registerPost.title);
-      console.log('content', registerPost.content);
+      console.log('data[0].categoryId', data[0].categoryId);
+      console.log('title', title);
+      console.log('content', content);
+
+      setSuccessful(false);
+      
+
+      dispatch(registerPost(currentUser.userId, data[0].categoryId, title, content))
+      .then((res) => {
+        console.log('success', res);
+        setSuccessful(true);
+        navigate('/');
+      })
+      .catch((err) => {
+        console.log('error', err);
+        setSuccessful(false);
+        setDisabled(false);
+      });
+
     }
 
     const onTitleHandler = (e) => {
+      // console.log('title', e.target.value);
       setTitle(e.target.value);
     }
 
     return (
-        <Box 
-        gap={1}
-        sx={{ 
-        display: 'flex',
-        flexDirection: 'column', 
-        justifyContent: 'center',
-        alignItems: 'center',
-        width: '100vw',
-        height: '100vh',
-        backgroundColor: 'white',
-        }}
-        >
-            <Box
+          <Box
                 sx={{ 
-                    width: '90%',
+                    width: '700px',
                     display: 'flex',
+                    flexDirection: 'column', 
+                    justifyContent: 'center',
+                    alignItems: 'center',
                 }}
             >
-                <Button
+              <Box sx={{
+                    display: 'flex',
+                    alignItems: 'left',
+                    mt: '10px'
+                }}>
+              <Button
                     id="demo-customized-button"
                     aria-controls={open ? 'demo-customized-menu' : undefined}
                     aria-haspopup="true"
@@ -141,11 +164,12 @@ export default function Editor() {
                     onClick={handleClick}
                     endIcon={<KeyboardArrowDownIcon />}
                     sx={{ 
-                        width: 150,
-                        display: 'flex',
+                        width: '150px',
+                        height: '40px',
                     }}
                 >   
-                    {categoryName=='' ? '카테고리' : categoryName}
+                    {/* {categoryName=='' ? '카테고리' : categoryName} */}
+                    카테고리
                 </Button>
                 <StyledMenu
                     id="demo-customized-menu"
@@ -156,75 +180,43 @@ export default function Editor() {
                     open={open}
                     onClose={handleClose}
                 >
-                    <MenuItem onClick={handleClose} disableRipple>
-                        파이썬
-                    </MenuItem>
-                    <MenuItem onClick={handleClose} disableRipple>
-                        자바
-                    </MenuItem>
-                    <MenuItem onClick={handleClose} disableRipple>
-                        자바스크립트
-                    </MenuItem>
-                    <MenuItem onClick={handleClose} disableRipple>
-                        리액트
-                    </MenuItem>
+                  {data &&
+                    data.map((category) => {
+                      <MenuItem onClick={handleClose} disableRipple key={category.id}>
+                          {/* {category.categoryName} */}
+                          asdf
+                      </MenuItem>
+                    })}
                 </StyledMenu>
-            </Box>
+              </Box>
             
-          <Box
-                sx={{ 
-                    width: '90%',
-                }}
-            >
                 <Input 
                     placeholder="제목" 
                     sx={{ 
-                        width: '100%',
+                        width: '90%',
                         px: '10px',
+                        my: '10px',
                         fontSize: 'h5.fontSize',
                         fontStyle: 'bold',
                     }}
                     onChange={onTitleHandler} 
                 />
-            </Box>
-            <Box 
-                sx={{ 
-                    color: 'black',
-                    width: '90%',
-                }}
-            >
-                <CKEditor
-                    editor={ ClassicEditor }
-                    onReady={ editor => {
-                        console.log( 'Editor is ready to use!', editor );
-                    } }
-                    onChange={ 
-                      ( event, editor ) => {
-                      const data = editor.getData();
-                      setContent(data);
-                      }
-                    }
-                    onBlur={ ( event, editor ) => {
-                        console.log( 'Blur.', editor );
-                    } }
-                    onFocus={ ( event, editor ) => {
-                        console.log( 'Focus.', editor );
-                    } }
+                <EditorBox
+                  UserId={currentUser.userId}
+                  SetContent={setContent}
                 />
-            </Box>
-            <Divider />
             <Box sx={{
                     display: 'flex',
                     justifyContent: 'flex-end',
                     width: '90%',
+                    mt: '10px'
                 }}>
                 <Stack spacing={1} direction="row" >
                     <Button variant="outlined" disableElevation>취소</Button>
-                    <Button variant="contained" onClick={onRegisterPost} disableElevation >Record</Button>
+                    <Button variant="contained" onClick={onRegisterPost} disableElevation disabled={disabled} >Record</Button>
                 </Stack>
             </Box>
-
-    </Box>
+          </Box>
     );
 }
 
