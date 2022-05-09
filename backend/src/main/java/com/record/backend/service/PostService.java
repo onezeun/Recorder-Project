@@ -10,6 +10,7 @@ import com.record.backend.auth.security.UserPrincipal;
 import com.record.backend.domain.category.Category;
 import com.record.backend.domain.post.Post;
 import com.record.backend.domain.user.User;
+import com.record.backend.dto.category.response.PostUserByCategory;
 import com.record.backend.dto.post.request.PostSaveRequestDto;
 import com.record.backend.dto.post.request.PostUpdateRequestDto;
 import com.record.backend.dto.post.response.PostAllUsersResponseDto;
@@ -69,14 +70,16 @@ public class PostService {
 		return collect;
 	}
 
+	public List<PostUserByCategory> findUserCateogryPosts(Long userId, Long categoryId) {
+		return null;
+	}
+
 	public List<PostAllUsersResponseDto> findUserAllPosts(Long userId) {
 
 		return postRepository.findAllByUserId(userId)
 			.stream()
 			.map(PostAllUsersResponseDto::new)
 			.collect(Collectors.toList());
-
-
 	}
 
 	//삭제
@@ -92,5 +95,6 @@ public class PostService {
 
 		return findPost;
 	}
+
 
 }
