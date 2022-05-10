@@ -37,9 +37,13 @@ public class S3Uploader {
 	@Value("${cloud.aws.s3.bucket}")
 	private String bucket;
 
+	/*
+	* 프로필 파일 업로드 부분
+	* 저장 파일 디렉토리 : 사용자ID + /photo
+	* */
 	@Transactional
-	public FileUploadResponse uploadProfile(Long userId, MultipartFile multipartFile, String dirName) throws IOException {
-
+	public FileUploadResponse uploadProfile(Long userId, MultipartFile multipartFile, String dirName) throws
+		IOException {
 
 		File uploadFile = convert(multipartFile)
 			.orElseThrow(() -> new IllegalArgumentException("MultipartFile -> File로 전환이 실패했습니다."));
@@ -59,18 +63,23 @@ public class S3Uploader {
 		return new FileUploadResponse(userId, fileName, uploadImageUrl);
 	}
 
-	@Transactional
-	public FileUploadResponse uploadPostPhoto(Long userId, MultipartFile multipartFile, String dirName) throws IOException {
-		File uploadFile = convert(multipartFile)
-			.orElseThrow(() -> new IllegalArgumentException("MultipartFile -> File로 전환이 실패했습니다."));
-
-		return uploadPostPhoto(userId, uploadFile, dirName);
-	}
-
 	private String putS3(File uploadFile, String fileName) {
 		amazonS3Client.putObject(new PutObjectRequest(bucket, fileName, uploadFile).withCannedAcl(
 			CannedAccessControlList.PublicRead));
 		return amazonS3Client.getUrl(bucket, fileName).toString();
+	}
+
+	/*
+	 * 포스트 파일 업로드 부분
+	 * 저장 파일 디렉토리 : 사용자ID + randomUUID;
+	 * */
+	@Transactional
+	public FileUploadResponse uploadPostPhoto(Long userId, MultipartFile multipartFile, String dirName) throws
+		IOException {
+		File uploadFile = convert(multipartFile)
+			.orElseThrow(() -> new IllegalArgumentException("MultipartFile -> File로 전환이 실패했습니다."));
+
+		return uploadPostPhoto(userId, uploadFile, dirName);
 	}
 
 	@Transactional
@@ -97,7 +106,7 @@ public class S3Uploader {
 
 	private Optional<File> convert(MultipartFile file) throws IOException {
 		File convertFile = new File(file.getOriginalFilename());
-		if(convertFile.createNewFile()) {
+		if (convertFile.createNewFile()) {
 			try (FileOutputStream fos = new FileOutputStream(convertFile)) {
 				fos.write(file.getBytes());
 			}

@@ -12,8 +12,8 @@ public class PostDto {
 	private Long postId;
 	private Long userId;
 	private Long categoryId;
-	private String userNickName;
-	private String userCategoryName;
+	private String userNickname;
+	private String CategoryName;
 	private String title;
 	private String content;
 	private String summary;
@@ -25,8 +25,8 @@ public class PostDto {
 		this.postId = post.getId();
 		this.userId = post.getUser().getId();
 		this.categoryId = post.getCategory().getId();
-		this.userNickName = post.getUser().getNickname();
-		this.userCategoryName = post.getCategory().getName();
+		this.userNickname = post.getUser().getNickname();
+		this.CategoryName = post.getCategory().getName();
 		this.title = post.getTitle();
 		this.content = post.getContent();
 		this.summary = post.getSummary();

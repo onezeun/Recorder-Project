@@ -56,9 +56,9 @@ public class PostApiController {
 
 	//포스트 파일 업로드
 	@PostMapping("/board/posts/{user_id}/postPhoto")
-	public ResponseEntity<?> uploadPostPhoto(@PathVariable("user_id") Long userId, @RequestParam("postPhoto") MultipartFile multipartFile) throws
-		IOException {
-		//S3 Bucket 내부에 "/profile"
+	public ResponseEntity<?> uploadPostPhoto(@PathVariable("user_id") Long userId,
+		@RequestParam("postPhoto") MultipartFile multipartFile) throws IOException {
+		//S3 Bucket 내부에 "/postPhoto"
 
 		FileUploadResponse profile = s3Uploader.uploadPostPhoto(userId, multipartFile, "postPhoto");
 		return ResponseEntity.ok(profile);
@@ -98,10 +98,10 @@ public class PostApiController {
 		return new Result(userCategoryPosts);
 	}
 
-	@GetMapping("/board/posts/users/category")
+	@GetMapping("/board/users/posts/categories")
 	public Result findAllCategoryPosts(
 		@RequestParam(value = "offset", defaultValue = "0") int offset,
-		@RequestParam(value = "limit", defaultValue = "100") int limit) {
+		@RequestParam(value = "limit", defaultValue = "10") int limit) {
 		//XtoOne은 fetch join으로 가져옴
 		List<Post> posts = postQueryRepository.findAllWithUserCategory(offset, limit);
 
