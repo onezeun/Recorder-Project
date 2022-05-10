@@ -9,8 +9,9 @@ import lombok.Data;
 public class PostAllUsersResponseDto {
 	private Long postId;
 	private Long userId;
-	private String userNickname;
 	private Long categoryId;
+	private String userNickname;
+	private String categoryName;
 	private String title;
 	private String content;
 	private String summary;
@@ -21,8 +22,9 @@ public class PostAllUsersResponseDto {
 	public PostAllUsersResponseDto(Post post) {
 		this.postId = post.getId();
 		this.userId = post.getUser().getId();
-		this.userNickname = post.getUser().getNickname();
 		this.categoryId = post.getCategory().getId();
+		this.userNickname = post.getUser().getNickname();
+		this.categoryName = post.getCategory().getName();
 		this.title = post.getTitle();
 		this.content = post.getContent();
 		this.summary = post.getSummary();
