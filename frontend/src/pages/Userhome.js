@@ -3,24 +3,11 @@ import { Container, Stack, Box, Paper, Grid, Typography, Pagination, CardActionA
 import { styled, ThemeProvider, createTheme } from '@mui/material/styles';
 import List from '@mui/material/List';
 import Category from '../components/Category/Category';
+import axios from 'axios';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { getUser } from '../redux/actions/user';
 
-const MainPosts = [
-  {
-    title: '바보의 일상3',
-    description: '오늘은 밥을 먹지 않았다. 배가 고팠다.',
-  },
-  {
-    title: '바보의 일상2',
-    description: '오늘도 밥을 먹었다. 맛있었다.',
-  },
-  {
-    title: '바보의 일상1',
-    description: '오늘은 밥을 먹었다. 맛있었다.',
-  },
-];
 
 const Nav = styled(List)({
   '& .MuiListItemButton-root': {
@@ -41,10 +28,7 @@ export default function Userhome() {
   const { user: currentUser } = useSelector((state) => state.auth);
   const data = useSelector((state) => state.user);
   const [userData, setUserData] = useState([]);
-
-  useEffect(() => {
-    getUsers();
-  }, []);
+  const [allPosts, setAllPosts] = useState([]);
 
   function getUsers() {
     dispatch(getUser(currentUser.userId))
@@ -55,6 +39,24 @@ export default function Userhome() {
         console.error(error);
       });
   }
+  useEffect(() => {
+    getUsers();
+    console.log(data)
+  }, []);
+
+  useEffect(() => {
+      try {
+        axios.get(`http://localhost:8080/board/users/${currentUser.userId}/posts`)
+        .then(response => {
+          setAllPosts(response.data.data);
+          console.log('userid', currentUser.userId)
+        })
+      } catch (e) {
+        console.log(e);
+      }
+  }, []);
+
+
 
   return (
     <Grid>
@@ -115,8 +117,8 @@ export default function Userhome() {
           {/* 블로그 배너*/}
           <Paper
             sx={{
-              mx: 3,
-              width: '98%',
+              mx: 'auto',
+              width: '1000px',
               height: '300px',
               overflow: 'hidden',
               position: 'relative',
@@ -163,40 +165,40 @@ export default function Userhome() {
           {/* 게시물 */}
           <Box>
             <Grid container rowSpacing={3}>
-              {MainPosts.map((post) => (
+              {allPosts.map((post) => (
                 <Container sx={{ py: 3 }}>
-                      <CardActionArea component="a" href="#">
-                        <Card
-                          sx={{
-                            width: '98%',
-                            display: 'flex',
-                            flexDirection: 'column',
-                            mx:3
-                          }}
-                        >
-                          <CardMedia
-                            component="img"
-                            sx={{
-                              width: 'fill',
-                              height: '250px',
-                              objectFit: 'cover',
-                            }}
-                            image="https://source.unsplash.com/random"
-                          />
-
-                          <CardContent>
-                            <Typography sx={{ fontSize: 13 }}>
-                              2022-05-02
-                            </Typography>
-                            <Typography component="h2" variant="h5" paragraph>
-                              TEST 제목
-                            </Typography>
-                            <Typography variant="subtitle1">
-                              미리보기 내용
-                            </Typography>
-                          </CardContent>
-                        </Card>
-                      </CardActionArea>
+                  <Card
+                    sx={{
+                      width: '800px',
+                      height: '350px',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      mx:'auto'
+                    }}
+                  >
+                    <CardActionArea component="a" href="#">
+                      <CardMedia
+                        component="img"
+                        sx={{
+                          width: '800px',
+                          height: '250px',
+                          objectFit: 'cover',
+                        }}
+                        image={post.thumbnailImage}
+                      />
+                      <CardContent>
+                        <Typography sx={{ fontSize: 13 }}>
+                          2022-05-02
+                        </Typography>
+                        <Typography component="h2" variant="h5" paragraph>
+                        {post.title}
+                        </Typography>
+                        <Typography variant="subtitle1">
+                        {post.summary}
+                        </Typography>
+                      </CardContent>
+                    </CardActionArea>
+                  </Card>
                 </Container>
               ))}
             </Grid>
