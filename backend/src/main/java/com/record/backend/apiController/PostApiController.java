@@ -98,10 +98,10 @@ public class PostApiController {
 		return new Result(userCategoryPosts);
 	}
 
-	@GetMapping("/board/posts/users/category")
+	@GetMapping("/board/users/posts/categories")
 	public Result findAllCategoryPosts(
 		@RequestParam(value = "offset", defaultValue = "0") int offset,
-		@RequestParam(value = "limit", defaultValue = "100") int limit) {
+		@RequestParam(value = "limit", defaultValue = "10") int limit) {
 		//XtoOne은 fetch join으로 가져옴
 		List<Post> posts = postQueryRepository.findAllWithUserCategory(offset, limit);
 
