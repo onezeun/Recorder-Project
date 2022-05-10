@@ -68,7 +68,7 @@ public class CategoryApiController {
 
 	//삭제
 	@DeleteMapping("/board/categories/{category_id}")
-	public void deleteCateogry(@PathVariable("category_id") Long categoryId) {
+	public void deleteCategory(@PathVariable("category_id") Long categoryId) {
 		categoryService.deleteCategory(categoryId);
 	}
 

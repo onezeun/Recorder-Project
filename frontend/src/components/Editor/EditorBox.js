@@ -50,7 +50,7 @@ export default function EditorBox ({ UserId, SetContent }) {
             onChange={ 
                 ( event, editor ) => {
                 const data = editor.getData();
-                SetContent(data);  
+                SetContent(data);
             } }
             onBlur={ ( event, editor ) => {
                 // console.log( 'Blur.', editor );
