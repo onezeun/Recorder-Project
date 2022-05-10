@@ -102,12 +102,12 @@ export const registerPost = (user_id, categoryId, title, content) => (dispatch) 
     (response) => {
       dispatch({
         type: REGISTER_POST
-      })
+      });
 
       dispatch({
-      type: SET_MESSAGE,
-      payload: response.data.message,
-    });
+        type: SET_MESSAGE,
+        payload: response.data.message,
+      });
 
     return Promise.resolve();
   },

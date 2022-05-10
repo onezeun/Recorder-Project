@@ -30,7 +30,8 @@ const StyledMenu = styled((props) => (
       }}
       {...props}
     />
-  ))(({ theme }) => ({
+  ))
+  (({ theme }) => ({
     '& .MuiPaper-root': {
       borderRadius: 6,
       marginTop: theme.spacing(1),
@@ -68,10 +69,9 @@ export default function Editor() {
     const [successful, setSuccessful] = useState(false);
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
-    const [categories, setCategories] = useState([]);
 
     const { user: currentUser } = useSelector((state) => state.auth);
-    const { data } = useSelector((state) => state.category);
+    const { data: categories } = useSelector((state) => state.category);
 
     const [disabled, setDisabled] = useState(false);
 
@@ -79,16 +79,16 @@ export default function Editor() {
     // 카테고리 조회
     useEffect(() => {
       getCategories();
-      console.log(data)
+      console.log(categories);
     }, []);
 
-    function getCategories () {
+    const getCategories = () => {
       dispatch(allCategories(currentUser.userId))
       .then((data) => {
-        setCategories(data);
+        console.error(data);
       })
       .catch((error) => {
-        console.error(error)
+        console.error(error);
       })
     }
 
@@ -105,22 +105,14 @@ export default function Editor() {
         setAnchorEl(null);
     };
 
-    const onRegisterPost = async (e) => {
+    const onRegisterPost = (e) => {
       setDisabled(true);
 
       e.preventDefault();
-      await new Promise((r) => setTimeout(r, 1000));
-      
-
-      console.log('currentUser.userId', currentUser.userId);
-      console.log('data[0].categoryId', data[0].categoryId);
-      console.log('title', title);
-      console.log('content', content);
 
       setSuccessful(false);
-      
 
-      dispatch(registerPost(currentUser.userId, data[0].categoryId, title, content))
+      dispatch(registerPost(currentUser.userId, categories[0].categoryId, title, content))
       .then((res) => {
         console.log('success', res);
         setSuccessful(true);
@@ -180,8 +172,8 @@ export default function Editor() {
                     open={open}
                     onClose={handleClose}
                 >
-                  {data &&
-                    data.map((category) => {
+                  {categories &&
+                    categories.map((category) => {
                       <MenuItem onClick={handleClose} disableRipple key={category.id}>
                           {/* {category.categoryName} */}
                           asdf
