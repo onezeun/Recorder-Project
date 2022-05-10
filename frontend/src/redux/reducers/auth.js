@@ -46,19 +46,18 @@ export default function (state = initialState, action) {
         isLoggedIn: false,
         user: null,
       };
-      case REGISTER_POST:
-        return {
-          ...state,
-          isLoggedIn: true,
-          user: payload.user,
-        }
+    case REGISTER_POST:
+      return {
+        ...state,
+        isLoggedIn: true,
+      }
 
-      case CATEGORY_GET:
-        return {
-          ...state,
-          isLoggedIn: true,
-          user: payload.user,
-        }
+    case CATEGORY_GET:
+      return {
+        ...state,
+        isLoggedIn: true,
+        user: payload.user,
+      }
 
     default:
       return state;

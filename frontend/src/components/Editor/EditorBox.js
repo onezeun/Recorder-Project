@@ -2,7 +2,7 @@ import React from "react";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
-const API_URL = "http://localhost:8080";
+const API_URL = "http://localhost:8080/board/posts";
 
 export default function EditorBox ({ UserId, SetContent }) {
 
@@ -13,7 +13,7 @@ export default function EditorBox ({ UserId, SetContent }) {
                     const body = new FormData();
                     loader.file.then((file) => {
                         body.append("postPhoto", file);
-                        fetch(`${API_URL}/board/posts/${UserId}/postPhoto`, {
+                        fetch(`${API_URL}/${UserId}/postPhoto`, {
                             method: "post",
                             body: body
                         })
@@ -50,7 +50,7 @@ export default function EditorBox ({ UserId, SetContent }) {
             onChange={ 
                 ( event, editor ) => {
                 const data = editor.getData();
-                SetContent(data);  
+                SetContent(data);
             } }
             onBlur={ ( event, editor ) => {
                 // console.log( 'Blur.', editor );
