@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  react:
+    image: node:14.16.1-alpine
+    command: sh -c "npm -i start"
+    ports:
+      - "3000:3000"
+    working_dir: /app
+    volumes:
+      - ./frontend:/app
+    container_name: recorder_react
+    networks:
+      - frontend-network
+
+  spring:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    image: recorder_spring
+    ports:
+      - "8080:8080"
+    container_name: recorder_spring
+    restart: always
+    networks:
+      - backend-network
+      - frontend-network
+networks:
+  backend-network:
+  frontend-network:
