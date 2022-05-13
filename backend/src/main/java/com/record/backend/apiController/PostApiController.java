@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.validation.Valid;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,8 +17,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.record.backend.auth.security.CurrentUser;
-import com.record.backend.auth.security.UserPrincipal;
 import com.record.backend.aws.FileUploadResponse;
 import com.record.backend.aws.S3Uploader;
 import com.record.backend.domain.post.Post;
@@ -48,7 +48,7 @@ public class PostApiController {
 	//포스트 생성
 	@PostMapping("/board/posts")
 	//@PreAuthorize("hasRole('USER')")
-	public ResponseEntity<?> savePost(@RequestBody PostSaveRequestDto requestDto) {
+	public ResponseEntity<?> savePost(@Valid @RequestBody PostSaveRequestDto requestDto) {
 		Post post = postService.savePost(requestDto);
 
 		return ResponseEntity.ok(new ApiResponse(true, "Post Created Successfully!"));
@@ -114,11 +114,13 @@ public class PostApiController {
 
 
 	//하나만 조회
+	//@CurrentUser UserPrincipal currentUser,
 	@GetMapping("/board/posts/{post_id}")
-	public PostAllUsersResponseDto findPost(@CurrentUser UserPrincipal currentUser, @PathVariable("post_id") Long postId) {
+	public PostAllUsersResponseDto findPost(@PathVariable("post_id") Long postId) {
 		//Post findPost = postRepository.findById(postId).get();
-		Post findPost = postService.getPostById(postId, currentUser);
-		return new PostAllUsersResponseDto(findPost);
+		//Post findPost = postService.getPostById(postId, currentUser);
+		return postService.getPostById(postId);
+
 	}
 
 	//삭제

@@ -16,7 +16,6 @@ public class PostAllUsersResponseDto {
 	private String content;
 	private String summary;
 	private int hits;
-	private Exposure exposure;
 	private String thumbnailImage;
 
 	public PostAllUsersResponseDto(Post post) {
@@ -29,7 +28,7 @@ public class PostAllUsersResponseDto {
 		this.content = post.getContent();
 		this.summary = post.getSummary();
 		this.hits = post.getHits();
-		this.exposure = post.getExposure();
 		this.thumbnailImage = post.getThumbnail_image();
 	}
+
 }

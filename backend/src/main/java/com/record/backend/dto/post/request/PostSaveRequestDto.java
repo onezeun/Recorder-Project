@@ -4,7 +4,6 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
 import com.record.backend.domain.category.Category;
-import com.record.backend.domain.post.Exposure;
 import com.record.backend.domain.post.Post;
 import com.record.backend.domain.user.User;
 
@@ -21,7 +20,7 @@ public class PostSaveRequestDto {
 	private Long categoryId; //여기 구현 제대로 하기
 
 	@NotEmpty
-	@Size(min = 1, max = 20)
+	@Size(min = 1, max = 20, message = "1자 이상 20자 이하로 작성하여야 합니다.")
 	private String title;
 	@NotEmpty
 	@Size(min = 1)
