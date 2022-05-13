@@ -17,6 +17,7 @@ public class CategoryPostsDto {
 	private String exposure;
 	private String thumbnailImage;
 
+
 	public CategoryPostsDto(Post post) {
 		title = post.getTitle();
 		content = post.getContent();

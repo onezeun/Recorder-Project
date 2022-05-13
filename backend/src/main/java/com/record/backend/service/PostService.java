@@ -6,7 +6,6 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.record.backend.auth.security.UserPrincipal;
 import com.record.backend.domain.category.Category;
 import com.record.backend.domain.post.Post;
 import com.record.backend.domain.user.User;
@@ -88,13 +87,19 @@ public class PostService {
 		postRepository.deleteById(postId);
 	}
 
-	public Post getPostById(Long postId, UserPrincipal currentUser) {
-		Post findPost = postRepository.findById(postId).orElseThrow(
-			() -> new ResourceNotFoundException("Post", "id", postId)
-		);
+	// public Post getPostById(Long postId, UserPrincipal currentUser) {
+	// 	Post findPost = postRepository.findById(postId).orElseThrow(
+	// 		() -> new ResourceNotFoundException("Post", "id", postId)
+	// 	);
+	//
+	// 	return findPost;
+	// }
 
-		return findPost;
+	public PostAllUsersResponseDto getPostById(Long postId) {
+		Post findPost = postRepository.findById(postId).get();
+		return new PostAllUsersResponseDto(findPost);
 	}
+
 
 
 }
