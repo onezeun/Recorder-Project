@@ -31,10 +31,9 @@ public class CategoryService {
 	@Transactional
 	public Category saveCategory(CategorySaveRequestDto requestDto) {
 		User user = userRepository.findById(requestDto.getUserId()).get();
-		System.out.println(user);
 		requestDto.setUser(user);
 
-		validateDuplicatedCategoryName(requestDto.getCategoryName());
+		validateDuplicatedCategoryName(requestDto.getUserId(), requestDto.getCategoryName());
 		return categoryRepository.save(requestDto.toEntity());
 	}
 
@@ -42,8 +41,11 @@ public class CategoryService {
 	@Transactional
 	public CategoryUpdateResponseDto updateCategory(Long categoryId, CategoryUpdateRequestDto updateDto) {
 		Category findCategory = categoryRepository.findById(categoryId).get();
-		validateDuplicatedCategoryName(updateDto.getCategoryName());
-		findCategory.setName(updateDto.getCategoryName());
+		Long userId = categoryRepository.findUserIdByCategoryId(categoryId);
+		if (!findCategory.getName().equals(updateDto.getCategoryName())) {
+			validateDuplicatedCategoryName(userId, updateDto.getCategoryName());
+			findCategory.setName(updateDto.getCategoryName());
+		}
 		return new CategoryUpdateResponseDto(findCategory.getId(), findCategory.getName());
 	}
 
@@ -62,8 +64,8 @@ public class CategoryService {
 			.collect(Collectors.toList());
 	}
 
-	private void validateDuplicatedCategoryName(String categoryName) {
-		if (categoryRepository.findByName(categoryName).isPresent()) {
+	private void validateDuplicatedCategoryName(Long userId, String categoryName) {
+		if (categoryRepository.existCategoryByUserId(userId, categoryName) != null) {
 			throw new IllegalUserException("이미 존재하는 카테고리입니다.");
 		}
 	}
