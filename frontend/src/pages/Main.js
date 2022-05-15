@@ -18,15 +18,18 @@ import {
   CardActionArea,
 } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useNavigate } from 'react-router-dom';
+import { ConstructionOutlined } from '@mui/icons-material';
 
 const theme = createTheme();
 
 export default function Main() {
   const [posts, setPosts] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
       try {
-        axios.get('http://localhost:8080/board/posts')
+        axios.get('http://localhost:8080/board/users/posts/categories')
         .then(response => {
           setPosts(response.data.data);
         })
@@ -63,11 +66,10 @@ export default function Main() {
           pb: 6,
         }}
       >
-        
         {/* 게시글 */}
         <Grid container spacing={4}>
           {posts.map(post => (
-            <Grid item key={post} xs={12} sm={6} md={4}>
+            <Grid item key = {post.postId} xs={12} sm={6} md={4}>              
               <Card
                 sx={{
                   mx: 'auto',
@@ -88,7 +90,7 @@ export default function Main() {
                   title={post.userNickname}
                   subheader={post.created_time}
                 />
-                <CardActionArea component="a" href="#">
+                <CardActionArea component='a' href={"http://localhost:3000/post/" + `${post.postId}`}>
                   <CardMedia
                     component="img"
                     sx={{
@@ -122,7 +124,7 @@ export default function Main() {
         autoComplete="off"
       >
         <Stack spacing={2}>
-          <Pagination count={3} size="small" shape="rounded" />
+          <Pagination count={3} size="small" s hape="rounded" />
         </Stack>
       </Box>
     </Box>
