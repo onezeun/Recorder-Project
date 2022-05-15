@@ -11,6 +11,9 @@ public class PostAllUsersResponseDto {
 	private Long userId;
 	private Long categoryId;
 	private String userNickname;
+	private String profilePhoto;
+	private String domain;
+	private String introduce;
 	private String categoryName;
 	private String title;
 	private String content;
@@ -23,6 +26,9 @@ public class PostAllUsersResponseDto {
 		this.userId = post.getUser().getId();
 		this.categoryId = post.getCategory().getId();
 		this.userNickname = post.getUser().getNickname();
+		this.profilePhoto = post.getUser().getProfilePhoto();
+		this.domain = post.getUser().getDomain();
+		this.introduce = post.getUser().getIntroduce();
 		this.categoryName = post.getCategory().getName();
 		this.title = post.getTitle();
 		this.content = post.getContent();
