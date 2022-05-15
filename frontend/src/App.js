@@ -46,9 +46,9 @@ function App() {
             {/* <Link to="/user">
               <button>User</button>
             </Link> */}
-            <Link to="/post">
+            {/* <Link to="/post">
               <button>Post</button>
-            </Link>
+            </Link> */}
             <Link to="/main">
               <button>Main</button>
             </Link>
@@ -81,13 +81,13 @@ function App() {
             <Route path="/signup" element={<Signup />} />
             <Route path="/editor" element={<Editor />} />
             <Route path="/user" element={<User />} />
-            <Route path="/post" element={<Post />} />
             <Route path="/main" element={<Main />} />
             <Route path="/userhome" element={<UserHome />} />
             <Route path="/search" element={<Search />} />
             <Route path="/neighbor" element={<Neighbor />} />
             <Route path="/category" element={<Category />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/post/:postId" element={<Post />} />
           </Routes>
         </main>
 

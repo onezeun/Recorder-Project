@@ -1,18 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import Clock from 'react-live-clock'
 
+import axios from 'axios';
+
 import InputUnstyled from '@mui/base/InputUnstyled';
 import { styled } from '@mui/system';
-import { Button, Stack, Avatar, Box, ImageList, ImageListItem, IconButton, Typography, getPopoverUtilityClass } from '@mui/material';
+import { Button, Stack, Avatar, Box, ImageList, ImageListItem, IconButton, Typography, getPopoverUtilityClass, Grid } from '@mui/material';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { useSelector, useDispatch } from 'react-redux';
 import { getUser } from '../redux/actions/user';
 import { getPost } from '../redux/actions/post';
+import { useParams } from 'react-router-dom';
 // import Fab from '@mui/material/Fab';
 // import FavoriteIcon from '@mui/icons-material/Favorite';
 // import ShareIcon from '@mui/icons-material/Share';
-
-
 
 export default function Post() {
 
@@ -64,43 +65,47 @@ export default function Post() {
     );
   });
   
-  const { user: currentUser } = useSelector((state) => state.auth);
-  const data = useSelector((state) => state.user);
-  const datas = useSelector((state) => state.post);
-  const [ userData, setUserData ] = useState([]);
+  // const { user: currentUser } = useSelector((state) => state.auth);
+  // const data = useSelector((state) => state.user);
+
+  // const [ userData, setUserData ] = useState([]);
   const [ postData, setPostData ] = useState([]);
 
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
-  // 유저 정보 가져오기
+  const { postId } = useParams();
+
   useEffect(() => {
-    getUsers();
     getPosts();
+    // setCurrentData(getPostById(postId));
   }, []);
 
-  function getUsers() {
-    dispatch(getUser(currentUser.userId))
-    .then((data) => {
-      setUserData(data);
-      console.log('data', data);
-    })
-    .catch((error) => {
-      console.error(error);
-    })
-  }
-  console.log('datas.postId', datas.postId);
-  console.log('currentUser.userId', currentUser.userId)
-
   function getPosts() {
-    dispatch(getPost(datas.postId))
-    .then((datas) => {
-      setPostData(datas);
-      console.log('datas', datas);
-    })
-    .catch((error) => {
-      console.error(error);
+    axios.get('http://localhost:8080/board/posts/' + `${postId}`)
+    .then((res) => {
+      setPostData(res.data);
+      console.log(res.data);
     })
   }
+
+  // console.log('postData.userId', postData.userId);
+
+  // function getUsers() {
+  //   dispatch(getUser(postData.userId))
+  //   .then((data) => {
+  //     setUserData(data);
+  //   })
+  //   .catch((error) => {
+  //     console.error(error);
+  //   })
+  // }
+  // const getPostById = postId => {
+  //   const array = postData.filter(x => x.postId == postId);
+  //   if (array.length === 1) {
+  //     return array[0];
+  //   }
+  //   return null;
+  // }
 
   return(
     <Box
@@ -114,7 +119,7 @@ export default function Post() {
       }}
     >
       {/* 타이틀 */}
-      <Typography variant="h4" sx={{ py: '20px' }}>{datas.title}제목 들어갈 것임</Typography>
+     <Typography variant="h4" sx={{ py: '20px' }}>{postData.title}제목 들어갈 것임</Typography>
 
       {/* 작성자 */}
       <Box sx={{ 
@@ -125,15 +130,20 @@ export default function Post() {
         alignItems: 'end' 
         }}
       >
-        <Typography >{data.nickname}</Typography>
-        {/* 작성시간으로 수정해야함 */}
-        <Clock format = {'YYYY-MM-DD HH:mm'} ticking = {true} timezone = {'KR/pacific'} />
+        <Typography >{postData.userNickname}</Typography>
       </Box>
 
       {/* 내용 */}
-      <h4>평소에 사진 찍는 걸 좋아해서 제가 찍은 사진이에요~</h4>
-      <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FzM3mp%2Fbtrr3oghEUP%2FboYYynkXF9FjhuqxFUSe41%2Fimg.png" width='600px' height='400px' />
-      <h4>게시물 내용 채우기용</h4>
+      <Box
+        sx={{
+          mt: '20px',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+        }}
+      >
+      {postData.content}
+      </Box>
 
       {/* 하단 작성자 프로필사진, 이름, 설명 */}
       <Box 
@@ -145,10 +155,10 @@ export default function Post() {
           alignItems: 'center',
         }}
       >
-        <Avatar alt="jiwoon-joo" src={data.profilePhoto} sx={{ width: 80, height: 80, mr: '10px' }}/>
+        <Avatar alt="jiwoon-joo" src={postData.profilePhoto} sx={{ width: 80, height: 80, mr: '10px' }}/>
         <Stack spacing={1}>
-          <Typography variant="h6" >{data.nickname}</Typography>
-          <Typography variant="h7" >{data.introduce}</Typography>
+          <Typography variant="h6" >{postData.domain}</Typography>
+          <Typography variant="h7" >{postData.introduce}</Typography>
         </Stack>
       </Box>
 
