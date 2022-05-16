@@ -83,6 +83,7 @@ function App() {
             <Route path="/user" element={<User />} />
             <Route path="/main" element={<Main />} />
             <Route path="/userhome" element={<UserHome />} />
+            <Route path="/userhome/:userId" element={<UserHome />} />
             <Route path="/search" element={<Search />} />
             <Route path="/neighbor" element={<Neighbor />} />
             <Route path="/category" element={<Category />} />
