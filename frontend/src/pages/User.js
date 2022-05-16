@@ -116,6 +116,40 @@ export default function User() {
     });
   }
   
+  const useConfirm = (message=null, onConfirm, onCancel) => {
+
+    const confirmAction = () => {
+      if (window.confirm(message)) {
+        onConfirm();
+      } else {
+        onCancel();
+      }
+    };
+
+    return confirmAction;
+  }
+
+  const deleteConfirm = () => {
+    axios.delete('http://localhost:8080/users/' + `${currentUser.userId}`)
+    .then(() => {
+      alert('회원탈퇴를 성공적으로 완료했습니다!')
+    })
+    .catch(() => {
+      alert('회원탈퇴에 실패했습니다!')
+    })
+
+  }
+
+  const cancelConfirm = () => {
+    navigate('/User');
+  }
+
+  const onClickDelete = useConfirm(
+    "회원탈퇴를 하시겠습니까?",
+    deleteConfirm,
+    cancelConfirm
+  );
+
   return (
     <Box
       sx={{
@@ -219,7 +253,7 @@ export default function User() {
               <Box sx={{ flexGrow: 1 }} />
             </Stack>
 
-            <EtcButton size="small" color="error">회원 탈퇴</EtcButton>
+            <EtcButton size="small" color="error" onClick={onClickDelete}>회원 탈퇴</EtcButton>
                
           </Stack>
       </Paper>
