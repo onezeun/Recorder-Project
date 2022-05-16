@@ -1,19 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import Clock from 'react-live-clock'
-
+import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 import InputUnstyled from '@mui/base/InputUnstyled';
 import { styled } from '@mui/system';
-import { Button, Stack, Avatar, Box, ImageList, ImageListItem, IconButton, Typography, getPopoverUtilityClass, Grid } from '@mui/material';
-import AddCircleIcon from '@mui/icons-material/AddCircle';
-import { useSelector, useDispatch } from 'react-redux';
-import { getUser } from '../redux/actions/user';
-import { getPost } from '../redux/actions/post';
-import { useParams } from 'react-router-dom';
-// import Fab from '@mui/material/Fab';
-// import FavoriteIcon from '@mui/icons-material/Favorite';
-// import ShareIcon from '@mui/icons-material/Share';
+import { Button, Stack, Avatar, Box, Typography, Grid } from '@mui/material';
 
 export default function Post() {
 
@@ -65,19 +56,27 @@ export default function Post() {
     );
   });
   
-  // const { user: currentUser } = useSelector((state) => state.auth);
-  // const data = useSelector((state) => state.user);
+  const CustomTypography = styled(Typography)`
+    &:hover {
+      color: #ff5f70;
+      cursor: pointer;
+    }
+    `;
 
-  // const [ userData, setUserData ] = useState([]);
+    const CustomAvatar = styled(Avatar)`
+    &:hover {
+      color: dark ? grey[300] : grey[900];
+      cursor: pointer;
+    }
+    `;
+
   const [ postData, setPostData ] = useState([]);
-
-  // const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const { postId } = useParams();
 
   useEffect(() => {
     getPosts();
-    // setCurrentData(getPostById(postId));
   }, []);
 
   function getPosts() {
@@ -88,24 +87,9 @@ export default function Post() {
     })
   }
 
-  // console.log('postData.userId', postData.userId);
-
-  // function getUsers() {
-  //   dispatch(getUser(postData.userId))
-  //   .then((data) => {
-  //     setUserData(data);
-  //   })
-  //   .catch((error) => {
-  //     console.error(error);
-  //   })
-  // }
-  // const getPostById = postId => {
-  //   const array = postData.filter(x => x.postId == postId);
-  //   if (array.length === 1) {
-  //     return array[0];
-  //   }
-  //   return null;
-  // }
+  const onClickUser = () => {
+    navigate('/Userhome/' + `${postData.userId}`)
+  }
 
   return(
     <Box
@@ -119,27 +103,37 @@ export default function Post() {
       }}
     >
       {/* 타이틀 */}
-     <Typography variant="h4" sx={{ py: '20px' }}>{postData.title}제목 들어갈 것임</Typography>
+      <Box sx={{ 
+        width: '600px',
+        display: 'flex', 
+        flexDirection: 'column', 
+        pb: 3, 
+        alignItems: 'center' 
+        }}
+      >
+        <Typography variant="h4" sx={{ py: '20px' }}>{postData.title}제목 들어갈 것임</Typography>
+      </Box>
 
       {/* 작성자 */}
       <Box sx={{ 
         width: '600px',
         display: 'flex', 
         flexDirection: 'column', 
-        p: 0.5, 
+        pb: 5, 
         alignItems: 'end' 
         }}
       >
-        <Typography >{postData.userNickname}</Typography>
+        <CustomTypography onClick={onClickUser}>{postData.userNickname}</CustomTypography>
       </Box>
 
       {/* 내용 */}
       <Box
         sx={{
-          mt: '20px',
+          width: '600px',
           display: 'flex',
           flexDirection: 'column',
-          alignItems: 'center',
+          pb: 10,
+          alignItems: 'start',
         }}
       >
       {postData.content}
@@ -148,16 +142,16 @@ export default function Post() {
       {/* 하단 작성자 프로필사진, 이름, 설명 */}
       <Box 
         sx={{ 
-          width: '500px',
+          width: '600px',
           display: 'flex', 
           flexDirection: 'row',
           justifyContent: 'flex-start',
           alignItems: 'center',
         }}
       >
-        <Avatar alt="jiwoon-joo" src={postData.profilePhoto} sx={{ width: 80, height: 80, mr: '10px' }}/>
+        <CustomAvatar alt="" src={postData.profilePhoto} onClick={onClickUser} sx={{ width: 80, height: 80, mr: '10px' }}/>
         <Stack spacing={1}>
-          <Typography variant="h6" >{postData.domain}</Typography>
+          <CustomTypography variant="h6" onClick={onClickUser}>{postData.domain}</CustomTypography>
           <Typography variant="h7" >{postData.introduce}</Typography>
         </Stack>
       </Box>
