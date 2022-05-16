@@ -162,10 +162,13 @@ export default function SignUp() {
     dispatch(register(email, password, nickname, domain, introduce))
       .then(() => {
         setSuccessful(true);
+        alert('회원가입을 성공적으로 완료했습니다!')
       })
       .catch(() => {
         setSuccessful(false);
       });
+
+    navigate('/login');
   };
 
   // 취소 버튼
