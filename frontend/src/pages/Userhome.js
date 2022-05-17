@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import { Container, Stack, Box, Paper, Grid, Typography, Pagination, CardActionArea, Card, CardMedia, CardContent, Button, Divider, Avatar, Link } from '@mui/material';
 import { styled, ThemeProvider, createTheme } from '@mui/material/styles';
 import List from '@mui/material/List';
@@ -25,15 +26,17 @@ const Nav = styled(List)({
 
 export default function Userhome() {
   const dispatch = useDispatch();
-  const { user: currentUser } = useSelector((state) => state.auth);
   const data = useSelector((state) => state.user);
   const [userData, setUserData] = useState([]);
   const [allPosts, setAllPosts] = useState([]);
+  const { userId } = useParams();
+
 
   function getUsers() {
-    dispatch(getUser(currentUser.userId))
+    dispatch(getUser(userId))
       .then((data) => {
         setUserData(data);
+        console.log(data);
       })
       .catch((error) => {
         console.error(error);
@@ -41,15 +44,13 @@ export default function Userhome() {
   }
   useEffect(() => {
     getUsers();
-    console.log(data)
   }, []);
 
   useEffect(() => {
       try {
-        axios.get(`http://localhost:8080/board/users/${currentUser.userId}/posts`)
-        .then(response => {
-          setAllPosts(response.data.data);
-          console.log('userid', currentUser.userId)
+        axios.get(`http://localhost:8080/board/users/${userId}/posts`)
+        .then(res => {
+          setAllPosts(res.data.data);
         })
       } catch (e) {
         console.log(e);
@@ -112,59 +113,10 @@ export default function Userhome() {
             </Paper>
           </ThemeProvider>
         </Box>
-
         <Stack direction="column" sx={{ justifyContent: 'center' }}>
-          {/* 블로그 배너*/}
-          <Paper
-            sx={{
-              mx: 'auto',
-              width: '1000px',
-              height: '300px',
-              overflow: 'hidden',
-              position: 'relative',
-              backgroundColor: 'grey.800',
-              color: '#fff',
-              mb: 4,
-              backgroundSize: 'cover',
-              backgroundRepeat: 'no-repeat',
-              backgroundPosition: 'center',
-              backgroundImage: `url('https://source.unsplash.com/random')`,
-            }}
-          >
-            {
-              <img
-                style={{ display: 'none' }}
-                src="https://source.unsplash.com/random"
-              />
-            }
-            <Box
-              sx={{
-                position: 'absolute',
-                top: 0,
-                bottom: 0,
-                right: 0,
-                left: 0,
-                backgroundColor: 'rgba(0,0,0,.3)',
-              }}
-            />
-            <Grid>
-                <Box
-                  sx={{
-                    position: 'relative',
-                    p: { xs: 3, md: 6 },
-                    pr: { md: 0 },
-                  }}
-                >
-                  <Typography component="h2" variant="h3" color="inherit">
-                    {data.domain}
-                  </Typography>
-                </Box>
-            </Grid>
-          </Paper>
-
           {/* 게시물 */}
           <Box>
-            <Grid container rowSpacing={3}>
+            <Grid container >
               {allPosts.map((post) => (
                 <Container sx={{ py: 3 }}>
                   <Card
@@ -176,7 +128,7 @@ export default function Userhome() {
                       mx:'auto'
                     }}
                   >
-                    <CardActionArea component="a" href="#">
+                    <CardActionArea component="a" href={"http://localhost:3000/post/" + `${post.postId}`}>
                       <CardMedia
                         component="img"
                         sx={{
