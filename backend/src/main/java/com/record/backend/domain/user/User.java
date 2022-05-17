@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -17,8 +18,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+//import com.record.backend.auth.domain.RefreshToken;
 import com.record.backend.domain.BaseEntity;
 import com.record.backend.domain.category.Category;
 import com.record.backend.domain.comment.Comment;
@@ -34,7 +37,6 @@ import lombok.Setter;
 @Entity
 @Table(name = "users")
 public class User extends BaseEntity {
-
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "user_id")
 	private Long id;
@@ -60,6 +62,9 @@ public class User extends BaseEntity {
 		inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Set<Role> roles = new HashSet<>();
 
+	// @OneToOne(cascade = CascadeType.ALL)
+	// @JoinColumn(name = "refreshtoken", referencedColumnName = "id")
+	// private RefreshToken refreshToken;
 
 	@OneToMany(mappedBy = "user", cascade = ALL)
 	private List<Category> categoryList = new ArrayList<>();
