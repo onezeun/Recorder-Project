@@ -18,24 +18,18 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.record.backend.auth.domain.RefreshToken;
 import com.record.backend.auth.repository.RoleRepository;
 import com.record.backend.auth.security.JwtTokenProvider;
 import com.record.backend.auth.security.UserPrincipal;
-import com.record.backend.auth.service.RefreshTokenService;
 import com.record.backend.domain.user.Role;
 import com.record.backend.domain.user.RoleName;
 import com.record.backend.domain.user.User;
 import com.record.backend.dto.loginlogout.request.LoginRequest;
 import com.record.backend.dto.loginlogout.request.SignUpRequest;
-import com.record.backend.dto.loginlogout.request.TokenRefreshRequest;
 import com.record.backend.dto.loginlogout.response.ApiResponse;
 import com.record.backend.dto.loginlogout.response.JwtAuthenticationResponse;
-import com.record.backend.dto.loginlogout.response.TokenRefreshResponse;
 import com.record.backend.exception.AppException;
-import com.record.backend.exception.TokenRefreshException;
 
 import com.record.backend.repository.UserRepository;
 
@@ -45,9 +39,6 @@ public class AuthController {
 
 	@Autowired
 	AuthenticationManager authenticationManager;
-
-	@Autowired
-	RefreshTokenService refreshTokenService;
 
 	@Autowired
 	UserRepository userRepository;
@@ -77,29 +68,9 @@ public class AuthController {
 
 		UserPrincipal userPrincipal = (UserPrincipal)authentication.getPrincipal();
 
-		RefreshToken refreshToken = refreshTokenService.createRefreshToken(authentication);
-		return ResponseEntity.ok(new JwtAuthenticationResponse(jwt, refreshToken.getToken(),
+		//RefreshToken refreshToken = refreshTokenService.createRefreshToken(authentication);
+		return ResponseEntity.ok(new JwtAuthenticationResponse(jwt,
 			userPrincipal.getId(), userPrincipal.getEmail(), userPrincipal.getDomain(), userPrincipal.getIntroduce()));
-	}
-
-	@PostMapping("/refreshtoken")
-	public ResponseEntity<?> refreshtoken(@Valid @RequestBody TokenRefreshRequest tokenRefreshRequest) {
-		String requestRefreshToken = tokenRefreshRequest.getRefreshToken();
-
-		return refreshTokenService.findByToken(requestRefreshToken)
-			.map(refreshTokenService::verifyExpiration)
-			.map(RefreshToken::getUser)
-			.map(user -> {
-				Authentication authentication = authenticationManager.authenticate(
-					new UsernamePasswordAuthenticationToken(
-						user.getEmail(), user.getPassword()
-					)
-				);
-				String token = tokenProvider.generateToken(authentication);
-				return ResponseEntity.ok(new TokenRefreshResponse(token, requestRefreshToken));
-
-			})
-			.orElseThrow(() -> new TokenRefreshException(requestRefreshToken, "Refresh token is not in database!"));
 	}
 
 	@PostMapping("/signup")
@@ -138,4 +109,25 @@ public class AuthController {
 		return ResponseEntity.ok(new ApiResponse(true, "User registered successfully"));
 	}
 
+	/**
+	 * refreshToken 받아오기 api
+	 @PostMapping("/refreshtoken") public ResponseEntity<?> refreshtoken(@Valid @RequestBody TokenRefreshRequest tokenRefreshRequest) {
+	 String requestRefreshToken = tokenRefreshRequest.getRefreshToken();
+
+	 return refreshTokenService.findByToken(requestRefreshToken)
+	 .map(refreshTokenService::verifyExpiration)
+	 .map(RefreshToken::getUser)
+	 .map(user -> {
+	 Authentication authentication = authenticationManager.authenticate(
+	 new UsernamePasswordAuthenticationToken(
+	 user.getEmail(), user.getPassword()
+	 )
+	 );
+	 String token = tokenProvider.generateToken(authentication);
+	 return ResponseEntity.ok(new TokenRefreshResponse(token, requestRefreshToken));
+
+	 })
+	 .orElseThrow(() -> new TokenRefreshException(requestRefreshToken, "Refresh token is not in database!"));
+	 }
+	 */
 }
