@@ -31,45 +31,6 @@ function App() {
       <CssBaseline />
       <Router>
         <Header />
-
-        <hr />
-          <div style={{ display:'inline' }}>
-            {/* <Link to="/login">
-              <button>Login</button>
-            </Link>
-            <Link to="/signup">
-              <button>Signup</button>
-            </Link> */}
-            <Link to="/editor">
-              <button>Editor</button>
-            </Link>
-            {/* <Link to="/user">
-              <button>User</button>
-            </Link> */}
-            {/* <Link to="/post">
-              <button>Post</button>
-            </Link> */}
-            <Link to="/main">
-              <button>Main</button>
-            </Link>
-            {/* <Link to="/userhome">
-              <button>Userhome</button>
-            </Link> */}
-            {/* <Link to="/search">
-              <button>Search</button>
-            </Link>
-            <Link to="/neighbor">
-              <button>Neighbor</button>
-            </Link> */}
-            <Link to="/category">
-              <button>Category</button>
-            </Link>
-            {/* <Link to="/profile">
-              <button>profile</button>
-            </Link> */}
-          </div>
-          <hr /> 
-
         <main style={{
           display: 'flex',
           flexDirection: 'column',
@@ -86,8 +47,6 @@ function App() {
             <Route path="/userhome/:userId" element={<UserHome />} />
             <Route path="/search" element={<Search />} />
             <Route path="/neighbor" element={<Neighbor />} />
-            <Route path="/category" element={<Category />} />
-            <Route path="/profile" element={<Profile />} />
             <Route path="/post/:postId" element={<Post />} />
           </Routes>
         </main>
