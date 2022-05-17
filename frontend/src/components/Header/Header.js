@@ -1,4 +1,5 @@
 import React from 'react';
+import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate, useNavigate, Link } from 'react-router-dom';
 import styled from "styled-components";
@@ -22,6 +23,7 @@ export default function Header() {
   const { isLoggedIn } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { user: currentUser } = useSelector((state) => state.auth);
 
   const onLogOut = (e) => {
     e.preventDefault();
@@ -59,7 +61,7 @@ export default function Header() {
             <MenuItem component={Link} to={'/Editor'}>
               <Typography textAlign="center">새 글 작성</Typography>
             </MenuItem>
-            <MenuItem component={Link} to={'/Userhome'}>
+            <MenuItem component={Link} to={'/Userhome/' + `${currentUser.userId}`}>
               <Typography textAlign="center">내 블로그</Typography>
             </MenuItem>
             <MenuItem component={Link} to={'/User'}>

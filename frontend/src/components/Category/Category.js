@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import {
   createCategory,
   allCategories,
@@ -28,6 +29,7 @@ export default function Category() {
   const { isLoggedIn } = useSelector((state) => state.auth);
   const [edit, setEdit] = useState(false);
   const { user: currentUser } = useSelector((state) => state.auth);
+  const { userId } = useParams();
 
   // 조회
   useEffect(() => {
@@ -36,7 +38,7 @@ export default function Category() {
   }, []);
 
   function getCategories () {
-    dispatch(allCategories(currentUser.userId))
+    dispatch(allCategories(userId))
     .then((data) => {
       setCategories(data);
     })
@@ -48,7 +50,7 @@ export default function Category() {
   //추가
   function addCategory () {
     const addCategory = () => {
-      dispatch(createCategory(currentUser.userId, categoryName))
+      dispatch(createCategory(userId, categoryName))
       .then((response) => {
         console.log(response.data)
         setCategoryName('');
@@ -58,6 +60,7 @@ export default function Category() {
       })
     }
     addCategory();
+    window.location.reload();
   }
 
   function changeCategory (e) {
@@ -68,8 +71,8 @@ export default function Category() {
 
   // 수정
   function putCategory () {
-    const putCategory = (id) => {
-      dispatch(updateCategory(data[id].categoryId))
+    const putCategory = () => {
+      dispatch(updateCategory(data.categoryId))
       .then(() => {
       })
       .catch((error) => {
@@ -81,8 +84,8 @@ export default function Category() {
   }
 
   // 삭제
-  const removeCategory = (id) => {
-    dispatch(deleteCategory(data[id].categoryId))
+  const removeCategory = () => {
+    dispatch(deleteCategory(data.categoryId))
     .then(() => {
       getCategories();
     })
@@ -95,7 +98,7 @@ export default function Category() {
   // const removeCategory = (category) => {
   //   onToggle(category.categoryId)
   // }
-  // 저장s
+  // 저장
 
   return (
     <Box>
@@ -172,7 +175,7 @@ export default function Category() {
       {isLoggedIn ? (
           !edit ? null : (
             <Stack direction="row" spacing={2} sx={{ px: 0.5, pt: 1 }}>
-              <TextField onChange={changeCategory} id="outlined-basic" size="small" label="카테고리 추가" variant="outlined" placeholder="카테고리명을 입력해주세요"/>
+              <TextField onChange={changeCategory} size="small" label="카테고리 추가" variant="outlined" placeholder="카테고리명을 입력해주세요"/>
               <IconButton onClick={addCategory}><AddIcon/></IconButton>
             </Stack>
           )) : null}
