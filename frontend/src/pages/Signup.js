@@ -116,12 +116,15 @@ export default function SignUp() {
     },[password],);
 
   const onChangeNickname = (e) => {
-    const nicknameRegex = /^[가-힣a-zA-Z]{2,}$/;
+    const nicknameRegex = /^[가-힣a-zA-Z 0-9]{2,}$/;
     if (e.target.value === '') {
       setNicknameErrorMessage('닉네임을 입력해주세요');
       setNicknameError(true);
+    } else if(e.target.value.length < 2) {
+      setNicknameErrorMessage('두 글자 이상 입력해주세요.')
+      setNicknameError(true);
     } else if (!nicknameRegex.test(e.target.value)) {
-      setNicknameErrorMessage('두 글자 이상 입력해주세요');
+      setNicknameErrorMessage('한글, 영어, 숫자만 입력 가능합니다.');
       setNicknameError(true);
     } else setNicknameError(false);
     setNickname(e.target.value);
@@ -132,8 +135,11 @@ export default function SignUp() {
     if (e.target.value === '') {
       setDomainErrorMessage('블로그명(도메인)을 입력해주세요');
       setDomainError(true);
-    } else if (!domainRegex.test(e.target.value)) {
+    } else if(e.target.value.length < 5) {
       setDomainErrorMessage('다섯 글자 이상 입력해주세요');
+      setDomainError(true);
+    } else if (!domainRegex.test(e.target.value)) {
+      setDomainErrorMessage('영어, 숫자만 입력 가능합니다.');
       setDomainError(true);
     } else setDomainError(false);
     setDomain(e.target.value);
