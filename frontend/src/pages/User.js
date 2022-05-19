@@ -7,6 +7,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { getUser, updateUser, updateImage } from "../redux/actions/user";
 import { TextField } from "@mui/material";
 import axios from 'axios';
+import { logout } from "../redux/actions/auth";
 
 export default function User() {
   const { user: currentUser } = useSelector((state) => state.auth);
@@ -138,6 +139,11 @@ export default function User() {
       alert('회원탈퇴에 실패했습니다!')
     })
 
+    dispatch(logout())
+    .then(() => {
+      navigate('/login')
+    });
+
   }
 
   const cancelConfirm = () => {
@@ -232,7 +238,7 @@ export default function User() {
 
             <Stack direction='row' sx={{ my: 1, p: 1}}>
               <Typography variant="h6" sx={{ fontWeight: "bold" }}>이웃 관리</Typography>
-              <Typography sx={{ marginLeft: 7.5, p: 0.5 }}>3명</Typography>
+              <Typography sx={{ marginLeft: 7.5, p: 0.5 }}>개발중입니다!</Typography>
               <Box sx={{ flexGrow: 1 }} />
             </Stack>
 
