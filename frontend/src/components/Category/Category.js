@@ -26,9 +26,9 @@ export default function Category() {
   const [categories, setCategories] = useState([]);
   const [categoryName, setCategoryName] = useState('');
   const { data } = useSelector((state) => state.category);
-  const { isLoggedIn } = useSelector((state) => state.auth);
-  const [edit, setEdit] = useState(false);
+  const [ edit, setEdit ] = useState(false);
   const { user: currentUser } = useSelector((state) => state.auth);
+  const { email } = useSelector((state) => state.user);
   const { userId } = useParams();
 
   // 조회
@@ -112,7 +112,7 @@ export default function Category() {
             }}
           />
         </ListItemButton>
-        {isLoggedIn ? (
+        {currentUser.email === email ? (
           !edit ? (
             <Tooltip title="카테고리 설정">
               <IconButton
@@ -172,7 +172,7 @@ export default function Category() {
           )
         ) : null}
       </ListItem>
-      {isLoggedIn ? (
+      {currentUser.email === email ? (
           !edit ? null : (
             <Stack direction="row" spacing={2} sx={{ px: 0.5, pt: 1 }}>
               <TextField onChange={changeCategory} size="small" label="카테고리 추가" variant="outlined" placeholder="카테고리명을 입력해주세요"/>
