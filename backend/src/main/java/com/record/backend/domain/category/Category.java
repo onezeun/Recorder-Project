@@ -1,5 +1,6 @@
 package com.record.backend.domain.category;
 
+import static javax.persistence.CascadeType.*;
 import static javax.persistence.FetchType.*;
 
 import java.util.ArrayList;
@@ -40,7 +41,7 @@ public class Category {
 
 	private String name;
 
-	@OneToMany(mappedBy = "category")
+	@OneToMany(mappedBy = "category", cascade = ALL)
 	private List<Post> posts = new ArrayList<>();
 
 	@Builder
