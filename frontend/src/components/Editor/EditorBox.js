@@ -50,7 +50,8 @@ export default function EditorBox ({ UserId, SetContent }) {
             onChange={ 
                 ( event, editor ) => {
                 const data = editor.getData();
-                SetContent(data);
+                let convertContent = data.replace(/(<([^>]+)>)/ig, "")
+                SetContent(convertContent);
             } }
             onBlur={ ( event, editor ) => {
                 // console.log( 'Blur.', editor );

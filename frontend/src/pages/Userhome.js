@@ -108,9 +108,9 @@ export default function Userhome() {
                   >
                     {data.introduce}
                   </Typography>
-                  <Stack direction="row">
+                  {/* <Stack direction="row">
                     <Button size="small">이웃추가</Button>
-                  </Stack>
+                  </Stack> */}
                 </Stack>
                 <Divider />
                 <Link to="/" component={Category} exact />

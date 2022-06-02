@@ -21,7 +21,6 @@ import { allCategories } from "../redux/actions/category";
 import axios from "axios";
 
 import EditorBox from "../components/Editor/EditorBox";
-
 import parse from "html-react-parser";
 
 const StyledMenu = styled((props) => (

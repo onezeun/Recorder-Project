@@ -230,7 +230,7 @@ export default function User() {
       </Paper>
 
       {/* 두 번째 칸 */}
-      <Paper
+      {/* <Paper
         elevation={2}
         sx={{ width: 700, my: 1, mt: 1, p: 2 }}
       >
@@ -245,7 +245,7 @@ export default function User() {
             <EtcButton size="small">이웃 관리</EtcButton>
 
           </Stack>
-      </Paper>
+      </Paper> */}
 
       {/* 세 번째 칸 */}
       <Paper
