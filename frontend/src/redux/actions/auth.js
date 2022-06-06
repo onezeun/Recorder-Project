@@ -92,12 +92,13 @@ export const logout = () => (dispatch) => {
   return Promise.resolve();
 };
 
-export const registerPost = (user_id, categoryId, title, content) => (dispatch) => {
+export const registerPost = (user_id, categoryId, title, content, summary) => (dispatch) => {
   return AuthService.registerPost(
     user_id,
     categoryId,
     title,
     content,
+    summary
   ).then(
     (response) => {
       dispatch({

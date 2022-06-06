@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import "../components/Editor/index.css";
 import { styled, alpha } from "@mui/material/styles";
@@ -66,12 +66,11 @@ const StyledMenu = styled((props) => (
   },
 }));
 
-export default function Editor() {
   const CategoryButton = styled(Button)`
-    background: white;
-    border: solid 1px;
-    color: #ff5f70;
-  `;
+      background: white;
+      border: solid 1px;
+      color: #ff5f70;
+    `;
 
   const RecordButton = styled(Button)`
     background: #ff5f70;
@@ -84,6 +83,9 @@ export default function Editor() {
     color: #ff5f70;
   `;
 
+export default function Editor() {
+  
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -91,11 +93,13 @@ export default function Editor() {
   const [successful, setSuccessful] = useState(false);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [summary, setSummary] = useState("");
 
   const { user: currentUser } = useSelector((state) => state.auth);
   const { data: categories } = useSelector((state) => state.category);
 
   const [disabled, setDisabled] = useState(false);
+  const { categoryId } = useParams();
 
   // 카테고리 조회
   useEffect(() => {
@@ -103,9 +107,9 @@ export default function Editor() {
   }, []);
 
   const getCategories = () => {
-    dispatch(allCategories(currentUser.userId))
-      .then((data) => {
-        console.log(data);
+    axios.get('http://localhost:8080/board/categories/users/' + `${currentUser.userId}`)
+      .then((res) => {
+        console.log('res', res.data.data);
       })
       .catch((error) => {
         console.error(error);
@@ -131,9 +135,7 @@ export default function Editor() {
 
     setSuccessful(false);
 
-    dispatch(
-      registerPost(currentUser.userId, categories[0].categoryId, title, content)
-    )
+    dispatch(registerPost(currentUser.userId, 3, title, content, summary))
       .then((res) => {
         console.log("success", res);
         setSuccessful(true);
@@ -186,7 +188,6 @@ export default function Editor() {
             height: "40px",
           }}
         >
-          {/* {categoryName=='' ? '카테고리' : categoryName} */}
           카테고리
         </CategoryButton>
         <StyledMenu
@@ -218,7 +219,7 @@ export default function Editor() {
         }}
         onChange={onTitleHandler}
       />
-      <EditorBox UserId={currentUser.userId} SetContent={setContent} />
+      <EditorBox UserId={currentUser.userId} SetContent={setContent} SetSummary={setSummary} />
       <Box
         sx={{
           display: "flex",

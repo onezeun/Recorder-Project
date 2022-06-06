@@ -59,7 +59,22 @@ const StyledMenu = styled((props) => (
     },
   }));
 
+  const CategoryButton = styled(Button)`
+      background: white;
+      border: solid 1px;
+      color: #ff5f70;
+    `;
 
+  const UpdateButton = styled(Button)`
+    background: #ff5f70;
+    color: white;
+  `;
+
+  const CancleButton = styled(Button)`
+    background: white;
+    border: solid 1px;
+    color: #ff5f70;
+  `;
 
 export default function EditorUpdate() {
     const dispatch = useDispatch();
@@ -69,6 +84,7 @@ export default function EditorUpdate() {
     const [successful, setSuccessful] = useState(false);
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
+    const [summary, setSummary] = useState('');
 
     const { user: currentUser } = useSelector((state) => state.auth);
     const { data: categories } = useSelector((state) => state.category);
@@ -94,13 +110,10 @@ export default function EditorUpdate() {
       })
     }
 
-    // postdata
-    const [ postData, setPostData ] = useState([]);
-
     function getPosts() {
         axios.get('http://localhost:8080/board/posts/' + `${postId}`)
         .then((res) => {
-          setPostData(res.data);
+          setTitle(res.data.title);
           console.log(res.data);
         })
     }
@@ -141,9 +154,13 @@ export default function EditorUpdate() {
     }
 
     const onTitleHandler = (e) => {
-      // console.log('title', e.target.value);
       setTitle(e.target.value);
     }
+
+    // 취소 버튼
+    const onClickCancleButton = () => {
+      navigate(-1);
+    };
 
     return (
           <Box
@@ -160,7 +177,7 @@ export default function EditorUpdate() {
                     alignItems: 'left',
                     mt: '10px'
                 }}>
-              <Button
+              <CategoryButton
                     id="demo-customized-button"
                     aria-controls={open ? 'demo-customized-menu' : undefined}
                     aria-haspopup="true"
@@ -176,7 +193,7 @@ export default function EditorUpdate() {
                 >   
                     {/* {categoryName=='' ? '카테고리' : categoryName} */}
                     카테고리
-                </Button>
+                </CategoryButton>
                 <StyledMenu
                     id="demo-customized-menu"
                     MenuListProps={{
@@ -187,11 +204,11 @@ export default function EditorUpdate() {
                     onClose={handleClose}
                 >
                   {categories &&
-                    categories.map((category) => {
+                    categories.map((category) => (
                       <MenuItem onClick={handleClose} disableRipple key={category.id}>
-                          {/* {category.categoryName} */}
+                        {category.categoryName}
                       </MenuItem>
-                    })}
+                    ))}
                 </StyledMenu>
               </Box>
             
@@ -204,12 +221,13 @@ export default function EditorUpdate() {
                         fontSize: 'h5.fontSize',
                         fontStyle: 'bold',
                     }}
+                    value={title}
                     onChange={onTitleHandler} 
                 />
                 <EditorBox
                   UserId={currentUser.userId}
-                  value={postData.content}
                   SetContent={setContent}
+                  SetSummary={setSummary}
                 />
             <Box sx={{
                     display: 'flex',
@@ -218,8 +236,8 @@ export default function EditorUpdate() {
                     mt: '10px'
                 }}>
                 <Stack spacing={1} direction="row" >
-                    <Button variant="outlined" disableElevation>취소</Button>
-                    <Button variant="contained" onClick={onUpdatePost} disableElevation disabled={disabled} >Update</Button>
+                    <CancleButton variant="outlined" onClick={onClickCancleButton} disableElevation>취소</CancleButton>
+                    <UpdateButton variant="contained" onClick={onUpdatePost} disableElevation disabled={disabled}>Update</UpdateButton>
                 </Stack>
             </Box>
           </Box>
