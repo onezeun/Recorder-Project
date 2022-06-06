@@ -4,15 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import "../components/Editor/index.css";
 import { styled, alpha } from "@mui/material/styles";
-import {
-  Box,
-  Stack,
-  Button,
-  Divider,
-  Input,
-  Menu,
-  MenuItem,
-} from "@mui/material";
+import { Box, Stack, Button, Divider, Input, Menu, MenuItem } from "@mui/material";
 // EditIcon, ArchiveIcon, FileCopyIcon, MoreHorizIcon
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { StylesProvider } from "@mui/styles";
@@ -66,30 +58,28 @@ const StyledMenu = styled((props) => (
   },
 }));
 
-  const CategoryButton = styled(Button)`
-      background: white;
-      border: solid 1px;
-      color: #ff5f70;
-    `;
+const CategoryButton = styled(Button)`
+  background: white;
+  border: solid 1px;
+  color: #ff5f70;
+`;
 
-  const RecordButton = styled(Button)`
-    background: #ff5f70;
-    color: white;
-  `;
+const RecordButton = styled(Button)`
+  background: #ff5f70;
+  color: white;
+`;
 
-  const CancleButton = styled(Button)`
-    background: white;
-    border: solid 1px;
-    color: #ff5f70;
-  `;
+const CancleButton = styled(Button)`
+  background: white;
+  border: solid 1px;
+  color: #ff5f70;
+`;
 
 export default function Editor() {
-  
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [anchorEl, setAnchorEl] = useState(null);
+  const [anchorEl, setAnchorEl] = useState([]);
   const [successful, setSuccessful] = useState(false);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
@@ -97,6 +87,7 @@ export default function Editor() {
 
   const { user: currentUser } = useSelector((state) => state.auth);
   const { data: categories } = useSelector((state) => state.category);
+  const [ categoryList, setCategoryList ] = useState([]);
 
   const [disabled, setDisabled] = useState(false);
   const { categoryId } = useParams();
@@ -106,15 +97,21 @@ export default function Editor() {
     getCategories();
   }, []);
 
+
   const getCategories = () => {
-    axios.get('http://localhost:8080/board/categories/users/' + `${currentUser.userId}`)
+    axios
+      .get("http://localhost:8080/board/categories/users/" + `${currentUser.userId}`)
       .then((res) => {
-        console.log('res', res.data.data);
+        setCategoryList(res.data.data)
+        console.log("categoryList", categoryList)
       })
       .catch((error) => {
         console.error(error);
       });
   };
+
+
+
 
   const open = Boolean(anchorEl);
 
@@ -188,7 +185,8 @@ export default function Editor() {
             height: "40px",
           }}
         >
-          카테고리
+          {/* {categoryList.categoryName == null ? "카테고리" : categoryList.categoryName} */}
+        카테고리
         </CategoryButton>
         <StyledMenu
           id="demo-customized-menu"
@@ -199,8 +197,8 @@ export default function Editor() {
           open={open}
           onClose={handleClose}
         >
-          {categories &&
-            categories.map((category) => (
+          {categoryList &&
+            categoryList.map((category) => (
               <MenuItem onClick={handleClose} disableRipple key={category.id}>
                 {category.categoryName}
               </MenuItem>
@@ -219,7 +217,11 @@ export default function Editor() {
         }}
         onChange={onTitleHandler}
       />
-      <EditorBox UserId={currentUser.userId} SetContent={setContent} SetSummary={setSummary} />
+      <EditorBox
+        UserId={currentUser.userId}
+        SetContent={setContent}
+        SetSummary={setSummary}
+      />
       <Box
         sx={{
           display: "flex",
