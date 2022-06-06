@@ -55,7 +55,7 @@ export default function Userhome() {
     } catch (e) {
       console.log(e);
     }
-  }, []);
+  }, allPosts.sort((a, b) => b.postId - a.postId), []);
 
   const onClickEditorButton = () => {
     navigate('/Editor')
@@ -128,7 +128,7 @@ export default function Userhome() {
                     <Card
                       sx={{
                         width: '800px',
-                        height: '350px',
+                        height: '380px',
                         display: 'flex',
                         flexDirection: 'column',
                         mx: 'auto',

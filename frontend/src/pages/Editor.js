@@ -79,14 +79,13 @@ export default function Editor() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [anchorEl, setAnchorEl] = useState([]);
+  const [anchorEl, setAnchorEl] = useState(null);
   const [successful, setSuccessful] = useState(false);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [summary, setSummary] = useState("");
 
   const { user: currentUser } = useSelector((state) => state.auth);
-  const { data: categories } = useSelector((state) => state.category);
   const [ categoryList, setCategoryList ] = useState([]);
 
   const [disabled, setDisabled] = useState(false);

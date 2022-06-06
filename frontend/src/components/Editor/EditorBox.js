@@ -54,7 +54,7 @@ export default function EditorBox ({ UserId, SetContent, SetSummary }) {
                 let convertContent = data.replace(/<(\/p|p)([^>]*)>/gi, "")
                 convertContent = convertContent.replace(/&nbsp;/gi,"");
                 SetContent(convertContent);
-                SetSummary(convertContent.substring(1, 20));
+                SetSummary(convertContent.substring(0, 29));
             } }
             onBlur={ ( event, editor ) => {
                 // console.log( 'Blur.', editor );
