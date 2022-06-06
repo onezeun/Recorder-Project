@@ -1,22 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import axios from 'axios';
-import {
-  Button,
-  IconButton,
-  Card,
-  CardActions,
-  CardContent,
-  CardMedia,
-  Grid,
-  Box,
-  Typography,
-  CardHeader,
-  Avatar,
-  Pagination,
-  Stack,
-  CardActionArea,
-} from '@mui/material';
+import { Button, IconButton, Card, CardActions, CardContent, CardMedia, Grid, Box, Typography, CardHeader, Avatar, Pagination, Stack, CardActionArea } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
 import { ConstructionOutlined } from '@mui/icons-material';
@@ -58,9 +43,7 @@ export default function Main() {
         alignItems: 'center',
       }}
     >
-    <Box
-      sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
-    >
+    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
       <Box
         sx={{
           bgcolor: 'background.paper',
@@ -69,9 +52,9 @@ export default function Main() {
         }}
       >
         {/* 게시글 */}
-        <Grid container spacing={4}>
+        <Grid container spacing={4} columnSpacing={{ xs: 12, sm: 6, md: 4 }} direction="row" justifyContent="flex-start" >
           {posts.map(post => (
-            <Grid item key = {post.postId} xs={12} sm={6} md={4}>              
+            <Grid item key={post.postId}>           
               <Card
                 sx={{
                   mx: 'auto',
