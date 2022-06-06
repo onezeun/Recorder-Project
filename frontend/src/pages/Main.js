@@ -25,12 +25,14 @@ const theme = createTheme();
 
 export default function Main() {
   const [posts, setPosts] = useState([]);
+  const [contentSummary, setContentSummary] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
       try {
         axios.get('http://localhost:8080/board/users/posts/categories')
         .then(response => {
+          console.log(response.data.data);
           setPosts(response.data.data);
         })
       } catch (e) {

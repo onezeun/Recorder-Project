@@ -43,13 +43,14 @@ const getCurrentUser = () => {
   return JSON.parse(localStorage.getItem('user'));
 };
 
-const registerPost = (userId, categoryId, title, content) => {
+const registerPost = (userId, categoryId, title, content, summary) => {
   return axios
   .post('http://localhost:8080/board/posts', {
     userId,
     categoryId,
     title,
-    content
+    content,
+    summary
   }) .catch((error) => {
     console.error(error);
   });

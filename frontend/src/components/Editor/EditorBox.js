@@ -1,10 +1,11 @@
 import React from "react";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import './index.css';
 
 const API_URL = "http://localhost:8080/board/posts";
 
-export default function EditorBox ({ UserId, SetContent }) {
+export default function EditorBox ({ UserId, SetContent, SetSummary }) {
 
     function uploadAdapter(loader) {
         return {
@@ -50,8 +51,10 @@ export default function EditorBox ({ UserId, SetContent }) {
             onChange={ 
                 ( event, editor ) => {
                 const data = editor.getData();
-                let convertContent = data.replace(/(<([^>]+)>)/ig, "")
+                let convertContent = data.replace(/<(\/p|p)([^>]*)>/gi, "")
+                convertContent = convertContent.replace(/&nbsp;/gi,"");
                 SetContent(convertContent);
+                SetSummary(convertContent.substring(1, 20));
             } }
             onBlur={ ( event, editor ) => {
                 // console.log( 'Blur.', editor );
