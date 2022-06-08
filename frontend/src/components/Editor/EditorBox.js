@@ -5,7 +5,7 @@ import './index.css';
 
 const API_URL = "http://localhost:8080/board/posts";
 
-export default function EditorBox ({ UserId, SetContent, SetSummary }) {
+export default function EditorBox ({ UserId, SetContent, SetSummary, Content }) {
 
     function uploadAdapter(loader) {
         return {
@@ -48,6 +48,7 @@ export default function EditorBox ({ UserId, SetContent, SetSummary }) {
             onReady={ editor => {
                 // console.log( 'Editor is ready to use!', editor );
             } }
+            data = {Content}
             onChange={ 
                 ( event, editor ) => {
                 const data = editor.getData();
