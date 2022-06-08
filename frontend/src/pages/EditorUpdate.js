@@ -84,6 +84,7 @@ export default function EditorUpdate() {
     const [successful, setSuccessful] = useState(false);
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
+    const [contents, setContents] = useState('');
     const [summary, setSummary] = useState('');
 
     const { user: currentUser } = useSelector((state) => state.auth);
@@ -114,6 +115,7 @@ export default function EditorUpdate() {
         axios.get('http://localhost:8080/board/posts/' + `${postId}`)
         .then((res) => {
           setTitle(res.data.title);
+          setContents(res.data.content);
           console.log(res.data);
         })
     }
@@ -228,6 +230,7 @@ export default function EditorUpdate() {
                   UserId={currentUser.userId}
                   SetContent={setContent}
                   SetSummary={setSummary}
+                  Content={contents}
                 />
             <Box sx={{
                     display: 'flex',
