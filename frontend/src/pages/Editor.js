@@ -4,7 +4,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import "../components/Editor/index.css";
 import { styled, alpha } from "@mui/material/styles";
-import { Box, Stack, Button, Divider, Input, Menu, MenuItem } from "@mui/material";
+import { Box, Stack, Button, Divider, TextField, Menu, MenuItem } from "@mui/material";
+import { withStyles } from '@material-ui/core/styles';
 // EditIcon, ArchiveIcon, FileCopyIcon, MoreHorizIcon
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { StylesProvider } from "@mui/styles";
@@ -75,6 +76,13 @@ const CancleButton = styled(Button)`
   color: #ff5f70;
 `;
 
+const TitleInput = withStyles({
+  root: {
+    '& .MuiInput-underline:after': {
+      borderBottomColor: '#ff5f70',
+    },
+  },})(TextField);
+
 export default function Editor() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -108,9 +116,6 @@ export default function Editor() {
         console.error(error);
       });
   };
-
-
-
 
   const open = Boolean(anchorEl);
 
@@ -205,16 +210,18 @@ export default function Editor() {
         </StyledMenu>
       </Box>
 
-      <Input
+      <TitleInput
+        hiddenLabel
+        variant="standard"
         placeholder="제목"
         sx={{
-          width: "90%",
+          width: "93%",
           px: "10px",
           my: "10px",
-          fontSize: "h5.fontSize",
-          fontStyle: "bold",
+          fontStyle: "bold"
         }}
         onChange={onTitleHandler}
+        InputProps={{ style: { fontSize: 26 } }}
       />
       <EditorBox
         UserId={currentUser.userId}
