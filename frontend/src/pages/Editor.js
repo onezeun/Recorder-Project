@@ -93,13 +93,10 @@ export default function Editor() {
   const [content, setContent] = useState("");
   const [summary, setSummary] = useState("");
   const [categories, setCategories] = useState('');
+  const [category_id, setCategory_Id] = useState('');
 
   const { user: currentUser } = useSelector((state) => state.auth);
   const [ categoryList, setCategoryList ] = useState([]);
-
-  // for(let i =0; i<categoryList.length; i++) {
-
-  // }
 
   const [disabled, setDisabled] = useState(false);
   const { categoryId } = useParams();
@@ -115,7 +112,6 @@ export default function Editor() {
       .get("http://localhost:8080/board/categories/users/" + `${currentUser.userId}`)
       .then((res) => {
         setCategoryList(res.data.data)
-        console.log("categoryList", categoryList)
       })
       .catch((error) => {
         console.error(error);
@@ -129,16 +125,19 @@ export default function Editor() {
   };
 
   const handleClose = (event) => {
-    // console.log('event', event.target.innerText);
-    // setCategory(event.target.innerText);
     setAnchorEl(null);
   };
 
   const onClickCategory = (e) => {
     setCategories(e.target.innerText);
-    console.log('categories', categories);
+    for(let i=0; i<categoryList.length; i++) {
+      if(categoryList[i].categoryName === e.target.innerText) {
+        setCategory_Id(categoryList[i].categoryId);
+      }
+    }
     handleClose();
   }
+
 
   const onRegisterPost = (e) => {
     setDisabled(true);
@@ -147,7 +146,7 @@ export default function Editor() {
 
     setSuccessful(false);
 
-    dispatch(registerPost(currentUser.userId, 3, title, content, summary))
+    dispatch(registerPost(currentUser.userId, category_id, title, content, summary))
       .then((res) => {
         console.log("success", res);
         setSuccessful(true);
@@ -197,6 +196,7 @@ export default function Editor() {
           sx={{
             width: "150px",
             height: "40px",
+            textTransform: 'none',
           }}
         >
         {categories}
