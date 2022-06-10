@@ -92,9 +92,14 @@ export default function Editor() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [summary, setSummary] = useState("");
+  const [categories, setCategories] = useState('');
 
   const { user: currentUser } = useSelector((state) => state.auth);
   const [ categoryList, setCategoryList ] = useState([]);
+
+  // for(let i =0; i<categoryList.length; i++) {
+
+  // }
 
   const [disabled, setDisabled] = useState(false);
   const { categoryId } = useParams();
@@ -129,6 +134,12 @@ export default function Editor() {
     setAnchorEl(null);
   };
 
+  const onClickCategory = (e) => {
+    setCategories(e.target.innerText);
+    console.log('categories', categories);
+    handleClose();
+  }
+
   const onRegisterPost = (e) => {
     setDisabled(true);
 
@@ -150,7 +161,6 @@ export default function Editor() {
   };
 
   const onTitleHandler = (e) => {
-    // console.log('title', e.target.value);
     setTitle(e.target.value);
   };
 
@@ -189,8 +199,7 @@ export default function Editor() {
             height: "40px",
           }}
         >
-          {/* {categoryList.categoryName == null ? "카테고리" : categoryList.categoryName} */}
-        카테고리
+        {categories}
         </CategoryButton>
         <StyledMenu
           id="demo-customized-menu"
@@ -203,7 +212,7 @@ export default function Editor() {
         >
           {categoryList &&
             categoryList.map((category) => (
-              <MenuItem onClick={handleClose} disableRipple key={category.id}>
+              <MenuItem onClick={onClickCategory} disableRipple key={category.id}>
                 {category.categoryName}
               </MenuItem>
             ))}
