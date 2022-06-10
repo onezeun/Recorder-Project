@@ -86,9 +86,12 @@ export default function EditorUpdate() {
     const [content, setContent] = useState('');
     const [contents, setContents] = useState('');
     const [summary, setSummary] = useState('');
+    const [categories, setCategories] = useState('');
+    const [category_id, setCategory_Id] = useState('');
+    const [currentCategory, setCurrentCategory] = useState('');
 
     const { user: currentUser } = useSelector((state) => state.auth);
-    const { data: categories } = useSelector((state) => state.category);
+    const [ categoryList, setCategoryList ] = useState([]);
 
     const [disabled, setDisabled] = useState(false);
     const { postId } = useParams();
@@ -98,25 +101,26 @@ export default function EditorUpdate() {
     useEffect(() => {
       getCategories();
       getPosts();
-      console.log(categories);
     }, []);
 
     const getCategories = () => {
-      dispatch(allCategories(currentUser.userId))
-      .then((data) => {
-        console.error(data);
-      })
-      .catch((error) => {
-        console.error(error);
-      })
-    }
+      axios
+        .get("http://localhost:8080/board/categories/users/" + `${currentUser.userId}`)
+        .then((res) => {
+          setCategoryList(res.data.data)
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    };
 
     function getPosts() {
         axios.get('http://localhost:8080/board/posts/' + `${postId}`)
         .then((res) => {
           setTitle(res.data.title);
           setContents(res.data.content);
-          console.log(res.data);
+          setCategories(res.data.categoryName);
+          console.log('currentCategory', currentCategory);
         })
     }
 
@@ -129,10 +133,18 @@ export default function EditorUpdate() {
     };
 
     const handleClose = (event) => {
-        // console.log('event', event.target.innerText);
-        // setCategory(event.target.innerText);
         setAnchorEl(null);
     };
+
+    const onClickCategory = (e) => {
+      setCategories(e.target.innerText);
+      for(let i=0; i<categoryList.length; i++) {
+        if(categoryList[i].categoryName === e.target.innerText) {
+          setCategory_Id(categoryList[i].categoryId);
+        }
+      }
+      handleClose();
+    }
 
     const onUpdatePost = (e) => {
       setDisabled(true);
@@ -191,10 +203,10 @@ export default function EditorUpdate() {
                     sx={{ 
                         width: '150px',
                         height: '40px',
+                        textTransform: 'none',
                     }}
-                >   
-                    {/* {categoryName=='' ? '카테고리' : categoryName} */}
-                    카테고리
+                >
+                  {categories}
                 </CategoryButton>
                 <StyledMenu
                     id="demo-customized-menu"
@@ -205,9 +217,9 @@ export default function EditorUpdate() {
                     open={open}
                     onClose={handleClose}
                 >
-                  {categories &&
-                    categories.map((category) => (
-                      <MenuItem onClick={handleClose} disableRipple key={category.id}>
+                  {categoryList &&
+                    categoryList.map((category) => (
+                      <MenuItem onClick={onClickCategory} disableRipple key={category.id}>
                         {category.categoryName}
                       </MenuItem>
                     ))}
