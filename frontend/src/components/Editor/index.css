@@ -1,3 +1,6 @@
 .ck-editor__editable:not(.ck-editor__nested-editable) {
     height: 50vh;
 }
+.ck-focused { 
+    border: 1px solid #ff5f70 !important;
+  }
